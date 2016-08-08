@@ -71,6 +71,7 @@ app.use(bodyParser.urlencoded({
 var client = redis.createClient(process.env.REDISCLOUD_URL||'redis://localhost:6379', {no_ready_check: true});
 app.use(cookieParser());
 app.use(expressSession({
+  store: new RedisStore({'client': client}),
   secret: process.env.SESSION_SECRET || 'secret',
   resave: false,
   saveUninitialized: false
