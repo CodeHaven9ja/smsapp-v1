@@ -21,8 +21,10 @@ var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
+// Serve the Parse API on the /parse URL prefix
+var mountPath = process.env.PARSE_MOUNT || '/parse';
 
-var serverUri = process.env.PARSE_SERVER_URI || 'http://localhost:1337/parse'
+var serverUri = process.env.PARSE_SERVER_URI + process.env.PARSE_MOUNT || 'http://localhost:1337/parse'
 
 Parse.initialize(process.env.APP_ID || 'myAppId', "unused");
 Parse.serverURL = serverUri;
@@ -82,8 +84,6 @@ app.use(flash());
 // Serve static assets from the /public folder
 app.use(express.static(path.join(__dirname, '/public/assets')));
 
-// Serve the Parse API on the /parse URL prefix
-var mountPath = process.env.PARSE_MOUNT || '/parse';
 app.use(mountPath, api);
 // make the Parse Dashboard available at /dashboard
 app.use('/dashboard', dashboard);
@@ -101,7 +101,7 @@ app.use('/users', require('./routes/users'));
 var port = process.env.PORT || 1337;
 var httpServer = require('http').createServer(app);
 httpServer.listen(port, () => {
-    console.log('parse-server-example running on port ' + port + '.');
+    console.log('School management system running on port ' + port + '.');
 });
 
 // // Start app
