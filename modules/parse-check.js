@@ -1,12 +1,11 @@
-var login = (parse) => {
+var check = (parse) => {
 	return (req, res, next) => {
-		var currentUser = parse.User.current();
+		var currentUser = req.session.user;
 		if (currentUser) {
-			req.session.user = currentUser;
 			next();
 		}
-		return res.render('home/login', {message:"You need to login to view this page."});
+		res.redirect('home/login');
 	}
 }
 
-module.exports = login;
+module.exports = check;

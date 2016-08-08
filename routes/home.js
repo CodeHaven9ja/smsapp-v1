@@ -8,7 +8,6 @@ var returnRouter = function(parse){
 	var parseAuthCheck = require('../modules/parse-check.js')(Parse);
 	router.get('/',  (req,res) =>{
 		var currentUser = req.session.user;
-		console.log(currentUser);
 		if (req.path !== '/login' && !currentUser) {
 			res.render('home/login',{
 				pageTitle: "School management system",
