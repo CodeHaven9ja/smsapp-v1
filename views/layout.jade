@@ -1,0 +1,26 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0")
+		meta(name="author", content="Thompson Edolo")
+		meta(name="keyword", content="slick, flat, dashboard, bootstrap, admin, template, theme, responsive, fluid, retina")
+		meta(name="description", content="")
+		link(rel="shortcut icon", href="javascript:;", type="image/png")
+		block head
+			title Default title
+		block styles
+			include ./includes/styles.jade
+
+	- var auth = isAuthenticated
+	block body
+		body(class=auth ? 'authed' : 'anon')
+			section
+				block sidebar
+				block header
+				block content
+				footer
+					block footer
+	block scripts
+		include ./includes/scripts.jade
+		

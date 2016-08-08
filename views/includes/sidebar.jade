@@ -1,0 +1,173 @@
+// sidebar left start
+.sidebar-left
+  // responsive view logo start
+  .logo.dark-logo-bg(class='visible-xs-* visible-sm-*')
+    a(href='index.html')
+      img(src='img/logo-icon.png', alt='')
+      // <i class="fa fa-maxcdn"></i>
+      span.brand-name SMS
+  // responsive view logo end
+  .sidebar-left-info
+    // visible small devices start
+    .search-field   
+    // visible small devices end
+    // sidebar nav start
+    ul.nav.nav-pills.nav-stacked.side-navigation
+      li
+        h3.navigation-title Navigation
+      li.active
+        a(href='index.html')
+          i.fa.fa-home
+          span Dashboard
+      li.menu-list
+        a(href='')
+          i.fa.fa-laptop
+          span Layouts
+        ul.child-list
+          li
+            a(href='boxed-layout.html')  Boxed Page
+          li
+            a(href='collapsed-menu.html')  Sidebar Collapsed
+          li
+            a(href='blank-page.html')  Blank page
+          li
+            a(href='different-theme-layouts.html')  Different Theme Layouts
+      li.menu-list
+        a(href='')
+          i.fa.fa-book
+          span UI Elements
+        ul.child-list
+          li
+            a(href='general.html')  BS Elements
+          li
+            a(href='buttons.html')  Buttons
+          li
+            a(href='toastr.html')  Toaster Notification
+          li
+            a(href='widgets.html')  Widgets
+          li
+            a(href='ion-slider.html')  Ion Slider
+          li
+            a(href='tree.html')  Tree View
+          li
+            a(href='nestable.html')  Nestable
+          li
+            a(href='fontawesome.html')  Fontawesome
+          li
+            a(href='line-icon.html')  Line Icon
+      li
+        h3.navigation-title Components
+      li.menu-list
+        a(href='')
+          i.fa.fa-cogs
+          span
+            | Components 
+            span.badge.noti-arrow.bg-success.pull-right 3
+        ul.child-list
+          li
+            a(href='grid.html')  Grids
+          li
+            a(href='calendar.html')  Calendar
+          li
+            a(href='timeline.html')  Timeline 
+          li
+            a(href='gallery.html')  Gallery 
+      li.menu-list
+        a(href='javascript:;')
+          i.fa.fa-th-list
+          span Data Tables
+        ul.child-list
+          li
+            a(href='table-static.html')  Basic Table
+          li
+            a(href='table-dynamic.html')  Advanced Table
+      li.menu-list
+        a(href='')
+          i.fa.fa-tasks
+          span Forms
+        ul.child-list
+          li
+            a(href='form-layout.html')  Form Layouts
+          li
+            a(href='advanced-components.html')  Advanced Components
+          li
+            a(href='form-wizard.html')  Form Wizards
+          li
+            a(href='form-validation.html')  Form Validation
+          li
+            a(href='form-editor.html')  Editors
+      li.menu-list
+        a(href='')
+          i.fa.fa-bar-chart-o
+          span Charts 
+        ul.child-list
+          li
+            a(href='flot-chart.html')  Flot Charts
+          li
+            a(href='morris-chart.html')  Morris Charts
+          li
+            a(href='chartjs.html')  Chartjs
+      li
+        h3.navigation-title Extra
+      li.menu-list
+        a(href='javascript:;')
+          i.fa.fa-envelope-o
+          span
+            | Email 
+            span.label.noti-arrow.bg-danger.pull-right 4 Unread
+        ul.child-list
+          li
+            a(href='inbox.html')  Inbox
+          li
+            a(href='inbox-details.html')  View Mail
+          li
+            a(href='inbox-compose.html')  Compose Mail
+      li.menu-list
+        a(href='javascript:;')
+          i.fa.fa-map-marker
+          span Maps
+        ul.child-list
+          li
+            a(href='google-map.html')  Google Map
+          li
+            a(href='vector-map.html')  Vector Map
+      li.menu-list
+        a(href='')
+          i.fa.fa-file-text
+          span Extra Pages
+        ul.child-list
+          li
+            a(href='profile.html')  Profile
+          li
+            a(href='invoice.html')  Invoice
+          li
+            a(href='login.html')  Login 
+          li
+            a(href='registration.html')  Registration 
+          li
+            a(href='lock.html')  Lock Screen 
+          li
+            a(href='404.html')  404 Error
+          li
+            a(href='500.html')  500 Error
+    // sidebar nav end
+    // sidebar widget start
+    .sidebar-widget
+      h4 Server Status
+      ul.list-group
+        li
+          span.label.label-danger.pull-right 33%
+          p CPU Used
+          .progress.progress-xs
+            .progress-bar.progress-bar-danger(style='width: 33%;')
+              span.sr-only 33%
+        li
+          span.label.label-warning.pull-right 65%
+          p Bandwidth
+          .progress.progress-xs
+            .progress-bar.progress-bar-warning(style='width: 65%;')
+              span.sr-only 65%
+        li
+          a.btn.btn-success.btn-sm(href='javascript:;') View Details
+    // sidebar widget end
+// sidebar left end

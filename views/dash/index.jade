@@ -1,0 +1,14 @@
+extends ../layout.jade
+
+block head
+	title #{pageTitle}
+
+block body
+	body.sticky-header
+		section
+			block sidebar
+				include ../includes/sidebar.jade
+			.body-content
+				include ../includes/header.jade
+				footer
+					| 2016 &copy; #{pageTitle} by Glassstones Solutions.
