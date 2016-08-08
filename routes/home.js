@@ -9,10 +9,7 @@ var returnRouter = function(parse){
 	router.get('/',  (req,res) =>{
 		var currentUser = req.session.user;
 		if (req.path !== '/login' && !currentUser) {
-			res.render('home/login',{
-				pageTitle: "School management system",
-				isAuthenticated: false,
-			});
+			res.redirect('/home/login');
 		} else {
 			// res.render('index', {
 			// 	page: "dash_index",
