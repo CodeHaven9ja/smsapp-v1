@@ -13,7 +13,8 @@ var returnRouter = function(parse){
 		if (currentUser){
 			var imgUrl = gravatar.url(currentUser.email, {s: '200', r: 'pg', d: 'retro'});
 			res.render('dash/index',{
-				pageTitle: "School management system | Home",
+				pageTitle: "School Management System",
+				action: "Home",
 				isAuthenticated: true,
 				user: currentUser,
 				gravatar: imgUrl

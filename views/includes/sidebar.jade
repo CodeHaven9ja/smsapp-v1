@@ -19,101 +19,95 @@
         a(href='index.html')
           i.fa.fa-home
           span Dashboard
-      li.menu-list
-        a(href='')
-          i.fa.fa-laptop
-          span Layouts
-        ul.child-list
-          li
-            a(href='boxed-layout.html')  Boxed Page
-          li
-            a(href='collapsed-menu.html')  Sidebar Collapsed
-          li
-            a(href='blank-page.html')  Blank page
-          li
-            a(href='different-theme-layouts.html')  Different Theme Layouts
+      //- For Admins and Teachers
+      if user.role == 'admin' || user.role == 'teacher'
+        li.menu-list
+          a(href='')
+            i.fa.fa-laptop
+            span Students
+          ul.child-list
+            if user.role == 'admin'
+              li
+                a(href='boxed-layout.html')  Enrollment
+            li
+              a(href='collapsed-menu.html')  Attendance
+            li
+              a(href='blank-page.html')  Reports
+            li
+              a(href='different-theme-layouts.html')  Demographic
+            if user.role == 'teacher'
+              li
+                a Class List
+      //- For Admins and Teachers
+      if user.role == 'admin' || user.role == 'teacher'
+        li.menu-list
+          a(href='')
+            i.fa.fa-laptop
+            span Parents
+          ul.child-list
+            li
+              a(href='boxed-layout.html')  Add Parent
+            li
+              a(href='boxed-layout.html')  Link Parent
+            li
+              a Statistics
+      //- For Parents
+      if user.role == 'parent'
+        li.menu-list
+          a(href='')
+            i.fa.fa-laptop
+            span Child / Ward
+          ul.child-list
+            li
+              a(href='collapsed-menu.html')  Attendance
+            li
+              a(href='blank-page.html')  Reports
+            li
+              a(href='different-theme-layouts.html')  Demographic
+      //- For Student
+      if user.role == 'user'
+        li.menu-list
+            a(href='')
+              i.fa.fa-laptop
+              span My Records
+            ul.child-list
+              li
+                a(href='collapsed-menu.html')  My Attendance
+              li
+                a(href='blank-page.html')  My Reports
+      //- For Student
       li.menu-list
         a(href='')
           i.fa.fa-book
-          span UI Elements
+          span Curriculum
         ul.child-list
           li
-            a(href='general.html')  BS Elements
+            a(href='general.html')  Class Work
+          if user.role == 'admin' || user.role == 'teacher'
+            li
+              a Add Class Work
           li
-            a(href='buttons.html')  Buttons
+            a(href='buttons.html')  Time Table
+          if user.role == 'admin' || user.role == 'teacher'
+            li
+              a Add Time Table Schedule
           li
-            a(href='toastr.html')  Toaster Notification
+            a(href='toastr.html')  Calendar
+          if user.role == 'admin' || user.role == 'teacher'
+            li
+              a Add Calendar Event
           li
-            a(href='widgets.html')  Widgets
-          li
-            a(href='ion-slider.html')  Ion Slider
-          li
-            a(href='tree.html')  Tree View
-          li
-            a(href='nestable.html')  Nestable
-          li
-            a(href='fontawesome.html')  Fontawesome
-          li
-            a(href='line-icon.html')  Line Icon
-      li
-        h3.navigation-title Components
-      li.menu-list
-        a(href='')
-          i.fa.fa-cogs
-          span
-            | Components 
-            span.badge.noti-arrow.bg-success.pull-right 3
-        ul.child-list
-          li
-            a(href='grid.html')  Grids
-          li
-            a(href='calendar.html')  Calendar
-          li
-            a(href='timeline.html')  Timeline 
-          li
-            a(href='gallery.html')  Gallery 
-      li.menu-list
-        a(href='javascript:;')
-          i.fa.fa-th-list
-          span Data Tables
-        ul.child-list
-          li
-            a(href='table-static.html')  Basic Table
-          li
-            a(href='table-dynamic.html')  Advanced Table
-      li.menu-list
-        a(href='')
-          i.fa.fa-tasks
-          span Forms
-        ul.child-list
-          li
-            a(href='form-layout.html')  Form Layouts
-          li
-            a(href='advanced-components.html')  Advanced Components
-          li
-            a(href='form-wizard.html')  Form Wizards
-          li
-            a(href='form-validation.html')  Form Validation
-          li
-            a(href='form-editor.html')  Editors
-      li.menu-list
-        a(href='')
-          i.fa.fa-bar-chart-o
-          span Charts 
-        ul.child-list
-          li
-            a(href='flot-chart.html')  Flot Charts
-          li
-            a(href='morris-chart.html')  Morris Charts
-          li
-            a(href='chartjs.html')  Chartjs
+            a Newsletter & Bulletin
+          if user.role == 'admin' || user.role == 'teacher'
+            li
+              a Add Newsletter / Bulletin
       li
         h3.navigation-title Extra
       li.menu-list
         a(href='javascript:;')
           i.fa.fa-envelope-o
           span
-            | Email 
+            | Messages 
             span.label.noti-arrow.bg-danger.pull-right 4 Unread
         ul.child-list
           li
