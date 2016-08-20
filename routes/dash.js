@@ -8,21 +8,23 @@ var returnRouter = function(parse){
 	var parseRegister = require('../modules/parse-register.js')(Parse);
 	var parseAuthCheck = require('../modules/parse-check.js')(Parse);
 
-	router.get('/', (req, res) => {
+
+	router.get('/', parseAuthCheck, (req, res) => {
 		var currentUser = req.session.user;
-		if (currentUser){
-			var imgUrl = gravatar.url(currentUser.email, {s: '200', r: 'pg', d: 'retro'});
-			res.render('dash/index',{
-				pageTitle: "School Management System",
-				action: "Home",
-				isAuthenticated: true,
-				user: currentUser,
-				gravatar: imgUrl
-			});
-		} else {
-			res.redirect('/home/login')
-		}
+		var imgUrl = gravatar.url(currentUser.email, {s: '200', r: 'pg', d: 'retro'});
+		res.render('dash/index',{
+			pageTitle: "School Management System",
+			action: "Home",
+			isAuthenticated: true,
+			user: currentUser,
+			gravatar: imgUrl
+		});
 	});
+
+	router.use('/students', parseAuthCheck, require('./students/students.controller')(Parse));
+
+
+
 	return router;
 }
 module.exports = returnRouter;

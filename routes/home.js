@@ -58,6 +58,10 @@ var returnRouter = function(parse){
 		});
 	});
 
+	router.get('/noPermission', (req, res) =>{
+		res.status(403).send("You can't view this page!")
+	});
+
 	router.post('/register', parseRegister, (req, res) =>{
 		res.redirect('/');
 	});
