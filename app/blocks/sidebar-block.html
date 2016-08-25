@@ -1,0 +1,21 @@
+<div class="sidebar-left" ng-controller="SidebarCtrl as sb">
+    <!--responsive view logo start-->
+    <div class="logo dark-logo-bg visible-xs-* visible-sm-*">
+        <a href="index.html">
+            <img src="/img/logo-icon.png" alt="">
+            <!--<i class="fa fa-maxcdn"></i>-->
+            <span class="brand-name">SMS</span>
+        </a>
+    </div>
+    <!--responsive view logo end-->
+
+    <div class="sidebar-left-info">
+        <!-- visible small devices start-->
+        <div class=" search-field">  </div>
+        <!-- visible small devices end-->
+
+        <!--sidebar nav start-->
+        <ul  ng-if="sb.user.role == 'user'" ng-include src="'blocks/sidebars/user-sidebar.html'" class="nav nav-pills nav-stacked side-navigation"></ul>
+        <!--sidebar nav end-->
+    </div>
+</div>

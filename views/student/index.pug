@@ -1,0 +1,14 @@
+extends ../layout.pug
+
+block head
+	title #{pageTitle} | #{action}
+block body
+	body.sticky-header
+		section
+			block sidebar
+				include ../includes/sidebar.pug
+			.body-content
+				include ../includes/header.pug
+				div #{user.role}
+				footer
+					| 2016 &copy; #{pageTitle} by Glassstones Solutions.

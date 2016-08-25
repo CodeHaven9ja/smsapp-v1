@@ -64,7 +64,7 @@ var app = express();
 
 // Configure app
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade'); 
+app.set('view engine', 'pug'); 
 
 // Use Middleware
 app.use(bodyParser.urlencoded({
@@ -83,6 +83,7 @@ app.use(flash());
 
 // Serve static assets from the /public folder
 app.use(express.static(path.join(__dirname, '/public/assets')));
+app.use(express.static(path.join(__dirname, '/bower_components')));
 
 app.use(mountPath, api);
 // make the Parse Dashboard available at /dashboard
@@ -97,6 +98,11 @@ app.get('/', (req, res) => {
 app.use('/home', require('./routes/home')(Parse));
 app.use('/dash', require('./routes/dash')(Parse));
 app.use('/users', require('./routes/users'));
+
+// make JWT token available to angular app
+app.get('/token', function (req, res) { 
+  res.send(req.session.user.sessionToken);
+});
 
 var port = process.env.PORT || 1337;
 var httpServer = require('http').createServer(app);

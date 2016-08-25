@@ -1,0 +1,26 @@
+{
+  "name": "parse-server-example",
+  "description": "An example Parse API server using the parse-server module",
+  "main": "index.js",
+  "authors": [
+    "Thompson Edolo <verygreenboi@live.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/verygreenboi/smsapp-v1",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-gravatar": "^0.4.2",
+    "angular-socket-io": "^0.7.0",
+    "angular-cloudinary": "^1.2.4",
+    "angular-ui-router": "^0.3.1",
+    "angular-timeago": "^0.4.3",
+    "jquery.easy-pie-chart": "^2.1.6"
+  }
+}

@@ -1,0 +1,84 @@
+extends ../../dash-layout.pug
+
+block append pagehead
+	span.sub-title Welcome #{user.firstName}
+	.state-information
+		.state-graph
+			#balance.chart
+				canvas(width='82', height='32', style='display: inline-block; width: 82px; height: 32px; vertical-align: top;')
+			.info Balance $ 2,317
+		.state-graph
+			#item-sold.chart
+				canvas(width='82', height='32', style='display: inline-block; width: 82px; height: 32px; vertical-align: top;')
+			.info Item Sold 1230
+block append overview
+	.col-lg-3.col-sm-6
+		section.panel.purple(ng-controller="TodoCtrl as td")
+			.symbol
+				i.fa.fa-send
+			.value.white
+				h1(value="0", count-to="{{td.count}}", duration="0.5")
+				p Class Work
+	.col-lg-3.col-sm-6
+		section.panel
+			.symbol.purple-color
+				i.fa.fa-envelope-o
+			.value.gray
+				h1(value="0", count-to="8", duration="0.5")
+				p Messages
+	.col-lg-6.col-sm-6
+		section.panel(ng-controller="NotificationCtrl")
+			header.panel-heading.head-border
+				| notification
+				span.tools.pull-right
+					a.fa.fa-repeat.box-refresh(href='javascript:;')
+			.noti-information.notification-menu
+				// notification info start
+				.notification-list.mail-list.not-list
+					a.single-mail(href='javascript:;')
+						span.icon.bg-primary
+							i.fa.fa-envelope-o
+						span.purple-color John Doe
+							|  send you a mail
+						p
+							small Just Now
+						span.read.tooltips(data-original-title='Mark as Unread', data-toggle='tooltip', data-placement='left')
+							i.fa.fa-circle-o
+					a.single-mail(href='javascript:;')
+						span.icon.bg-success
+							i.fa.fa-comments-o
+						span.red-color Jim Doe
+							|  mentioned you a post
+						p
+							small 30 Mins Ago
+						span.read.tooltips(data-original-title='Mark as Unread', data-toggle='tooltip', data-placement='left')
+							i.fa.fa-circle-o
+					a.single-mail(href='javascript:;')
+						span.icon.bg-warning
+							i.fa.fa-warning
+						|  Application Error
+						p
+							small  2 Days Ago
+						span.read.tooltips(data-original-title='Mark as Unread', data-toggle='tooltip', data-placement='left')
+							i.fa.fa-circle-o
+					a.single-mail(href='javascript:;')
+						span.icon.bg-dark
+							i.fa.fa-database
+						strong Database Overloaded 24%
+						p
+							small 1 Week Ago
+						span.un-read.tooltips(data-original-title='Mark as Read', data-toggle='tooltip', data-placement='left')
+							i.fa.fa-circle
+					a.single-mail(href='javascript:;')
+						span.icon.bg-danger
+							i.fa.fa-warning
+						strong Server Failed Notification
+						p
+							small 10 Days Ago
+						span.un-read.tooltips(data-original-title='Mark as Read', data-toggle='tooltip', data-placement='left')
+							i.fa.fa-circle
+					a.single-mail.text-center(href='javascript:;')
+						| View All Notification
+				// notification info end
+block body
+	.row

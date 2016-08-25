@@ -50,6 +50,7 @@ var returnRouter = function(parse){
 	router.post('/login', (req, res) =>{
 		parse.User.logIn(req.body.username, req.body.password).then((user) =>{
 			req.session.user = user;
+			req.session.token = user.sessionToken;
 			res.redirect('/');
 		}).catch((error)=>{
 			loginError = error;

@@ -1,0 +1,35 @@
+extends ../layout.pug
+
+block head
+	title #{pageTitle} | #{action}
+
+block body
+	body.sticky-header
+		section
+			block sidebar
+				include ../includes/sidebar.pug
+			.body-content
+				include ../includes/header.pug
+				case user.role
+					when "admin"
+					when "teacher"
+					when "parent"
+					when "user"
+						ui-view
+						//- include ../includes/dash/_student-dash.pug
+					default
+						p You are not authorized to view this page.
+				footer
+					| 2016 &copy; #{pageTitle} by Glassstones Solutions.
+block append scripts
+	case user.role
+		when "admin"
+			// include all admin dependencies
+		when "teacher"
+			// include all Teacher dependencies
+		when "parent"
+			// include all Parent dependencies
+		when "user"
+			// include all Student dependencies
+			script(src="/js/controllers/todo.controller.js")
+			script(src="/js/controllers/notification.controller.js")
