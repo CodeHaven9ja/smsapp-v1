@@ -16,6 +16,9 @@
 
         <!--sidebar nav start-->
         <ul  ng-if="sb.user.role == 'user'" ng-include src="'blocks/sidebars/user-sidebar.html'" class="nav nav-pills nav-stacked side-navigation"></ul>
+        <ul ng-if="sb.user.role == 'teacher'" ng-include src="'blocks/sidebars/teacher-sidebar.html'" class="nav nav-pills nav-stacked side-navigation"></ul>
+        <ul ng-if="sb.user.role == 'admin'" ng-include src="'blocks/sidebars/admin-sidebar.html'" class="nav nav-pills nav-stacked side-navigation"></ul>
         <!--sidebar nav end-->
+
     </div>
 </div>

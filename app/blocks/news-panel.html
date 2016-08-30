@@ -1,0 +1,47 @@
+<div class="col-md-6">
+	<section class="panel">
+		<header class="panel-heading head-border">
+			newsletters
+			<span class="tools pull-right">
+            	<a class="fa fa-repeat box-refresh" href="javascript:;"></a>
+        	</span>
+		</header>
+		<div class="noti-information notification-menu">
+			<div class="notification-list mail-list not-list">
+				<a ng-repeat="m in nwCrtl.messages" ng-click="nwCrtl.selectMail($index)" class="single-mail">
+					<span class="icon bg-primary">
+					    <i class="fa fa-envelope-o"></i>
+					</span>
+					<span class="purple-color">{{m.firstName}} {{m.lastName}}</span> send you a mail
+					<p>
+						<small>Just Now</small>
+					</p>
+					<span ng-if="!m.isRead" class="read tooltips" data-original-title="Mark as Unread" data-toggle="tooltip" data-placement="left">
+					    <i class="fa fa-circle-o"></i>
+					</span>
+					<span ng-if="m.isRead" class="un-read tooltips" data-original-title="Mark as Read" data-toggle="tooltip" data-placement="left">
+					    <i class="fa fa-circle"></i>
+					</span>
+				</a>
+
+				<a href="javascript:;" class="single-mail text-center">
+				View All Messages
+				</a>
+
+			</div>
+		</div>
+	</section>
+</div>
+<div class="col-md-6">
+	<section class="panel pro-box">
+		<header class="panel-heading">
+			message
+		</header>
+		<div class="panel-body">
+			<div ng-if="!nwCrtl.messageClicked" class="no-message">
+				<h2>Click a message to view it</h2>
+			</div>
+			<p>{{nwCrtl.message.text}}</p>
+		</div>
+	</section>
+</div>
