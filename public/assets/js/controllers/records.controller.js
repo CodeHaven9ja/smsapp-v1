@@ -2,13 +2,16 @@
     'use strict';
     angular
         .module('app')
+        .controller('NewsCtrl', ['$scope','$window','$interval','$timeout','MessageService',nwCrtl])
         .controller('EventsCtrl',['$scope','$window','$interval','$timeout','UserService', 'uiCalendarConfig','$compile',evCrtl])
         .controller('TimeTableCtrl',['$scope','$window','$interval','$timeout','UserService', 'uiCalendarConfig','$compile',ttCrtl])
         .controller('ReportsCtrl',
             ['$scope','$window','$interval','$timeout','UserService',rpCrtl]
-        ).controller('AttendanceCtrl',
+        )
+        .controller('AttendanceCtrl',
             ['$scope','$window','$interval','$timeout','UserService',rcCrtl]
-        ).directive('ngScore',function(){
+        )
+        .directive('ngScore',function(){
             return {
                 replace: false,
                 scope: true,
@@ -42,6 +45,23 @@
                 }
             };
         });
+
+        function nwCrtl($scope,$window,$interval,$timeout,MessageService) {
+            var nwCrtl = this;
+            nwCrtl.messageClicked = false;
+            nwCrtl.messages = [];
+            nwCrtl.message = {};
+
+            MessageService.getMessages().then(function (m){
+                nwCrtl.messages = m;
+            });
+
+            nwCrtl.selectMail = function(i){
+                nwCrtl.message = nwCrtl.messages[i].message;
+                nwCrtl.messages[i].isRead = true;
+                nwCrtl.messageClicked = true;
+            }
+        }
 
         function evCrtl($scope,$window,$interval,$timeout,UserService, uiCalendarConfig, $compile) {
             var evCrtl = this;

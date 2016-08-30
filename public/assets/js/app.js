@@ -44,6 +44,12 @@
                     controller: 'EventsCtrl',
                     controllerAs: 'evCrtl'
                 })
+                .state('news', {
+                    url: '/news',
+                    templateUrl: 'curr/news.html',
+                    controller: 'NewsCtrl',
+                    controllerAs: 'nwCrtl'
+                })
         }
         function run($http, $rootScope, $window) {
         	// body...
