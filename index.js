@@ -47,6 +47,12 @@ var dashboard = new ParseDashboard({
       "appId": "myAppId",
       "masterKey": "myMasterKey",
       "appName": "SMS Local"
+    },
+    {
+      "serverURL": serverUri,
+      "appId": process.env.APP_ID,
+      "masterKey": process.env.MASTER_KEY,
+      "appName": "SMS Prod"
     }
   ],
   "users":[
