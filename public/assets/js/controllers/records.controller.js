@@ -2,6 +2,8 @@
     'use strict';
     angular
         .module('app')
+        .controller('EventsCtrl',['$scope','$window','$interval','$timeout','UserService', 'uiCalendarConfig','$compile',evCrtl])
+        .controller('TimeTableCtrl',['$scope','$window','$interval','$timeout','UserService', 'uiCalendarConfig','$compile',ttCrtl])
         .controller('ReportsCtrl',
             ['$scope','$window','$interval','$timeout','UserService',rpCrtl]
         ).controller('AttendanceCtrl',
@@ -40,6 +42,223 @@
                 }
             };
         });
+
+        function evCrtl($scope,$window,$interval,$timeout,UserService, uiCalendarConfig, $compile) {
+            var evCrtl = this;
+
+            var date = new Date('2016-08-29T12:00:00.000Z');
+            var m = date.getUTCMinutes();
+            var h = date.getUTCHours();
+            var d = date.getDate();
+            var m = date.getMonth();
+            var y = date.getFullYear();
+
+            console.log(date.toJSON());
+
+            /* event source that contains custom events on the scope */
+            evCrtl.eventSource = [
+              {title: 'First CA Test',start: new Date('2016-08-29T07:00:00.000Z'),end: new Date('2016-09-02T07:00:00.000Z'),allDay: false},
+              {title: 'Third term vacation',start: new Date(y, m+1, d, 9, 0),end: new Date(y, m+2, d+2, 10, 0),allDay: true},
+              {title: 'Long Break',start: new Date(y, m, d, 10, 0),end: new Date(y, m, d, 12, 0),allDay: false},
+            ];
+
+            /* event source that calls a function on every view switch */
+            evCrtl.eventsF = function (start, end, timezone, callback) {
+              var s = new Date(start).getTime() / 1000;
+              var e = new Date(end).getTime() / 1000;
+              var m = new Date(start).getMonth();
+              var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
+              callback(events);
+            };
+
+            /* alert on eventClick */
+            evCrtl.alertOnEventClick = function( date, jsEvent, view){
+                evCrtl.alertMessage = (date.title + ' was clicked ');
+            };
+
+            /* alert on Drop */
+            evCrtl.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
+                evCrtl.alertMessage = ('Event Dropped to make dayDelta ' + delta);
+            };
+            /* alert on Resize */
+            evCrtl.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
+                evCrtl.alertMessage = ('Event Resized to make dayDelta ' + delta);
+            };
+            /* add and removes an event source of choice */
+            evCrtl.addRemoveEventSource = function(sources,source) {
+              var canAdd = 0;
+              angular.forEach(sources,function(value, key){
+                if(sources[key] === source){
+                  sources.splice(key,1);
+                  canAdd = 1;
+                }
+              });
+              if(canAdd === 0){
+                sources.push(source);
+              }
+            };
+            /* add custom event*/
+            evCrtl.addEvent = function() {
+              evCrtl.events.push({
+                title: 'Open Sesame',
+                start: new Date(y, m, 28),
+                end: new Date(y, m, 29),
+                className: ['openSesame']
+              });
+            };
+            /* remove event */
+            evCrtl.remove = function(index) {
+              evCrtl.events.splice(index,1);
+            };
+            /* Change View */
+            evCrtl.changeView = function(view,calendar) {
+              uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
+            };
+            /* Change View */
+            evCrtl.renderCalendar = function(calendar) {
+              $timeout(function() {
+                if(uiCalendarConfig.calendars[calendar]){
+                  uiCalendarConfig.calendars[calendar].fullCalendar('render');
+                }
+              });
+            };
+             /* Render Tooltip */
+            evCrtl.eventRender = function( event, element, view ) {
+                element.attr({'tooltip': event.title,
+                              'tooltip-append-to-body': true});
+                $compile(element)($scope);
+            }; 
+
+            /* config object */
+            evCrtl.uiConfig = {
+              calendar:{
+                height: 650,
+                editable: false,
+                header:{
+                  left: 'title',
+                  center: '',
+                  right: 'today prev,next'
+                },
+                eventClick: evCrtl.alertOnEventClick,
+                eventDrop: evCrtl.alertOnDrop,
+                eventResize: evCrtl.alertOnResize,
+                eventRender: evCrtl.eventRender
+              }
+            };
+
+            evCrtl.eventSources = [evCrtl.eventSource,evCrtl.eventsF];
+        }
+
+        function ttCrtl($scope,$window,$interval,$timeout,UserService, uiCalendarConfig, $compile) {
+            var ttCrtl = this;
+
+            var date = new Date('2016-08-29T12:00:00.000Z');
+            var m = date.getUTCMinutes();
+            var h = date.getUTCHours();
+            var d = date.getDate();
+            var m = date.getMonth();
+            var y = date.getFullYear();
+
+            console.log(date.toJSON());
+
+            /* event source that contains custom events on the scope */
+            ttCrtl.eventSource = [
+              {title: 'Biology Single Period',start: new Date('2016-08-29T07:00:00.000Z'),end: new Date(y, m, d, h - 3, 0),allDay: false},
+              {title: 'Maths Single Period',start: new Date(y, m, d, 9, 0),end: new Date(y, m, d, 10, 0),allDay: false},
+              {title: 'Long Break',start: new Date(y, m, d, 10, 0),end: new Date(y, m, d, 12, 0),allDay: false},
+            ];
+
+            /* event source that calls a function on every view switch */
+            ttCrtl.eventsF = function (start, end, timezone, callback) {
+              var s = new Date(start).getTime() / 1000;
+              var e = new Date(end).getTime() / 1000;
+              var m = new Date(start).getMonth();
+              var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
+              callback(events);
+            };
+
+            /* alert on eventClick */
+            ttCrtl.alertOnEventClick = function( date, jsEvent, view){
+                ttCrtl.alertMessage = (date.title + ' was clicked ');
+            };
+
+            /* alert on Drop */
+            ttCrtl.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
+                ttCrtl.alertMessage = ('Event Dropped to make dayDelta ' + delta);
+            };
+            /* alert on Resize */
+            ttCrtl.alertOnResize = function(event, delta, revertFunc, jsEvent, ui, view ){
+                ttCrtl.alertMessage = ('Event Resized to make dayDelta ' + delta);
+            };
+            /* add and removes an event source of choice */
+            ttCrtl.addRemoveEventSource = function(sources,source) {
+              var canAdd = 0;
+              angular.forEach(sources,function(value, key){
+                if(sources[key] === source){
+                  sources.splice(key,1);
+                  canAdd = 1;
+                }
+              });
+              if(canAdd === 0){
+                sources.push(source);
+              }
+            };
+            /* add custom event*/
+            ttCrtl.addEvent = function() {
+              ttCrtl.events.push({
+                title: 'Open Sesame',
+                start: new Date(y, m, 28),
+                end: new Date(y, m, 29),
+                className: ['openSesame']
+              });
+            };
+            /* remove event */
+            ttCrtl.remove = function(index) {
+              ttCrtl.events.splice(index,1);
+            };
+            /* Change View */
+            ttCrtl.changeView = function(view,calendar) {
+              uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
+            };
+            /* Change View */
+            ttCrtl.renderCalendar = function(calendar) {
+              $timeout(function() {
+                if(uiCalendarConfig.calendars[calendar]){
+                  uiCalendarConfig.calendars[calendar].fullCalendar('render');
+                }
+              });
+            };
+             /* Render Tooltip */
+            ttCrtl.eventRender = function( event, element, view ) {
+                element.attr({'tooltip': event.title,
+                              'tooltip-append-to-body': true});
+                $compile(element)($scope);
+            }; 
+
+            /* config object */
+            ttCrtl.uiConfig = {
+              calendar:{
+                height: 650,
+                editable: false,
+                header:{
+                  left: 'title',
+                  center: '',
+                  right: 'today prev,next'
+                },
+                defaultView: 'agendaWeek',
+                eventClick: ttCrtl.alertOnEventClick,
+                eventDrop: ttCrtl.alertOnDrop,
+                eventResize: ttCrtl.alertOnResize,
+                eventRender: ttCrtl.eventRender,
+                weekends: false,
+                minTime: '08:00:00',
+                maxTime: '17:00:00'
+              }
+            };
+
+            ttCrtl.eventSources = [ttCrtl.eventSource,ttCrtl.eventsF];
+
+        }
 
         function rpCrtl($scope,$window,$interval,$timeout,UserService) {
             var rpCrtl = this;

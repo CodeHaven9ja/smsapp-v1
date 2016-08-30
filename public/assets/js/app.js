@@ -5,6 +5,7 @@
         	'ui.router',
             'ui.gravatar',
             'easypiechart',
+            'ui.calendar',
             'countTo'
         	])
         .config(config)
@@ -33,9 +34,15 @@
                 })
                 .state('studentsTimetable', {
                     url: '/students/timetable/:studentId',
-                    templateUrl: 'records/records.html',
+                    templateUrl: 'curr/timetable.html',
+                    controller: 'TimeTableCtrl',
+                    controllerAs: 'ttCrtl'
+                })
+                .state('studentsEvents', {
+                    url: '/students/events/:studentId',
+                    templateUrl: 'curr/events.html',
                     controller: 'EventsCtrl',
-                    controllerAs: 'rpCrtl'
+                    controllerAs: 'evCrtl'
                 })
         }
         function run($http, $rootScope, $window) {

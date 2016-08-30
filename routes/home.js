@@ -54,7 +54,6 @@ var returnRouter = function(parse){
 			res.redirect('/');
 		}).catch((error)=>{
 			loginError = error;
-			console.log("Here "+JSON.stringify(loginError));
 			res.render('home/login', {error:loginError});
 		});
 	});

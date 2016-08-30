@@ -21,6 +21,8 @@
     "angular-cloudinary": "^1.2.4",
     "angular-ui-router": "^0.3.1",
     "angular-timeago": "^0.4.3",
-    "jquery.easy-pie-chart": "^2.1.6"
+    "jquery.easy-pie-chart": "^2.1.6",
+    "angular-mocks": "^1.5.8",
+    "angular-ui-calendar": "^1.0.2"
   }
 }
