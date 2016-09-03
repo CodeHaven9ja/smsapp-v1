@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 var express = require('express');
 var gravatar = require('gravatar');
 var router = express.Router();

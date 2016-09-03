@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 var express = require('express');
 var router = express.Router();
 
@@ -13,14 +14,14 @@ var returnRouter = function(parse){
 		} else {
 			// res.render('index', {
 			// 	page: "dash_index",
-			// 	pageTitle: "School management system", 
+			// 	pageTitle: "Schoolpop", 
 			// 	isAuthenticated: true,
 			// 	user: req.user,
 			// 	controller: "home",
 			// 	action: "index"
 			// });
-			res.redirect('/dash')
-		};
+			res.redirect('/dash');
+		}
 	});
 
 	router.get('/login', (req, res) => {
@@ -28,7 +29,7 @@ var returnRouter = function(parse){
 			console.log(JSON.stringify(req.login.error));
 		}
 		res.render('home/login',{
-			pageTitle: "School management system | Login",
+			pageTitle: "Schoolpop | Login",
 			controller: "home",
 			action: "login"
 		});
@@ -36,7 +37,7 @@ var returnRouter = function(parse){
 
 	router.get('/register', (req, res) =>{
 		res.render('home/register', {
-			pageTitle: "School management system | Login",
+			pageTitle: "Schoolpop | Login",
 			controller: "home",
 			action: "register"
 		});
@@ -59,12 +60,17 @@ var returnRouter = function(parse){
 	});
 
 	router.get('/noPermission', (req, res) =>{
-		res.status(403).send("You can't view this page!")
+		res.render('home/noPermission', {
+			page: "dash_index",
+			pageTitle: "Schoolpop", 
+			isAuthenticated: true,
+			user: req.session.user,
+		});
 	});
 
 	router.post('/register', parseRegister, (req, res) =>{
 		res.redirect('/');
 	});
 	return router;
-}
+};
 module.exports = returnRouter;

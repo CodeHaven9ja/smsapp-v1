@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 var express = require('express');
 var app = express();
 
@@ -19,17 +20,16 @@ var register = (parse) => {
 		user.set("city", u.city);
 		user.set("sex", u.sex);
 		user.set("role", "user");
-
+		user.set("isActive", false);
 		user.signUp().then((user) =>{
 			req.session.user = user;
 			req.isLoggedIn = true;
 			res.redirect('/');
 		}).catch((error) =>{
 			registerError = error;
-			console.log("Here "+JSON.stringify(registerError));
 			res.render('home/register', {error:registerError});
-		})
-	}
-}
+		});
+	};
+};
 
 module.exports = register;

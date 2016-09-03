@@ -6540,3 +6540,11 @@ a.view-all:hover {
     align-items: center;
     justify-content: center;
 }
+
+.user-info {
+    margin: auto 20%;
+    text-align: justify;
+}
+.body-500 .error-wrapper .user-info h2, .body-500 .error-wrapper .user-info p{
+    color: #ffffff;
+}

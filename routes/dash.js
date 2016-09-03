@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 var express = require('express');
 var gravatar = require('gravatar');
 var router = express.Router();
@@ -9,7 +10,7 @@ var router = express.Router();
 	var parseAuthCheck = require('../modules/parse-check.js')(Parse);
 
 
-	router.get('/test', parseAuthCheck, (req, res) => {
+	router.get('/test', parseAuthCheck.login(Parse), parseAuthCheck.isActive(), (req, res) => {
 		var currentUser = req.session.user;
 		var imgUrl = gravatar.url(currentUser.email, {s: '200', r: 'pg', d: 'retro'});
 		res.render('dash/index',{
@@ -21,9 +22,11 @@ var router = express.Router();
 		});
 	});
 
-	router.use('/', parseAuthCheck, express.static('app'));
+	router.use('/', parseAuthCheck.login(Parse), 
+		parseAuthCheck.isActive(), express.static('app'));
 
-	router.get('/home', parseAuthCheck, (req, res) =>{
+	router.get('/home', parseAuthCheck.login(Parse), 
+		parseAuthCheck.isActive(), (req, res) =>{
 		var currentUser = req.session.user;
 		var imgUrl = gravatar.url(currentUser.email, {s: '200', r: 'pg', d: 'retro'});
 		res.render('angular/main',{
@@ -35,14 +38,17 @@ var router = express.Router();
 		});
 	});
 
-	router.get('/users/current', parseAuthCheck, (req, res) =>{
+	router.get('/users/current', parseAuthCheck.login(Parse), 
+		parseAuthCheck.isActive(), (req, res) =>{
 		res.json(req.session.user);
 	});
 
-	router.use('/students', parseAuthCheck, require('./students/students.controller')(Parse));
+	router.use('/students', parseAuthCheck.login(Parse), 
+		parseAuthCheck.isActive(), require('./students/students.controller')(Parse)
+	);
 
 
 
 	return router;
-}
+};
 module.exports = returnRouter;

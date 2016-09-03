@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 var express = require('express');
 var app = express();
 
@@ -20,7 +21,7 @@ var login = (parse) => {
 			console.log("Here "+JSON.stringify(loginError));
 			res.render('home/login', {error:loginError});
 		});
-	}
-}
+	};
+};
 
 module.exports = login;

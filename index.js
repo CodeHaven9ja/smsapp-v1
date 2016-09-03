@@ -1,5 +1,6 @@
 // Example express application adding the parse-server module to expose Parse
 // compatible API routes.
+/*jshint esversion: 6 */
 
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
@@ -24,7 +25,7 @@ if (!databaseUri) {
 // Serve the Parse API on the /parse URL prefix
 var mountPath = process.env.PARSE_MOUNT || '/parse';
 
-var serverUri = process.env.PARSE_SERVER_URI + process.env.PARSE_MOUNT || 'http://localhost:1337/parse'
+var serverUri = process.env.PARSE_SERVER_URI + process.env.PARSE_MOUNT || 'http://localhost:1337/parse';
 
 Parse.initialize(process.env.APP_ID || 'myAppId', "unused");
 Parse.serverURL = serverUri;

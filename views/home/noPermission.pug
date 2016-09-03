@@ -1,0 +1,18 @@
+extends ../layout.pug
+
+block head
+	title #{pageTitle} | Denied
+
+block body
+	body(class="body-500")
+		.container
+			section.error-wrapper
+				i.icon-500
+				.text-center
+					h2.purple-bg Account Inactive
+				p You need to print this page and take to an administrator at your school to get you account activated.
+				.user-info
+					p ID : #{user.objectId}
+					p Email : #{user.email}
+					p Name : #{user.firstName} #{user.lastName}
+					p Sex : #{user.sex}
