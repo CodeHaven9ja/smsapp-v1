@@ -7,7 +7,7 @@
 <li class="menu-list">
 	<a id="records" href="" ng-click="sb.sidebarClick('#records')"><i class="fa fa-laptop"></i><span>Students</span></a>
 	<ul class="child-list">
-		<li><a href="#/admin/enroll/{{sb.user.objectId}}"> Enrollment</a></li>
+		<li><a href="#/admin/enroll"> Enrollment</a></li>
 		<li><a href="#/admin/attendance/{{sb.user.objectId}}"> Attendance</a></li>
 		<li><a href="#/admin/records/{{sb.user.objectId}}"> Reports</a></li>
 		<li><a href="#/admin/demograph/{{sb.user.objectId}}"> Demographics</a></li>
@@ -27,6 +27,14 @@
 		<li><a href="#/admin/timetable/{{sb.user.objectId}}"> Time Table</a></li>
 		<li><a href="#/admin/events/{{sb.user.objectId}}"> Calendar</a></li>
 		<li><a href="#/news">Newsletter &amp; Bulletin</a></li>
+	</ul>
+</li>
+<li><h3 class="navigation-title">Others</h3></li>
+<li class="menu-list">
+	<a href="" id="staff-man" ng-click="sb.sidebarClick('#staff-man')"><i class="fa fa-book"></i><span>Staff Management</span></a>
+	<ul class="child-list">
+		<li><a href="#/admin/finance/stat"> View Staff Members</a></li>
+		<li><a href="#/admin/finance/lookup"> Add Staff Member</a></li>
 	</ul>
 </li>
 <li class="menu-list">

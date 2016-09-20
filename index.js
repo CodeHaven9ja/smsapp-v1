@@ -78,6 +78,9 @@ app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+// parse application/json 
+app.use(bodyParser.json());
+
 var client = redis.createClient(process.env.REDISCLOUD_URL||'redis://localhost:6379', {no_ready_check: true});
 app.use(cookieParser());
 app.use(expressSession({

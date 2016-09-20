@@ -22,8 +22,8 @@ var router = express.Router();
 		});
 	});
 
-	router.use('/', parseAuthCheck.login(Parse), 
-		parseAuthCheck.isActive(), express.static('app'));
+	router.use('/', [parseAuthCheck.login(Parse), 
+			parseAuthCheck.isActive()], express.static('app'));
 
 	router.get('/home', parseAuthCheck.login(Parse), 
 		parseAuthCheck.isActive(), (req, res) =>{

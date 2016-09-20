@@ -4,8 +4,14 @@
         .module('app',[
         	'ui.router',
             'ui.gravatar',
+            'ui.bootstrap',
+            'angularUtils.directives.dirPagination',
             'easypiechart',
             'ui.calendar',
+            'studentSearchBox',
+            'toaster', 
+            'ngAnimate',
+            'uiSwitch',
             'countTo'
         	])
         .config(config)
@@ -49,6 +55,12 @@
                     templateUrl: 'curr/news.html',
                     controller: 'NewsCtrl',
                     controllerAs: 'nwCrtl'
+                })
+                .state('adminEnroll', {
+                    url: '/admin/enroll',
+                    templateUrl: 'admin/enroll.html',
+                    controller: 'AdminCtrl',
+                    controllerAs: 'admCrtl'
                 })
         }
         function run($http, $rootScope, $window) {

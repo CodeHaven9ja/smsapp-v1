@@ -1,0 +1,96 @@
+<toaster-container></toaster-container> -->
+<div class="row">
+	<div class="col-md-6">
+		<div class="panel"  students-array="admCrtl.students">
+			<header class="panel-heading">
+				search
+			</header>
+			<div class="panel-body">
+				<div class="col-md-12" ng-include="'blocks/student.search.box.html'"></div>
+				<div class="noti-information notification-menu">
+					<div class="student-list notification-list mail-list not-list" 
+						dir-paginate="s in admCrtl.students 
+						| filter: admCrtl.searchQ
+						| itemsPerPage: 4" ng-click="admCrtl.onStudentClick($index)">
+						<a class="single-mail">
+							<span class="icon bg-primary">
+								<i class="fa fa-user"></i>
+							</span>
+							{{s.firstName}} {{s.lastName}}
+							<p>{{s.objectId}}</p>
+							<span ng-class="{'read': s.isActive, 'un-read': !s.isActive}" class="un-read tooltips" data-original-title="Mark as Read" data-toggle="tooltip" data-placement="left">
+							    <i class="fa fa-circle"></i>
+							</span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<dir-pagination-controls boundary-links="true"></dir-pagination-controls>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="panel">
+			<div class="panel-heading">
+				Student Information
+			</div>
+			<div class="panel-body w-setting">
+				<div ng-if="admCrtl.loaded" class="row">
+					<div class="col-xs-6">
+					<h3>{{admCrtl.student.firstName}} {{admCrtl.student.lastName}}</h3>
+					<p><b>Username:</b> {{admCrtl.student.username}}</p>
+					<p><b>Email:</b> {{admCrtl.student.email}}</p>
+					<p><b>Student ID:</b> {{admCrtl.student.objectId}}</p>
+					<p><b>Account Activated:</b> {{admCrtl.student.isActive}}</p>
+						
+					</div>
+					<div class="col-xs-6">
+						<img ng-src="https://unsplash.it/200/200/?random" alt="" class="img-responsive img-thumbnail">
+					</div>
+				</div>
+				<div ng-if="admCrtl.loaded" class="row">
+					<div class="col-md-12">
+						<ul class="team-list chat-list-side info statistics border-less-list setting-list">
+							<li>
+								<div class="inline">
+		              <span class="name">
+		                  <b>
+		                  	Activate Account
+		                  </b>
+		              </span>
+		            </div>
+		            <span class="thumb-small">
+		            	<span ng-click="admCrtl.toggleActivate(admCrtl.student.objectId, admCrtl.student.isActive)" id="{{admCrtl.student.objectId}}" ng-class="{'check':admCrtl.student.isActive}" class="switch switch-default green">
+								    <small></small>
+								    <span class="switch-text">
+								    	<span class="on ng-binding"></span>
+								    	<span class="off ng-binding"></span>
+							    	</span>
+									</span>
+								</span>
+							</li>
+						</ul>
+						<hr />
+						<div class="link-parent">
+							<h3>Link Parent</h3>
+							<form ng-submit="admCrtl.getParent(objectId)" name="parent" class="form-inline">
+								<div class="form-group">
+									<label for="" class="sr-only">Parent ID</label>
+									<input name="objectId" ng-model="objectId" required type="text" class="form-control" ng-maxlength="10" ng-pattern="/^[a-zA-Z0-9_]*$/" ng-minlength="10" placeholder="Parent ID">
+								</div>
+								<button class="btn btn-primary btn-sm" ng-disabled="!parent.$valid">Choose Parent</button>
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- <span class="switch switch-default green" ng-click="vm.check()" ng-class="{'check': vm.ngModel === (vm.trueValue || true)}" ng-if="admCrtl.loaded" ng-model="admCrtl.student.isActive">
+    <small></small>
+    <span class="switch-text"><span class="on ng-binding"></span><span class="off ng-binding"></span></span>
+</span>

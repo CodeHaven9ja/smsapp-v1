@@ -6548,3 +6548,7 @@ a.view-all:hover {
 .body-500 .error-wrapper .user-info h2, .body-500 .error-wrapper .user-info p{
     color: #ffffff;
 }
+
+.student-list {
+    display: block;
+}

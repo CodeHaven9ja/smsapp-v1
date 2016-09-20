@@ -60,11 +60,13 @@ var returnRouter = function(parse){
 	});
 
 	router.get('/noPermission', (req, res) =>{
+		var user = req.session.user;
+		delete req.session.user;
 		res.render('home/noPermission', {
 			page: "dash_index",
 			pageTitle: "Schoolpop", 
 			isAuthenticated: true,
-			user: req.session.user,
+			user: user,
 		});
 	});
 
