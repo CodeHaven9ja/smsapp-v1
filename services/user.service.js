@@ -1,7 +1,5 @@
 var config = require('../config.json');
-var request = require('request');
-
-var Q = require('q');
+var r = require('../modules/service-response.js');
 
 var service = {};
 
@@ -36,65 +34,6 @@ function ToggleUserActivation(userToken, userId, isActive) {
   		isActive: isActive
     }
   };
-  return returnPutRequest(options);
+  return r.put(options);
 }
 
-function returnGetRequest(options) {
-	var deferred = Q.defer();
-  request.get(options, function (error, response, body){
-    if (error) {
-        deferred.reject(error);
-    }
-    if (response.body) {
-        deferred.resolve(response.body);
-    } else {
-        deferred.resolve();
-    }
-  });
-  return deferred.promise;
-}
-
-function returnPostRequest(options) {
-  var deferred = Q.defer();
-  request.post(options, function (error, response, body){
-    if (error) {
-        deferred.reject(error);
-    }
-    if (response.body) {
-        deferred.resolve(response.body);
-    } else {
-        deferred.resolve();
-    }
-  });
-  return deferred.promise;
-}
-
-function returnPutRequest(options) {
-  var deferred = Q.defer();
-  request.put(options, function (error, response, body){
-    if (error) {
-        deferred.reject(error);
-    }
-    if (response.body) {
-        deferred.resolve(response.body);
-    } else {
-        deferred.resolve();
-    }
-  });
-  return deferred.promise;
-}
-
-function returnDeleteRequest(options) {
-  var deferred = Q.defer();
-  request.delete(options, function (error, response, body){
-    if (error) {
-        deferred.reject(error);
-    }
-    if (response.body) {
-        deferred.resolve(response.body);
-    } else {
-        deferred.resolve();
-    }
-  });
-  return deferred.promise;
-}

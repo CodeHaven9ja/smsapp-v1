@@ -27,7 +27,7 @@ var mountPath = process.env.PARSE_MOUNT || '/parse';
 
 var serverUri = process.env.PARSE_SERVER_URI + process.env.PARSE_MOUNT || 'http://localhost:1337/parse';
 
-Parse.initialize(process.env.APP_ID || 'myAppId', "unused");
+Parse.initialize(process.env.APP_ID || 'myAppId', "unused", process.env.MASTER_KEY || 'myMasterKey');
 Parse.serverURL = serverUri;
 
 var api = new ParseServer({

@@ -12,9 +12,17 @@
             'toaster', 
             'ngAnimate',
             'uiSwitch',
+            'multiStepForm',
             'countTo'
         	])
         .config(config)
+        .controller('stepCtrl', ['$scope', 'multiStepFormInstance', 
+          function ($scope, multiStepFormInstance){
+            $scope.clearParent = function(){
+              $scope.parent = {};
+              multiStepFormInstance.setActiveIndex(1);
+            }
+        }])
         .run(run);
         function config($stateProvider, $urlRouterProvider) {
         	// default route

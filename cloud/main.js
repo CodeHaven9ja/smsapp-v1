@@ -17,6 +17,53 @@ Parse.Cloud.afterSave(Parse.User, (req, res) => {
     increaseUser();
 });
 
+Parse.Cloud.define('linkParent', (req, res) =>{
+    var token = req.user.getSessionToken();
+    console.log("User Token", token);
+    var pid = req.params.pid,
+        sid = req.params.sid;
+    var student, parent, profile;
+    var Profile;
+
+    // Get student
+    var sQ = new Parse.Query(Parse.User);
+
+    sQ.equalTo('objectId', sid);
+    sQ.first({ sessionToken: token }).then((s) =>{
+        student = s;
+        console.log(s);
+        // Get Parent
+        var pQ = new Parse.Query(Parse.User);
+        pQ.equalTo('objectId', pid);
+        return pQ.first();
+    }).then((p) =>{
+        console.log(p);
+        parent = p;
+        return p;
+    }).then((p) =>{
+        var prQ = new Parse.Query('Profile');
+        prQ.equalTo('user', student);
+        prQ.equalTo('parent', parent);
+        return prQ.first(); 
+    }).then((profile) =>{
+        if (!profile) {
+            var Profile = Parse.Object.extend("Profile");
+            profile = new Profile();
+        }
+        profile.set('type', 'student');
+        profile.set('parent', parent);
+        profile.set('user', student);
+        return profile.save(null,{ useMasterKey: true });
+    }).then((profile) =>{
+        student.set('profile', profile);
+        return student.save(null,{ useMasterKey: true });
+    }).then((student) =>{
+        res.success(student);
+    }).catch((error) =>{
+        res.error(error);
+    });
+});
+
 Parse.Cloud.afterDelete(Parse.User, (req, res) =>{
 	decreaseUser();
 });

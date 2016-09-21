@@ -21,7 +21,7 @@ var register = (parse) => {
 		user.set("sex", u.sex);
 		user.set("role", "user");
 		user.set("isActive", false);
-		user.signUp().then((user) =>{
+		user.signUp(null, { useMasterKey: true }).then((user) =>{
 			req.session.user = user;
 			req.isLoggedIn = true;
 			res.redirect('/');

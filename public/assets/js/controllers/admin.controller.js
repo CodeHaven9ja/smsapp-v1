@@ -7,10 +7,22 @@ angular.module('app')
 		admCrtl.loaded = false;
 		admCrtl.students = [];
 		admCrtl.student = {};
-		admCrtl.parent = {};
+		admCrtl._parent = {};
 		admCrtl.currentActive;
+		admCrtl.steps = [
+			{
+        templateUrl: 'admin/student-enroll-steps/activate.html',
+        title: 'Activate Account',
+        controller: 'stepCtrl'
+    	},
+    	{
+        templateUrl: 'admin/student-enroll-steps/link.html',
+        title: 'Link Parent'
+    	}
+		];
 
 		admCrtl.onStudentClick = function(i){
+			admCrtl.parent = {};
 			admCrtl.loaded = true;
 			admCrtl.student = admCrtl.students[i];
 			admCrtl.currentActive = admCrtl.student.isActive;
@@ -35,10 +47,22 @@ angular.module('app')
 				if (admCrtl.student.isActive) {
 					toaster.pop('success', "Done!", admCrtl.student.firstName+" activated");
 				} else {
-					toaster.pop('error', "Done!", admCrtl.student.firstName+" deactivated");
+					toaster.pop({
+						type:'error', 
+						title:"Done!", 
+						body: admCrtl.student.firstName+" deactivated",
+						timeout: 0,
+						showCloseButton: true
+					});
 				}
 			}).catch((error) =>{
-				toaster.pop('error', "Oops!", "An error occurred.");
+				toaster.pop({
+					type:'error', 
+					title:"Oops!", 
+					body: "An error occurred.",
+					timeout: 0,
+					showCloseButton: true
+				});
 				admCrtl.student.isActive = isActive;
 				if (!isActive) {
 					el.removeClass('check');
@@ -48,24 +72,23 @@ angular.module('app')
 			});
 		}
 		admCrtl.getParent = function(id) {
+			console.log(admCrtl._parent);
 			StudentService.GetParent(id).then((parent) =>{
-				admCrtl.parent = parent.results[0];
+				admCrtl._parent = {};
+				admCrtl.parent = parent;
 			}).catch((error) =>{
 				console.log(error);
 			});
 		}
-		// $scope.$watch('admCrtl.student.isActive', function(newValue, oldValue){
-		// 	var student = admCrtl.student;
-		// 	if (admCrtl.loaded && admCrtl.shouldUpdate) {
-		// 		console.log("Update",newValue);
-		// 		StudentService.ToggleActivate(student).then((user) =>{
-		// 			admCrtl.shouldUpdate = true;
-		// 			console.log(user);
-		// 		}).catch((error) =>{
-		// 			admCrtl.student.isActive = admCrtl.currentActive;
-		// 			admCrtl.shouldUpdate = true;
-		// 			console.log(error);
-		// 		})
-		// 	}
-		// });
+
+		admCrtl.linkParent = function(){
+			StudentService.LinkParent(admCrtl.student.objectId, 
+				admCrtl.parent.objectId).then((user) =>{
+					admCrtl.student = user;
+			});
+		}
+		admCrtl.clearParent = function(){
+			admCrtl.parent = {};
+		}
+
 	}]);

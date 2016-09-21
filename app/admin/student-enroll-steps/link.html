@@ -1,0 +1,27 @@
+<div ng-if="!admCrtl.parent.objectId && admCrtl.student.isActive" class="link-parent">
+	<h3>Link Parent</h3>
+	<form ng-submit="admCrtl.getParent(admCrtl._parent.objectId)" name="parent" class="form-inline">
+		<div class="form-group">
+			<label for="" class="sr-only">Parent ID</label>
+			<input name="objectId" ng-model="admCrtl._parent.objectId" required type="text" class="form-control" ng-maxlength="10" ng-pattern="/^[a-zA-Z0-9_]*$/" ng-minlength="10" placeholder="Parent ID">
+		</div>
+		<button class="btn btn-primary btn-sm" ng-disabled="!parent.$valid || admCrtl.student.profile">Choose Parent</button>
+		<a ng-click="admCrtl.removeLink(admCrtl.student)" class="btn btn-primary btn-sm" ng-disabled="!admCrtl.student.profile">Remove Link</a>
+	</form>
+</div>
+
+<div ng-if="admCrtl.parent.objectId" class="row">
+	<div class="col-sm-12">
+		<h3>Parent Information</h3>
+		<h4>Parent ID: {{admCrtl.parent.objectId}}</h4>
+		<p>{{admCrtl.parent.firstName}} {{admCrtl.parent.lastName}}</p>
+		<p>{{admCrtl.parent.email}}</p>
+		<hr />
+		<h4>Do you want to link this parent to {{admCrtl.student.firstName}} {{admCrtl.student.lastName}}?</h4>
+		<a class="btn btn-warning" ng-click="admCrtl.linkParent()">Link</a>
+		<a class="btn btn-danger" ng-click="admCrtl.clearParent()">Reset</a>
+	</div>
+</div>
+
+
+<h3 ng-if="!admCrtl.student.isActive">Activate this account!</h3>

@@ -1,7 +1,6 @@
 var config = require('../config.json');
-var request = require('request');
 
-var Q = require('q');
+var r = require('../modules/service-response.js');
 
 var service = {};
 
@@ -9,6 +8,7 @@ var mountPath = process.env.PARSE_MOUNT || '/parse';
 
 service.getStudents = GetStudents;
 service.getStudentParentByParentId = GetStudentParentByParentId;
+service.linkParentToStudent = LinkParentToStudent;
 
 module.exports = service;
 
@@ -16,6 +16,28 @@ var server_url;
 
 if (process.env.PARSE_SERVER_URI) {
     server_url = process.env.PARSE_SERVER_URI;
+}
+
+function LinkParentToStudent(token, sid, pid) {
+  var s;
+  if (server_url) {
+    s = server_url + '/functions/linkParent';
+  }
+
+  var options = {
+    url: s  || config.apiUrl + '/functions/linkParent',
+    headers: {
+      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Revocable-Session': 1,
+      "X-Parse-Session-Token": token,
+      'Content-Type': 'application/json'
+    },
+    json:{
+      sid: sid,
+      pid: pid
+    }
+  };
+  return r.post(options);
 }
 
 function GetStudentParentByParentId(userToken, id) {
@@ -39,7 +61,7 @@ function GetStudentParentByParentId(userToken, id) {
       'Content-Type': 'application/json'
     }
   };
-  return returnGetRequest(options);
+  return r.get(options);
 }
 
 function GetStudents(userToken, page) {
@@ -66,65 +88,5 @@ function GetStudents(userToken, page) {
       'Content-Type': 'application/json'
     }
   };
-  return returnGetRequest(options);
-}
-
-function returnGetRequest(options) {
-	var deferred = Q.defer();
-  request.get(options, function (error, response, body){
-    if (error) {
-        deferred.reject(error);
-    }
-    if (response.body) {
-        deferred.resolve(response.body);
-    } else {
-        deferred.resolve();
-    }
-  });
-  return deferred.promise;
-}
-
-function returnPostRequest(options) {
-  var deferred = Q.defer();
-  request.post(options, function (error, response, body){
-    if (error) {
-        deferred.reject(error);
-    }
-    if (response.body) {
-        deferred.resolve(response.body);
-    } else {
-        deferred.resolve();
-    }
-  });
-  return deferred.promise;
-}
-
-function returnPutRequest(options) {
-  var deferred = Q.defer();
-  request.put(options, function (error, response, body){
-    if (error) {
-        deferred.reject(error);
-    }
-    if (response.body) {
-        deferred.resolve(response.body);
-    } else {
-        deferred.resolve();
-    }
-  });
-  return deferred.promise;
-}
-
-function returnDeleteRequest(options) {
-  var deferred = Q.defer();
-  request.delete(options, function (error, response, body){
-    if (error) {
-        deferred.reject(error);
-    }
-    if (response.body) {
-        deferred.resolve(response.body);
-    } else {
-        deferred.resolve();
-    }
-  });
-  return deferred.promise;
+  return r.get(options);
 }

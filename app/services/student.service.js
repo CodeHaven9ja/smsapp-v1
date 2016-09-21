@@ -5,6 +5,7 @@ function Service($http, $q, $httpParamSerializerJQLike) {
 	service.GetAllStudents = GetAllStudents;
 	service.ToggleActivate = ToggleActivate;
 	service.GetParent = GetParent;
+	service.LinkParent = LinkParent;
 	return service;
 	
 	function GetAllStudents() {
@@ -17,6 +18,9 @@ function Service($http, $q, $httpParamSerializerJQLike) {
 
 	function GetParent(id) {
 		return $http.get('/dash/students/parent/'+id).then(handleSuccess, handleError);
+	}
+	function LinkParent(sid, pid){
+		return $http.post('/dash/students/'+sid+'/'+pid).then(handleSuccess, handleError);
 	}
 	// private functions
 

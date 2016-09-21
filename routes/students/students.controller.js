@@ -12,6 +12,7 @@ var returnRouter = function(parse){
 	router.get('/', getAllStudents);
 	router.put('/', toggleStudentActivation);
 	router.get('/:studentId', getStudent);
+	router.post('/:studentId/:parentId', linkParent);
 	router.get('/:studentId/attendance', getStudentAttendance);
 	router.get('/:studentId/work', getStudentClassWork);
 	router.get('/:studentId/timetable', getStudentTimeTable);
@@ -20,6 +21,18 @@ var returnRouter = function(parse){
 	return router;
 }
 module.exports = returnRouter;
+
+function linkParent(req, res) {
+	var parentId = req.params.parentId;
+	var studentId = req.params.studentId;
+	var _token = req.session.user.sessionToken;
+
+	studentService.linkParentToStudent(_token, studentId, parentId).then((student) =>{
+		res.send(student.result);
+	}).catch((error) =>{
+		res.status(500).send(error);
+	});
+}
 
 function getStudentParent(req, res) {
 	var parentId = req.params.id;
