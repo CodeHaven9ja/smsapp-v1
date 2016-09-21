@@ -12,7 +12,7 @@ module.exports = service;
 var server_url;
 
 if (process.env.PARSE_SERVER_URI) {
-    server_url = process.env.PARSE_SERVER_URI +'/'+ mountPath;
+    server_url = process.env.PARSE_SERVER_URI + mountPath;
 }
 
 function ToggleUserActivation(userToken, userId, isActive) {
