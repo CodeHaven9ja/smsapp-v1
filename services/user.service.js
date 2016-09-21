@@ -6,6 +6,7 @@ var service = {};
 var mountPath = process.env.PARSE_MOUNT || '/parse';
 
 service.toggleUserActivation = ToggleUserActivation;
+service.updateUser = UpdateUser;
 
 module.exports = service;
 
@@ -13,6 +14,26 @@ var server_url;
 
 if (process.env.PARSE_SERVER_URI) {
     server_url = process.env.PARSE_SERVER_URI + mountPath;
+}
+
+function UpdateUser(userToken, userId, f) {
+  var s;
+  if (server_url) {
+    s = server_url + '/classes/_User/'+userId;
+  }
+
+  var options = {
+    url: s  || config.apiUrl + '/classes/_User/'+userId,
+    headers: {
+      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Revocable-Session': 1,
+      "X-Parse-Session-Token": userToken,
+      'X-Parse-Master-Key': process.env.MASTER_KEY || 'myMasterKey',
+      'Content-Type': 'application/json'
+    },
+    json : f
+  };
+  return r.put(options);
 }
 
 function ToggleUserActivation(userToken, userId, isActive) {

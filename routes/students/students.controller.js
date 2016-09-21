@@ -12,6 +12,7 @@ var returnRouter = function(parse){
 	router.get('/', getAllStudents);
 	router.put('/', toggleStudentActivation);
 	router.get('/:studentId', getStudent);
+	router.put('/:studentId/unlink', removeLink);
 	router.post('/:studentId/:parentId', linkParent);
 	router.get('/:studentId/attendance', getStudentAttendance);
 	router.get('/:studentId/work', getStudentClassWork);
@@ -31,6 +32,21 @@ function linkParent(req, res) {
 		res.send(student.result);
 	}).catch((error) =>{
 		res.status(500).send(error);
+	});
+}
+
+function removeLink(req, res) {
+	var studentId = req.params.studentId;
+	var _token = req.session.user.sessionToken;
+	var f = {
+		'profile':{
+			'__op':'Delete'
+		}
+	};
+	userService.updateUser(_token, studentId, f).then((user) =>{
+		res.send({message:"Unlinked!"});
+	}).catch((error) =>{
+		res.status(500).send({message:"An error occurred."});
 	});
 }
 

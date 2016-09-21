@@ -1,4 +1,4 @@
-<div ng-if="!admCrtl.parent.objectId && admCrtl.student.isActive !admCrtl.student.profile"" class="link-parent">
+<div ng-if="!admCrtl.student.profile" class="link-parent">
 	<h3>Link Parent To {{admCrtl.student.firstName}} {{admCrtl.student.lastName}}</h3>
 	<form ng-submit="admCrtl.getParent(admCrtl._parent.objectId)" name="parent" class="form-inline">
 		<div class="form-group">
@@ -8,12 +8,12 @@
 		<button class="btn btn-primary btn-sm" ng-disabled="!parent.$valid || admCrtl.student.profile">Choose Parent</button>
 	</form>
 </div>
-<div>
+<div ng-if="admCrtl.student.profile">
 	<h3>{{admCrtl.student.firstName}} {{admCrtl.student.lastName}} is Linked</h3>
-	<a ng-if="admCrtl.student.profile" ng-click="admCrtl.removeLink(admCrtl.student)" class="btn btn-danger btn-sm" ng-disabled="!admCrtl.student.profile">Remove Link</a>
+	<a  ng-click="admCrtl.removeLink(admCrtl.student)" class="btn btn-danger btn-sm" ng-disabled="!admCrtl.student.profile">Remove Link</a>
 </div>
 
-<div ng-if="admCrtl.parent.objectId" class="row">
+<div ng-if="admCrtl.parent.objectId && !admCrtl.student.profile" class="row">
 	<div class="col-sm-12">
 		<h3>Parent Information</h3>
 		<h4>Parent ID: {{admCrtl.parent.objectId}}</h4>
@@ -21,7 +21,7 @@
 		<p>{{admCrtl.parent.email}}</p>
 		<hr />
 		<h4>Do you want to link this parent to {{admCrtl.student.firstName}} {{admCrtl.student.lastName}}?</h4>
-		<a class="btn btn-warning" ng-click="admCrtl.linkParent()">Link</a>
+		<a class="btn btn-warning" ng-click="admCrtl.linkParent(admCrtl.student)">Link</a>
 		<a class="btn btn-danger" ng-click="admCrtl.clearParent()">Reset</a>
 	</div>
 </div>

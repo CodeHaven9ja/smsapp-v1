@@ -6,6 +6,7 @@ function Service($http, $q, $httpParamSerializerJQLike) {
 	service.ToggleActivate = ToggleActivate;
 	service.GetParent = GetParent;
 	service.LinkParent = LinkParent;
+	service.RemoveLink = RemoveLink;
 	return service;
 	
 	function GetAllStudents() {
@@ -21,6 +22,10 @@ function Service($http, $q, $httpParamSerializerJQLike) {
 	}
 	function LinkParent(sid, pid){
 		return $http.post('/dash/students/'+sid+'/'+pid).then(handleSuccess, handleError);
+	}
+
+	function RemoveLink(sid) {
+		return $http.put('/dash/students/'+sid+'/unlink').then(handleSuccess, handleError);
 	}
 	// private functions
 

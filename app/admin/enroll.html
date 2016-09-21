@@ -18,8 +18,9 @@
 							</span>
 							{{s.firstName}} {{s.lastName}}
 							<p>{{s.objectId}}</p>
-							<span ng-class="{'read': s.isActive, 'un-read': !s.isActive}" class="un-read tooltips" data-original-title="Mark as Read" data-toggle="tooltip" data-placement="left">
-							    <i class="fa fa-circle"></i>
+							<span  class=" read tooltips" data-original-title="Mark as Read" data-toggle="tooltip" data-placement="left">
+								<span ng-if="s.profile" class="label label-success">Linked</span>
+							    <i ng-class="{'fa-circle': s.isActive, 'fa-circle-o': !s.isActive}" class="fa"></i>
 							</span>
 						</a>
 					</div>

@@ -1,6 +1,6 @@
 angular.module('app')
-	.controller('AdminCtrl', ['$scope','StudentService','toaster', 
-		function($scope, StudentService,toaster){
+	.controller('AdminCtrl', ['$scope','StudentService','toaster', '$filter', 
+		function($scope, StudentService,toaster,$filter){
 
 		var admCrtl = this;
 
@@ -91,8 +91,40 @@ angular.module('app')
 			StudentService.LinkParent(admCrtl.student.objectId, 
 				admCrtl.parent.objectId).then((user) =>{
 					admCrtl.student = user;
+					for (var i = 0; i < admCrtl.students.length; i++) {
+						if (admCrtl.students[i].objectId === admCrtl.student.objectId) {
+							admCrtl.students[i] = admCrtl.student;
+							toaster.pop('success', "Done!", admCrtl.students[i].firstName+" Linked!");
+						}
+					}
+			}).catch((error) =>{
+				toaster.pop({
+					type:'error', 
+					title:"Error", 
+					body: error.message,
+					timeout: 0,
+					showCloseButton: true
+				});
 			});
 		}
+		admCrtl.removeLink = function(s){
+			StudentService.RemoveLink(s.objectId).then((student) =>{
+				admCrtl.student = $filter('filter')(admCrtl.students, function(d){
+					return d.objectId === s.objectId;
+				})[0];
+				delete admCrtl.student.profile;
+				toaster.pop('success', "Done!", s.firstName+" unlinked!");
+			}).catch((error) =>{
+				toaster.pop({
+					type:'error', 
+					title:"Error", 
+					body: error.message,
+					timeout: 0,
+					showCloseButton: true
+				});
+			});
+		}
+
 		admCrtl.clearParent = function(){
 			admCrtl.parent = {};
 		}
