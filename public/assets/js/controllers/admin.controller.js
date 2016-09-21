@@ -77,7 +77,13 @@ angular.module('app')
 				admCrtl._parent = {};
 				admCrtl.parent = parent;
 			}).catch((error) =>{
-				console.log(error);
+				toaster.pop({
+					type:'error', 
+					title:"Error", 
+					body: error.message,
+					timeout: 0,
+					showCloseButton: true
+				});
 			});
 		}
 
