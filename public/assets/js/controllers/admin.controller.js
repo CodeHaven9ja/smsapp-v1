@@ -155,8 +155,10 @@ angular.module('app')
 			});
 		}
 		admCrtl.getParent = function(id) {
-			console.log(admCrtl._parent);
 			StudentService.GetParent(id).then((parent) =>{
+				if (parent.role != 'parent') {
+					throw new UserException('Not a Parent. Please ensure that the ID is correct.');
+				}
 				admCrtl._parent = {};
 				admCrtl.parent = parent;
 			}).catch((error) =>{
@@ -213,3 +215,8 @@ angular.module('app')
 		}
 
 	}]);
+
+function UserException(message) {
+ this.message = message;
+ this.name = "UserException";
+}

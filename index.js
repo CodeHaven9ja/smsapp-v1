@@ -53,7 +53,7 @@ var dashboard = new ParseDashboard({
       "serverURL": serverUri,
       "appId": process.env.APP_ID,
       "masterKey": process.env.MASTER_KEY,
-      "appName": "SMS Prod",
+      "appName": "Schoolpop.ng Prod",
       "production": true
     }
   ],

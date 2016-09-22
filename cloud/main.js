@@ -22,11 +22,21 @@ Parse.Cloud.define('searchParent', (req, res) =>{
 
   var uQuery = new Parse.Query(Parse.User);
   uQuery.startsWith('objectId', q);
+  uQuery.doesNotExist('profile');
+  uQuery.notEqualTo('role', 'teacher');
+  uQuery.notEqualTo('role', 'admin');
 
   var eQuery = new Parse.Query(Parse.User);
   eQuery.startsWith('email', q);
+  eQuery.doesNotExist('profile');
+  eQuery.notEqualTo('role', 'teacher');
+  eQuery.notEqualTo('role', 'admin');
 
-  var mainQuery = Parse.Query.or(uQuery, eQuery);
+  var pQuery = new Parse.Query(Parse.User);
+  pQuery.startsWith('objectId', q);
+  pQuery.equalTo('role', 'parent');
+
+  var mainQuery = Parse.Query.or(uQuery, eQuery, pQuery);
   mainQuery.find().then((users) =>{
     res.success(users);
   });
