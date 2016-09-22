@@ -5,11 +5,15 @@ angular.module('app')
 			'ParentService',
 			'toaster', 
 			'$filter',
-			'$rootScope', 
-			function($scope, StudentService, ParentService, toaster,$filter,$rootScope){
+			'$rootScope',
+			'LocalService', 
+			function($scope, StudentService, ParentService, toaster,$filter,$rootScope, LocalService){
 				var pCtrl = this;
+
+				pCtrl.pId = LocalService.currentParentID;
 				
-				$rootScope.$watch('currentParentIndex', (id) =>{
+				$scope.$on('handleBroadcast', () =>{
+					var id = LocalService.id;
 					if (id) {
 						StudentService.GetParent(id).then((parent) =>{
 							pCtrl.parent = parent;
@@ -63,12 +67,13 @@ angular.module('app')
 		'toaster', 
 		'$filter', 
 		'$rootScope',
-		function($scope, StudentService, ParentService, toaster,$filter,$rootScope){
+		'LocalService',
+		function($scope, StudentService, ParentService, toaster,$filter,$rootScope, LocalService){
 		var admPCrtl = this;
 		admPCrtl.loaded = false;
 
 		admPCrtl.onParentClick = function(i){
-			$rootScope.currentParentIndex = i;
+			LocalService.prepForBroadcast(i);
 		}
 		
 		// Do search

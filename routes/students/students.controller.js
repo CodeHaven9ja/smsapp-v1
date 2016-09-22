@@ -86,7 +86,7 @@ function toggleParentActivation(req, res) {
 	var _parent = req.body;
 	var _token = req.session.user.sessionToken;
 	var f = {
-		'isActive':true,
+		'isActive':_parent.isActive,
 		'role':'parent',
 		'profile':{
 			'__op':'Delete'
