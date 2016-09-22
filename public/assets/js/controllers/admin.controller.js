@@ -1,13 +1,75 @@
 angular.module('app')
+	.controller('AdminParentCtrl',[
+			'$scope',
+			'StudentService',
+			'ParentService',
+			'toaster', 
+			'$filter',
+			'$rootScope', 
+			function($scope, StudentService, ParentService, toaster,$filter,$rootScope){
+				var pCtrl = this;
+				
+				$rootScope.$watch('currentParentIndex', (id) =>{
+					if (id) {
+						StudentService.GetParent(id).then((parent) =>{
+							pCtrl.parent = parent;
+						});
+					}
+				});
+
+				pCtrl.toggleActivate = function(id, isActive) {
+					var el = angular.element('#'+id);
+					pCtrl.parent.isActive = !isActive;
+					if (isActive) {
+						el.removeClass('check');
+					} else {
+						el.addClass('check');
+					}
+					StudentService.ToggleActivate(pCtrl.parent).then((user) =>{
+						var status;
+						if (pCtrl.parent.isActive) {
+							toaster.pop('success', "Done!", pCtrl.parent.firstName+" activated");
+						} else {
+							toaster.pop({
+								type:'error', 
+								title:"Done!", 
+								body: pCtrl.parent.firstName+" deactivated",
+								timeout: 0,
+								showCloseButton: true
+							});
+						}
+					}).catch((error) =>{
+						toaster.pop({
+							type:'error', 
+							title:"Oops!", 
+							body: "An error occurred.",
+							timeout: 0,
+							showCloseButton: true
+						});
+						pCtrl.parent.isActive = isActive;
+						if (!isActive) {
+							el.removeClass('check');
+						} else {
+							el.addClass('check');
+						}
+					});
+				}
+
+		}])
 	.controller('AdminParentsCtrl', [
 		'$scope',
 		'StudentService',
 		'ParentService',
 		'toaster', 
 		'$filter', 
-		function($scope, StudentService, ParentService, toaster,$filter){
+		'$rootScope',
+		function($scope, StudentService, ParentService, toaster,$filter,$rootScope){
 		var admPCrtl = this;
 		admPCrtl.loaded = false;
+
+		admPCrtl.onParentClick = function(i){
+			$rootScope.currentParentIndex = i;
+		}
 		
 		// Do search
 		admPCrtl.liveSearch = function(){

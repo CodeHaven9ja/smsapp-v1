@@ -10,7 +10,7 @@
 				<div class="noti-information notification-menu">
 					<div class="parent-list notification-list mail-list not-list" 
 						dir-paginate="p in admPCrtl.parents
-						| itemsPerPage: 4" ng-click="admPCrtl.onParentClick($index)">
+						| itemsPerPage: 4" ng-click="admPCrtl.onParentClick(p.objectId)">
 						<a class="single-mail">
 							<span class="icon bg-primary">
 								<i class="fa fa-user"></i>
@@ -30,30 +30,50 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-6" ng-controller="AdminParentCtrl as pCtrl">
 		<div class="panel">
-			<multi-step-container ng-if="admPCrtl.loaded" steps="admPCrtl.steps" class="simple-prev-next">
-				<div class="panel-heading">
-					{{$getActiveStep().title}}
-					<span ng-if="admPCrtl.parent.role === 'parent'" class="pull-right label label-success">Parent</span>
-				</div>
-				<div class="panel-body w-setting">
-					<main step-container></main>
-				</div>
-				<div class="panel-footer">
-					<div class="pull-right">
-						<button ng-if="!$isFirst()" class="btn btn-primary" ng-click="$previousStep()">
-							<span class="fa fa-chevron-left"></span>
-							Activate Account
-						</button>
-						<button ng-disabled="$isLast() || !admPCrtl.student.isActive" class="btn btn-success" ng-click="$nextStep()">
-							Link Account
-							<span class="fa fa-chevron-right"></span>
-						</button>
+			<div class="panel">
+				<header class="panel-heading">
+					Activate Parent
+					<span ng-if="pCtrl.parent.isActive" class="pull-right label label-success">Active</span>
+				</header>
+				<section class="panel-body">
+					<div class="row" ng-if="pCtrl.parent">
+						<div class="col-xs-6">
+							<h3 class="text-capitalize">{{pCtrl.parent.firstName}} {{pCtrl.parent.lastName}}</h3>
+							<address>
+								<strong>Email</strong>
+								<p>{{pCtrl.parent.email}}</p>
+							</address>
+							<strong>Address</strong>
+							<address>
+								{{pCtrl.parent.address}}
+							</address>
+						</div>
+						<div class="col-xs-6">
+							<img ng-src="https://unsplash.it/128/128/?random" alt="" class="img-responsive img-thumbnail pull-right link-profile-img">
+						</div>
 					</div>
-				</div>
-
-			</multi-step-container>
+					<div class="row" ng-if="pCtrl.parent">
+						<div class="col-xs-12">
+							<span class="name">
+	              <b>
+	              	Activate Account
+	              </b>
+	          	</span>
+	          	<span class="thumb-small pull-right">
+			        	<span ng-click="pCtrl.toggleActivate(pCtrl.parent.objectId, pCtrl.parent.isActive)" id="{{pCtrl.parent.objectId}}" ng-class="{'check':pCtrl.parent.isActive}" class="switch switch-default green">
+							    <small></small>
+							    <span class="switch-text">
+							    	<span class="on ng-binding"></span>
+							    	<span class="off ng-binding"></span>
+						    	</span>
+								</span>
+							</span>
+						</div>
+					</div>
+				</section>
+			</div>
 		</div>
 	</div>
 </div>
