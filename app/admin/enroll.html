@@ -11,7 +11,7 @@
 					<div class="student-list notification-list mail-list not-list" 
 						dir-paginate="s in admCrtl.students 
 						| filter: admCrtl.searchQ
-						| itemsPerPage: 4" ng-click="admCrtl.onStudentClick($index)">
+						| itemsPerPage: 4" ng-click="admCrtl.onStudentClick(s)">
 						<a class="single-mail">
 							<span class="icon bg-primary">
 								<i class="fa fa-user"></i>

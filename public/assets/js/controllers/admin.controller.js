@@ -104,10 +104,10 @@ angular.module('app')
     	}
 		];
 
-		admCrtl.onStudentClick = function(i){
+		admCrtl.onStudentClick = function(s){
 			admCrtl.parent = {};
 			admCrtl.loaded = true;
-			admCrtl.student = admCrtl.students[i];
+			admCrtl.student = s;
 			admCrtl.currentActive = admCrtl.student.isActive;
 
 		};
