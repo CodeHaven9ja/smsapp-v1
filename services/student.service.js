@@ -50,8 +50,7 @@ function GetStudentParentByParentId(userToken, id) {
     url: s  || config.apiUrl + '/classes/_User',
     qs:{
       where: {
-        'objectId': id,
-        'role': 'parent'
+        'objectId': id
       }
     },
     headers: {

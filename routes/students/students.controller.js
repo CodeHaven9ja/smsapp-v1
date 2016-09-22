@@ -18,6 +18,7 @@ var returnRouter = function(parse){
 	router.get('/:studentId/attendance', getStudentAttendance);
 	router.get('/:studentId/work', getStudentClassWork);
 	router.get('/:studentId/timetable', getStudentTimeTable);
+	router.put('/parent', toggleParentActivation);
 	router.get('/parent/:id', getStudentParent);
 	router.get('/parents/:q', searchParent);
 
@@ -81,8 +82,24 @@ function getStudentParent(req, res) {
 	});
 }
 
+function toggleParentActivation(req, res) {
+	var _parent = req.body;
+	var _token = req.session.user.sessionToken;
+	var f = {
+		'isActive':true,
+		'role':'parent',
+		'profile':{
+			'__op':'Delete'
+		}
+	};
+	userService.updateUser(_token, _parent.objectId, f).then((parent) =>{
+		res.status(204).send({message:"Activated."});
+	}).catch((error) =>{
+		res.status(501).send({errorCode:501, message:'An error occurred.'});
+	});
+}
+
 function toggleStudentActivation(req, res) {
-	console.log(req.body);
 	userService.toggleUserActivation(
 		req.session.user.sessionToken, 
 		req.body.objectId, 

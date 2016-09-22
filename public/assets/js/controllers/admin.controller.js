@@ -25,7 +25,7 @@ angular.module('app')
 					} else {
 						el.addClass('check');
 					}
-					StudentService.ToggleActivate(pCtrl.parent).then((user) =>{
+					ParentService.ToggleActivate(pCtrl.parent).then((user) =>{
 						var status;
 						if (pCtrl.parent.isActive) {
 							toaster.pop('success', "Done!", pCtrl.parent.firstName+" activated");
