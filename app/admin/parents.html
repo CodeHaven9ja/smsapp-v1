@@ -1,0 +1,59 @@
+<toaster-container></toaster-container>
+<div class="row">
+	<div class="col-md-6">
+		<div class="panel">
+			<header class="panel-heading">
+				search
+			</header>
+			<div class="panel-body">
+				<div class="col-md-12" ng-include="'blocks/parent.search.box.html'"></div>
+				<div class="noti-information notification-menu">
+					<div class="parent-list notification-list mail-list not-list" 
+						dir-paginate="p in admPCrtl.parents
+						| itemsPerPage: 4" ng-click="admPCrtl.onParentClick($index)">
+						<a class="single-mail">
+							<span class="icon bg-primary">
+								<i class="fa fa-user"></i>
+							</span>
+							{{p.firstName}} {{p.lastName}}
+							<p>{{p.objectId}}</p>
+							<span  class=" read tooltips" data-original-title="Mark as Read" data-toggle="tooltip" data-placement="left">
+								<span ng-if="p.profile" class="label label-success">Linked</span>
+							    <i ng-class="{'fa-circle': p.isActive, 'fa-circle-o': !p.isActive}" class="fa"></i>
+							</span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<dir-pagination-controls boundary-links="true"></dir-pagination-controls>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="panel">
+			<multi-step-container ng-if="admPCrtl.loaded" steps="admPCrtl.steps" class="simple-prev-next">
+				<div class="panel-heading">
+					{{$getActiveStep().title}}
+					<span ng-if="admPCrtl.parent.role === 'parent'" class="pull-right label label-success">Parent</span>
+				</div>
+				<div class="panel-body w-setting">
+					<main step-container></main>
+				</div>
+				<div class="panel-footer">
+					<div class="pull-right">
+						<button ng-if="!$isFirst()" class="btn btn-primary" ng-click="$previousStep()">
+							<span class="fa fa-chevron-left"></span>
+							Activate Account
+						</button>
+						<button ng-disabled="$isLast() || !admPCrtl.student.isActive" class="btn btn-success" ng-click="$nextStep()">
+							Link Account
+							<span class="fa fa-chevron-right"></span>
+						</button>
+					</div>
+				</div>
+
+			</multi-step-container>
+		</div>
+	</div>
+</div>

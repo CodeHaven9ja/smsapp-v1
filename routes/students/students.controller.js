@@ -5,6 +5,7 @@ var router = express.Router();
 var roleChecker = require('../../modules/role-check.js');
 var studentService = require('../../services/student.service.js');
 var userService = require('../../services/user.service.js');
+var parentService = require('../../services/parent.service.js');
 
 var returnRouter = function(parse){
 	var Parse = parse;
@@ -18,10 +19,26 @@ var returnRouter = function(parse){
 	router.get('/:studentId/work', getStudentClassWork);
 	router.get('/:studentId/timetable', getStudentTimeTable);
 	router.get('/parent/:id', getStudentParent);
+	router.get('/parents/:q', searchParent);
 
 	return router;
 }
 module.exports = returnRouter;
+
+function searchParent(req, res) {
+	var q = req.params.q;
+	var _token = req.session.user.sessionToken;
+	parentService.searchParent(_token, q).then((parents) =>{
+		// console.log("The parents", parents);
+		if (!parents.result) {
+			res.status(404).send({errorCode:404, message: 'No parent found'});
+			return;
+		}
+		res.send(parents.result);
+	}).catch((error) =>{
+		res.status(501).send({errorCode:501, message: 'An error occurred while searching for parents'});
+	})
+}
 
 function linkParent(req, res) {
 	var parentId = req.params.parentId;

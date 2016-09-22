@@ -70,6 +70,12 @@
                     controller: 'AdminCtrl',
                     controllerAs: 'admCrtl'
                 })
+                .state('adminParents', {
+                    url: '/parents',
+                    templateUrl: 'admin/parents.html',
+                    controller: 'AdminParentsCtrl',
+                    controllerAs: 'admPCrtl'
+                })
         }
         function run($http, $rootScope, $window) {
         	// body...

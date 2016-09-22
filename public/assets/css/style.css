@@ -6549,7 +6549,7 @@ a.view-all:hover {
     color: #ffffff;
 }
 
-.student-list {
+.student-list, .parent-list {
     display: block;
 }
 

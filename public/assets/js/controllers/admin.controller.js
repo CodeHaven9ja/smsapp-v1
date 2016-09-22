@@ -1,4 +1,25 @@
 angular.module('app')
+	.controller('AdminParentsCtrl', [
+		'$scope',
+		'StudentService',
+		'ParentService',
+		'toaster', 
+		'$filter', 
+		function($scope, StudentService, ParentService, toaster,$filter){
+		var admPCrtl = this;
+		admPCrtl.loaded = false;
+		
+		// Do search
+		admPCrtl.liveSearch = function(){
+			var q = admPCrtl.searchQ;
+			if (q) {
+				ParentService.SearchParents(q).then((parents) =>{
+					admPCrtl.parents = parents;
+				});
+			} 
+		}
+
+	}])
 	.controller('AdminCtrl', ['$scope','StudentService','toaster', '$filter', 
 		function($scope, StudentService,toaster,$filter){
 
