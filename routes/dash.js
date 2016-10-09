@@ -47,6 +47,9 @@ var router = express.Router();
 		parseAuthCheck.isActive(), require('./students/students.controller')(Parse)
 	);
 
+	router.use('/staff', parseAuthCheck.login(Parse), parseAuthCheck.isActive()
+		,require('./staff/staff.controller')(Parse));
+
 
 
 	return router;
