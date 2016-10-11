@@ -38,7 +38,7 @@ var api = new ParseServer({
   serverURL: serverUri,  // Don't forget to change to https if needed
   // Enable email verification
   appName: 'Schoolpop',
-  publicServerURL: process.env.PUB_SERVER_URL || 'http://localhost:1337/parse',
+  publicServerURL: process.env.PUB_SERVER_URL + mountPath || 'http://localhost:1337/parse',
   verifyUserEmails: true,
   emailAdapter:{
     module: 'parse-server-simple-mailgun-adapter',
@@ -134,7 +134,7 @@ var config = require('./config.json');
 var r = require('./modules/service-response.js');
 
 app.post('/resetPassword', (req, res) =>{
-  
+
   var mountPath = process.env.PARSE_MOUNT || '/parse';
   var server_url;
 
