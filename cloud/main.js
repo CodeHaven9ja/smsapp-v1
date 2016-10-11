@@ -3,6 +3,25 @@ Parse.Cloud.define('hello', (req, res) => {
   res.success('Hi');
 });
 
+Parse.Cloud.define('resetPassword', (req, res) =>{
+  var q = req.params.q;
+
+  var uQuery = new Parse.Query(Parse.User);
+  uQuery.equalTo('username', q);
+
+  var eQuery = new Parse.Query(Parse.User);
+  eQuery.equalTo('email', q);
+
+  var mainQuery = Parse.Query.or(uQuery, eQuery);
+  mainQuery.first().then((user) => {
+    return Parse.User.requestPasswordReset(user.getEmail()).then(() => {
+      res.success({reset:true});
+    });
+  }).catch((error) =>{
+    res.error(error);
+  });
+});
+
 Parse.Cloud.afterSave(Parse.User, (req, res) => {
 	var user = req.object;
   if (user.existed()) { 
@@ -15,6 +34,19 @@ Parse.Cloud.afterSave(Parse.User, (req, res) => {
   user.set("isActive", false);
   user.save();
   increaseUser();
+});
+
+Parse.Cloud.define('getStaffMembers', (req, res) => {
+  var token = req.user.getSessionToken();
+  var uQuery = new Parse.Query(Parse.User);
+
+  uQuery.containedIn('role', ['teacher', 'admin']);
+
+  uQuery.find({sessionToken: token}).then((users) =>{
+    res.success(users);
+  }).catch((error) =>{
+    res.error(error);
+  });
 });
 
 Parse.Cloud.define('searchParent', (req, res) =>{

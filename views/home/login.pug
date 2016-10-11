@@ -28,18 +28,19 @@ block body
 						a(href='/home/register')
 							|     Create an account
 				// Modal
-				#forgotPass.modal.fade(aria-hidden='true', aria-labelledby='myModalLabel', role='dialog', tabindex='-1')
-					.modal-dialog
-						.modal-content
-							.modal-header
-								button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-								h4.modal-title Forgot Password ?
-							.modal-body
-								p Enter your e-mail address below to reset your password.
-								input.form-control.placeholder-no-fix(type='text', name='email', placeholder='Email', autocomplete='off')
-							.modal-footer
-								button.btn.btn-default(data-dismiss='modal', type='button') Cancel
-								button.btn.btn-success(type='button') Submit
-				// modal
+				form(method="POST", action="/resetPassword")
+					#forgotPass.modal.fade(aria-hidden='true', aria-labelledby='myModalLabel', role='dialog', tabindex='-1')
+						.modal-dialog
+							.modal-content
+								.modal-header
+									button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+									h4.modal-title Forgot Password ?
+								.modal-body
+									p Enter your e-mail address below to reset your password.
+									input.form-control.placeholder-no-fix(type='text', name='q', placeholder='Email/Username', autocomplete='off', required)
+								.modal-footer
+									button.btn.btn-default(data-dismiss='modal', type='button') Cancel
+									button.btn.btn-success(type='submit') Submit
+					// modal
 
 

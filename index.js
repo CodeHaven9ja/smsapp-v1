@@ -36,6 +36,21 @@ var api = new ParseServer({
   appId: process.env.APP_ID || 'myAppId',
   masterKey: process.env.MASTER_KEY || 'myMasterKey', //Add your master key here. Keep it secret!
   serverURL: serverUri,  // Don't forget to change to https if needed
+  // Enable email verification
+  appName: 'Schoolpop',
+  publicServerURL: process.env.PUB_SERVER_URL || 'http://localhost:1337/parse',
+  verifyUserEmails: true,
+  emailAdapter:{
+    module: 'parse-server-simple-mailgun-adapter',
+    options: {
+      // The address that your emails come from
+      fromAddress: 'Schoolpop <noreply@'+ process.env.DOMAIN_NAME+ '>',
+      // Your domain from mailgun.com
+      domain: process.env.DOMAIN_NAME || 'http://localhost:1337',
+      // Your API key from mailgun.com
+      apiKey: process.env.MAILGUN_API_KEY || 'key-mykey',
+    }
+  },
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   }
@@ -112,6 +127,43 @@ app.get('/', (req, res) => {
 app.use('/home', require('./routes/home')(Parse));
 app.use('/dash', require('./routes/dash')(Parse));
 app.use('/users', require('./routes/users'));
+
+
+var config = require('./config.json');
+
+var r = require('./modules/service-response.js');
+
+app.post('/resetPassword', (req, res) =>{
+  
+  var mountPath = process.env.PARSE_MOUNT || '/parse';
+  var server_url;
+
+  if (process.env.PARSE_SERVER_URI) {
+      server_url = process.env.PARSE_SERVER_URI + mountPath;
+  }
+
+  var s;
+  if (server_url) {
+    s = server_url + '/functions/resetPassword';
+  }
+
+  var options = {
+    url: s  || config.apiUrl + '/functions/resetPassword',
+    headers: {
+      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Revocable-Session': 1,
+      'Content-Type': 'application/json'
+    },
+    json:{
+      q: req.body.q
+    }
+  };
+  r.post(options).then((status) =>{
+    res.redirect('/');
+  }).catch((err) =>{
+    res.render('/home/login');
+  });
+});
 
 // make JWT token available to angular app
 app.get('/token', function (req, res) { 
