@@ -179,7 +179,7 @@ app.get('/token', function (req, res) {
   res.send(req.session.user.sessionToken);
 });
 
-var port = process.env.PORT || 1337;
+var port = process.env.PORT || 3000;
 var httpServer = require('http').createServer(app);
 httpServer.listen(port, () => {
     console.log('School management system running on port ' + port + '.');
