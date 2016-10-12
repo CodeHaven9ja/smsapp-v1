@@ -21,7 +21,7 @@
     "kerberos": "~0.0.x",
     "parse": "^1.8.5",
     "parse-dashboard": "^1.0.15",
-    "parse-server": "~2.2.7",
+    "parse-server": "~2.2.22",
     "parse-server-mailgun": "^2.1.15",
     "parse-server-simple-mailgun-adapter": "^1.0.0",
     "passport": "^0.3.2",

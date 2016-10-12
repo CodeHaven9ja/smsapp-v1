@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // Example express application adding the parse-server module to expose Parse
 // compatible API routes.
 /*jshint esversion: 6 */
@@ -27,6 +29,13 @@ var mountPath = process.env.PARSE_MOUNT || '/parse';
 
 var serverUri = process.env.PARSE_SERVER_URI + process.env.PARSE_MOUNT || 'http://localhost:1337/parse';
 
+var publicServerURL;
+if (process.env.PUB_SERVER_URL) {
+  publicServerURL = process.env.PUB_SERVER_URL + mountPath;
+} else {
+  publicServerURL = 'http://localhost:1337/parse';
+}
+
 Parse.initialize(process.env.APP_ID || 'myAppId', "unused", process.env.MASTER_KEY || 'myMasterKey');
 Parse.serverURL = serverUri;
 
@@ -38,7 +47,7 @@ var api = new ParseServer({
   serverURL: serverUri,  // Don't forget to change to https if needed
   // Enable email verification
   appName: 'Schoolpop',
-  publicServerURL: process.env.PUB_SERVER_URL + mountPath || 'http://localhost:1337/parse',
+  publicServerURL: publicServerURL,
   verifyUserEmails: true,
   emailAdapter:{
     module: 'parse-server-simple-mailgun-adapter',
