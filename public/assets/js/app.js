@@ -82,6 +82,12 @@
                     controller: 'AdminStaffCtrl',
                     controllerAs: 'admSCrtl'
                 })
+                .state('adminAttendance', {
+                    url: '/admin/attendance',
+                    templateUrl: 'admin/attendance.html',
+                    controller: 'AdminAttendanceCtrl',
+                    controllerAs: 'admACrtl'
+                })
         }
         function run($http, $rootScope, $window) {
         	// body...

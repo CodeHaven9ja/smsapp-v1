@@ -27,13 +27,17 @@ if (!databaseUri) {
 // Serve the Parse API on the /parse URL prefix
 var mountPath = process.env.PARSE_MOUNT || '/parse';
 
-var serverUri = process.env.PARSE_SERVER_URI + process.env.PARSE_MOUNT || 'http://localhost:1337/parse';
-
+var serverUri;
+if (process.env.PARSE_SERVER_URI) {
+  serverUri = process.env.PARSE_SERVER_URI + process.env.PARSE_MOUNT;
+} else {
+  serverUri = 'http://localhost:3000/parse';
+}
 var publicServerURL;
 if (process.env.PUB_SERVER_URL) {
   publicServerURL = process.env.PUB_SERVER_URL + mountPath;
 } else {
-  publicServerURL = 'http://localhost:1337/parse';
+  publicServerURL = 'http://localhost:3000/parse';
 }
 
 Parse.initialize(process.env.APP_ID || 'myAppId', "unused", process.env.MASTER_KEY || 'myMasterKey');
@@ -55,7 +59,7 @@ var api = new ParseServer({
       // The address that your emails come from
       fromAddress: 'Schoolpop <noreply@'+ process.env.DOMAIN_NAME+ '>',
       // Your domain from mailgun.com
-      domain: process.env.DOMAIN_NAME || 'http://localhost:1337',
+      domain: process.env.DOMAIN_NAME || 'http://localhost:3000',
       // Your API key from mailgun.com
       apiKey: process.env.MAILGUN_API_KEY || 'key-mykey',
     }
@@ -68,7 +72,7 @@ var api = new ParseServer({
 var dashboard = new ParseDashboard({
   "apps": [
     {
-      "serverURL": "http://localhost:1337/parse",
+      "serverURL": "http://localhost:3000/parse",
       "appId": "myAppId",
       "masterKey": "myMasterKey",
       "appName": "SMS Local"

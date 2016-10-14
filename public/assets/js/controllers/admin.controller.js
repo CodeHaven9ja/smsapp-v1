@@ -1,4 +1,59 @@
 angular.module('app')
+	.controller('AdminStudentCtrl', [
+		'$scope',
+	 	'StudentService', 
+	 	'toaster', 
+	 	'LocalService',
+		function($scope, StudentService, toaster, LocalService){
+
+			var sCtrl = this;
+
+			sCtrl.student;
+
+			$scope.$on('handleBroadcast', () =>{
+				var id = LocalService.id;
+				if (id) {
+					StudentService.GetStudent(id).then((student) =>{
+						sCtrl.student = student;
+						return student.objectId;
+					}).then((id) =>{
+						return StudentService.GetStudentTodayAttendance(id);
+					}).then((present) =>{
+						sCtrl.student.present = present;
+					}).catch((err) =>{
+						toaster.pop('error', "Oops!", sCtrl.student.firstName+"'s attendance record for today is absent.");
+					});
+				}
+			});
+
+			sCtrl.markStudent = function() {
+				if (sCtrl.student) {
+					StudentService.MarkStudent(sCtrl.student.objectId).then((status) =>{
+						sCtrl.student.present = status;
+						toaster.pop('success', "Done!", sCtrl.student.firstName+"'s attendance recorded.");
+					});
+				}
+			}
+
+	}])
+	.controller('AdminAttendanceCtrl',[
+		'$scope',
+		'StudentService',
+		'LocalService',
+		function($scope, StudentService, LocalService){
+			var admACrtl = this;
+			admACrtl.searchQ = "";
+			admACrtl.students = [];
+
+			StudentService.GetAllStudents().then((students) => {
+				admACrtl.students = students.results;
+			});
+
+			admACrtl.onStudentClick = function(i){
+				LocalService.prepForBroadcast(i);
+			}
+		}
+	])	
 	.controller('AdminParentCtrl',[
 			'$scope',
 			'StudentService',
@@ -71,16 +126,20 @@ angular.module('app')
 		function($scope, StudentService, ParentService, toaster,$filter,$rootScope, LocalService){
 		var admPCrtl = this;
 		admPCrtl.loaded = false;
+		admPCrtl.searchQ = "";
 
 		admPCrtl.onParentClick = function(i){
 			LocalService.prepForBroadcast(i);
 		}
+
+		$scope.$watch('admPCrtl.searchQ', function(val){
+			admPCrtl.liveSearch(val);
+		})
 		
 		// Do search
-		admPCrtl.liveSearch = function(){
-			var q = admPCrtl.searchQ;
-			if (q) {
-				ParentService.SearchParents(q).then((parents) =>{
+		admPCrtl.liveSearch = function(val){
+			if (val) {
+				ParentService.SearchParents(val).then((parents) =>{
 					admPCrtl.parents = parents;
 				});
 			} 

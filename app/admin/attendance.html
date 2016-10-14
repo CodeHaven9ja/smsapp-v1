@@ -6,11 +6,11 @@
 				search
 			</header>
 			<div class="panel-body">
-				<div class="col-md-12" search-box model="admPCrtl.searchQ"></div>
+				<div class="col-md-12" search-box model="admACrtl.searchQ"></div>
 				<div class="noti-information notification-menu">
 					<div class="parent-list notification-list mail-list not-list" 
-						dir-paginate="p in admPCrtl.parents
-						| itemsPerPage: 4" ng-click="admPCrtl.onParentClick(p.objectId)">
+						dir-paginate="p in admACrtl.students
+						| itemsPerPage: 4" ng-click="admACrtl.onStudentClick(p.objectId)">
 						<a class="single-mail">
 							<span class="icon bg-primary">
 								<i class="fa fa-user"></i>
@@ -30,46 +30,33 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6" ng-controller="AdminParentCtrl as pCtrl">
+	<div class="col-md-6" ng-controller="AdminStudentCtrl as sCtrl">
 		<div class="panel">
 			<div class="panel">
 				<header class="panel-heading">
-					Activate Parent
-					<span ng-if="pCtrl.parent.isActive" class="pull-right label label-success">Active</span>
+					Student
+					<span ng-if="sCtrl.student.isActive" class="pull-right label label-success">Active</span>
 				</header>
 				<section class="panel-body">
-					<div class="row" ng-if="pCtrl.parent">
+					<div class="row" ng-if="sCtrl.student">
 						<div class="col-xs-6">
-							<h3 class="text-capitalize">{{pCtrl.parent.firstName}} {{pCtrl.parent.lastName}}</h3>
+							<h3 class="text-capitalize">{{sCtrl.student.firstName}} {{sCtrl.student.lastName}}</h3>
 							<address>
 								<strong>Email</strong>
-								<p>{{pCtrl.parent.email}}</p>
+								<p>{{sCtrl.student.email}}</p>
 							</address>
 							<strong>Address</strong>
 							<address>
-								{{pCtrl.parent.address}}
+								{{sCtrl.student.address}}
 							</address>
 						</div>
 						<div class="col-xs-6">
-							<img gravatar-src="pCtrl.parent.email" gravatar-size="100" class="img-responsive img-thumbnail pull-right link-profile-img">
+							<img gravatar-src="sCtrl.student.email" gravatar-size="100" alt="" class="img-responsive img-thumbnail pull-right link-profile-img">
 						</div>
 					</div>
-					<div class="row" ng-if="pCtrl.parent">
+					<div class="row" ng-if="sCtrl.student">
 						<div class="col-xs-12">
-							<span class="name">
-	              <b>
-	              	Activate Account
-	              </b>
-	          	</span>
-	          	<span class="thumb-small pull-right">
-			        	<span ng-click="pCtrl.toggleActivate(pCtrl.parent.objectId, pCtrl.parent.isActive)" id="{{pCtrl.parent.objectId}}" ng-class="{'check':pCtrl.parent.isActive}" class="switch switch-default green">
-							    <small></small>
-							    <span class="switch-text">
-							    	<span class="on ng-binding"></span>
-							    	<span class="off ng-binding"></span>
-						    	</span>
-								</span>
-							</span>
+							<a class="btn btn-block btn-large" ng-class="{'btn-warning':!sCtrl.student.present, 'btn-success':sCtrl.student.present}" ng-disabled="sCtrl.student.present" ng-click="sCtrl.markStudent()">Mark Present</a>
 						</div>
 					</div>
 				</section>

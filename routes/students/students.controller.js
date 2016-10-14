@@ -13,9 +13,11 @@ var returnRouter = function(parse){
 	router.get('/', getAllStudents);
 	router.put('/', toggleStudentActivation);
 	router.get('/:studentId', getStudent);
+	router.get('/:studentId/attendance', getStudentAttendance);
+	router.post('/:studentId/attendance', tick);
+	router.get('/:studentId/attendance/today', getStudentAttendanceToday);
 	router.put('/:studentId/unlink', removeLink);
 	router.post('/:studentId/:parentId', linkParent);
-	router.get('/:studentId/attendance', getStudentAttendance);
 	router.get('/:studentId/work', getStudentClassWork);
 	router.get('/:studentId/timetable', getStudentTimeTable);
 	router.put('/parent', toggleParentActivation);
@@ -30,7 +32,6 @@ function searchParent(req, res) {
 	var q = req.params.q;
 	var _token = req.session.user.sessionToken;
 	parentService.searchParent(_token, q).then((parents) =>{
-		// console.log("The parents", parents);
 		if (!parents.result) {
 			res.status(404).send({errorCode:404, message: 'No parent found'});
 			return;
@@ -108,7 +109,6 @@ function toggleStudentActivation(req, res) {
 				res.status(500).send(user);	
 				return;
 			}
-			console.log(user);
 			res.send(user);
 		}).catch((error) => {
 			res.status(500).send({errorCode:500, message:'An error occurred.'});
@@ -119,26 +119,44 @@ function getAllStudents(req, res) {
 	studentService.getStudents(req.session.user.sessionToken, 0).then((students) =>{
 		res.status(200).send(students);
 	}).catch((error) =>{
-		res.send(401).send(error);
+		res.status(401).send(error);
 	});
 }
 
 function getStudent(req, res) {
 	var id = req.params.studentId;
 	var currentUser = req.session.user;
-	var imgUrl = gravatar.url(currentUser.email, {s: '200', r: 'pg', d: 'retro'});
-	res.render('student/index',{
-			pageTitle: "School Management System",
-			action: "records",
-			isAuthenticated: true,
-			user: currentUser,
-			gravatar: imgUrl
-		});
+	studentService.getStudent(currentUser.sessionToken, id).then((student) =>{
+		res.send(student);
+	}).catch((error) =>{
+		res.status(401).send(error);
+	});
+}
+
+function getStudentAttendanceToday(req, res) {
+	var id = req.params.studentId;
+	var currentUser = req.session.user;
+	
+	studentService.getStudentAttendanceToday(currentUser.sessionToken, id).then((status) =>{
+		var code = status.code;
+		if (code == 141) {
+			console.log("STATUS",JSON.stringify(status));
+			return res.status(404).send(false);		
+		}
+		res.status(200).send(true);
+	}).catch((error) =>{
+		res.status(401).send(error);
+	});
 }
 
 function getStudentAttendance(req, res) {
 	var id = req.params.studentId;
-	res.status(200).send("Hello "+id+". Attendance!");
+	res.status(200).send(false);
+}
+
+function tick(req, res) {
+	var id = req.params.studentId;
+	res.status(200).send(true);
 }
 
 function getStudentClassWork(req, res) {

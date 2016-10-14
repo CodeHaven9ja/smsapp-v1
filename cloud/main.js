@@ -22,6 +22,39 @@ Parse.Cloud.define('resetPassword', (req, res) =>{
   });
 });
 
+Parse.Cloud.define('getStudentAttendanceToday', (req, res) =>{
+  var token = req.user.getSessionToken();
+  var sid = req.params.sid;
+
+  var user;
+  var t = getDate();
+
+  var uQuery = new Parse.Query(Parse.User);
+  var aQuery = new Parse.Query('Activity');
+  uQuery.equalTo('objectId', sid);
+  uQuery.equalTo('role', 'user');
+  
+  uQuery.first().then((s) =>{
+    user = s;
+    aQuery.equalTo('fromUser', user);
+    aQuery.equalTo('type', 'attendance');
+    aQuery.equalTo('tickDate', t);
+
+    return aQuery.first({sessionToken : req.user.getSessionToken()});
+  }).then((activity) =>{
+    
+    if (!activity) {
+      return res.error({
+        errorCode: 404,
+        message: 'Not present.'
+      });
+    }
+    res.success();
+  }).catch((error) =>{
+    res.error(error);
+  });
+});
+
 Parse.Cloud.afterSave(Parse.User, (req, res) => {
 	var user = req.object;
   if (user.existed()) { 
@@ -77,7 +110,6 @@ Parse.Cloud.define('searchParent', (req, res) =>{
 
 Parse.Cloud.define('linkParent', (req, res) =>{
   var token = req.user.getSessionToken();
-  console.log("User Token", token);
   var pid = req.params.pid,
       sid = req.params.sid;
   var student, parent, profile;
@@ -89,13 +121,11 @@ Parse.Cloud.define('linkParent', (req, res) =>{
   sQ.equalTo('objectId', sid);
   sQ.first({ sessionToken: token }).then((s) =>{
     student = s;
-    console.log(s);
     // Get Parent
     var pQ = new Parse.Query(Parse.User);
     pQ.equalTo('objectId', pid);
     return pQ.first();
   }).then((p) =>{
-    console.log(p);
     parent = p;
     return p;
   }).then((p) =>{
@@ -144,4 +174,12 @@ function decreaseUser() {
     	count.increment('count', -1);
     	count.save();
     });
+}
+
+function getDate() {
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1;
+  var yyyy = today.getFullYear();
+  return new Date(mm+'-'+dd+'-'+yyyy);
 }
