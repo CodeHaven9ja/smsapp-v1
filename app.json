@@ -1,0 +1,46 @@
+{
+  "name": "smsapp-rev",
+  "scripts": {
+  },
+  "env": {
+    "APP_ID": {
+      "required": true
+    },
+    "DOMAIN_NAME": {
+      "required": true
+    },
+    "MAILGUN_API_KEY": {
+      "required": true
+    },
+    "MASTER_KEY": {
+      "required": true
+    },
+    "PARSE_MOUNT": {
+      "required": true
+    },
+    "PARSE_SERVER_URI": {
+      "required": true
+    },
+    "PUB_SERVER_URL": {
+      "required": true
+    },
+    "SESSION_SECRET": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "cloudinary",
+    "mongolab",
+    "rediscloud"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
