@@ -1,0 +1,58 @@
+<div class="col-md-6">
+  <section class="panel post-wrap pro-box team-member">
+    <aside class="bg-primary v-align">
+      <div class="panel-body text-center">
+        <div class="team-member-wrap">
+          <div class="team-member-info">
+            <div class="action-set">
+              <a href="javascript:;" class="tooltips" data-original-title="Profile Info" data-toggle="tooltip" data-placement="top">
+                  <i class="fa fa-reorder"></i>
+              </a>
+            </div>
+            <div class="team-title">
+              <a href="javascript:;" class="m-name">
+                  {{vm.activeStaff.firstName}} {{vm.activeStaff.lastName}}
+              </a>
+              <span class="sub-title"> {{vm.activeStaff.position}}</span>
+            </div>
+
+            <div class="call-info">
+                <a href="mailto:{{vm.activeStaff.email}}?Subject=I%20Need%20Information" target="_top">
+                    <i class="fa fa-envelope-o"></i>
+                </a>
+                <img gravatar-src="vm.activeStaff.email" gravatar-size="100" alt="vm.activeStaff.email" />
+                <a href="tel:{{vm.activeStaff.phone}}">
+                    <i class="fa fa-phone"></i>
+                </a>
+            </div>
+            <!-- <div class="status">
+              <h5>Status</h5>
+              <span>Busy in a meeting with HK Group CEO</span>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </aside>
+    <aside>
+      <header class="panel-heading head-border">
+          staff members
+          <span class="action-tools pull-right">
+              <a class="fa fa-reorder" href="javascript:;"></a>
+          </span>
+      </header>
+      <div class="post-info">
+        <ul  class="team-list cycle-pager external" id='no-template-pager'>
+          <li ng-repeat="s in vm.staff">
+            <a ng-click="vm.makeActive($index)">
+              <span class="thumb-small">
+                <img class="circle" gravatar-src="s.email" gravatar-size="100" alt="{{s.email}}"/>
+                <i class="dot" ng-class="{'online': s.isActive, 'offline': !s.isActive}"></i>
+              </span>
+              <span class="name">{{s.firstName}} {{s.lastName}}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+  </section>
+</div>
