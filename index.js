@@ -19,6 +19,7 @@ var ParseDashboard = require('parse-dashboard');
 
 
 
+var port = process.env.PORT || 3000;
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
 if (!databaseUri) {
@@ -100,6 +101,8 @@ var dashboard = new ParseDashboard({
 // javascriptKey, restAPIKey, dotNetKey, clientKey
 
 var app = express();
+
+app.set('port', port);
 
 // Configure app
 app.set('views', path.join(__dirname, 'views'));
@@ -183,16 +186,4 @@ app.get('/token', function (req, res) {
   res.send(req.session.user.sessionToken);
 });
 
-var port = process.env.PORT || 3000;
-var httpServer = require('http').createServer(app);
-httpServer.listen(port, () => {
-    console.log('School management system running on port ' + port + '.');
-});
-
-// // Start app
-// app.listen(port, () => {
-//   console.log('Ready on port ' + port + '.');
-// });
-
-// This will enable the Live Query real-time server
-ParseServer.createLiveQueryServer(httpServer);
+module.exports = app;
