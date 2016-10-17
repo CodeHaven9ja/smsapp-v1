@@ -1,6 +1,6 @@
 var httpServer = require('http'),
 		app = require('./index'),
-		ParseServer = require('parse-server').ParseServer;
+		ParseServer = require('./parse-server');
 
 var port = app.get('port');
 

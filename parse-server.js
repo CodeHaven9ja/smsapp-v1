@@ -1,0 +1,1 @@
+ParseServer = require('parse-server').ParseServer;
