@@ -1,0 +1,41 @@
+<toaster-container></toaster-container>
+
+<new-user-modal title="Add New Staff Member" model="admSCrtl.newStaff"></new-user-modal>
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="panel">
+			<header class="panel-heading">
+				Search
+				<a class="btn-xs btn btn-info pull-right" sclpop-staff-modal>Add Staff</a>
+			</header>
+			<div class="panel-body">
+				<div class="col-md-12" search-box model="admSCrtl.searchQ"></div>
+
+				<!-- Staff list -->
+				<div class="noti-information notification-menu">
+					<div class="parent-list notification-list mail-list not-list" 
+						dir-paginate="s in admSCrtl.staff
+						| itemsPerPage: 4" ng-click="admSCrtl.onStaffClick(s.objectId)">
+						<a class="single-mail">
+							<span class="icon bg-primary">
+								<i class="fa fa-user"></i>
+							</span>
+							{{s.firstName}} {{s.lastName}}
+							<p>{{p.objectId}}</p>
+							<span  class=" read tooltips" data-original-title="Mark as Read" data-toggle="tooltip" data-placement="left">
+								<span ng-if="s.profile" class="label label-success">Linked</span>
+							    <i ng-class="{'fa-circle': s.isActive, 'fa-circle-o': !s.isActive}" class="fa"></i>
+							</span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- END Staff list -->
+			<div class="panel-footer">
+				<dir-pagination-controls boundary-links="true"></dir-pagination-controls>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6"></div>
+</div>

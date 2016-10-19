@@ -57,15 +57,21 @@ Parse.Cloud.define('getStudentAttendanceToday', (req, res) =>{
 
 Parse.Cloud.afterSave(Parse.User, (req, res) => {
 	var user = req.object;
+  var currentUser = req.user;
   if (user.existed()) { 
   	if (user.get('role') != "user"){
   		decreaseUser();
   	}
   	return; 
+  } 
+  if (!user.existed() && user.get('role') === "teacher") {
+    user.set("isActive", false);
+    user.save(null,{useMasterKey: true});
+    return;
   }
   user.set("role", "user");
   user.set("isActive", false);
-  user.save();
+  user.save(null,{useMasterKey: true});
   increaseUser();
 });
 
@@ -73,12 +79,13 @@ Parse.Cloud.define('getStaffMembers', (req, res) => {
   var token = req.user.getSessionToken();
   var uQuery = new Parse.Query(Parse.User);
 
-  uQuery.containedIn('role', ['teacher', 'admin']);
+  uQuery.equalTo('role', 'teacher');
+  uQuery.include('profile');
 
-  uQuery.find({sessionToken: token}).then((users) =>{
-    res.success(users);
+  uQuery.find({sessionToken : token}).then((users) =>{
+    return res.success(users);
   }).catch((error) =>{
-    res.error(error);
+    return res.error(error);
   });
 });
 

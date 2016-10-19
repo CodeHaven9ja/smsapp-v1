@@ -3,6 +3,9 @@ angular.module('app').factory('LocalService', function($rootScope){
 
 	sharedService.id = '';
 
+  sharedService.createUser = function(label){
+    $rootScope.$broadcast(label);
+  };
 
   sharedService.prepForBroadcast = function(id) {
     this.id = id;

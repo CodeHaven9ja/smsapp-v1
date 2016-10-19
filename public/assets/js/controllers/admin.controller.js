@@ -1,4 +1,42 @@
 angular.module('app')
+	.controller('AdminStaffCtrl', [
+		'$scope',
+	 	'StudentService', 
+	 	'toaster', 
+	 	'LocalService',
+	 	'StaffService',
+	 	function($scope, StudentService, toaster, LocalService, StaffService){
+
+	 		var admSCrtl = this;
+	 		admSCrtl.staff = [];
+	 		admSCrtl.newStaff;
+
+	 		StaffService.getStaffMembers().then(function(staff){
+	 			admSCrtl.staff = staff;
+	 		}).catch(function(err){
+	 			toaster.pop('error', "Oops!", err.message);
+	 		});
+
+	 		$scope.$on('new-user', function(){
+	 			if (!admSCrtl.newStaff 
+	 				|| !admSCrtl.newStaff.username 
+	 				|| !admSCrtl.newStaff.firstName
+	 				|| !admSCrtl.newStaff.lastName) {
+
+	 				return;
+	 			}
+
+	 			StaffService.createNewStaffMember(admSCrtl.newStaff).then(function(staff){
+	 				admSCrtl.staff.unshift(staff);
+	 				admSCrtl.newStaff = undefined;
+	 			}).catch(function(err){
+	 				console.log(err);
+		 			toaster.pop('error', "Oops!", err.message);
+		 		});
+
+	 		});
+
+	}])
 	.controller('AdminStudentCtrl', [
 		'$scope',
 	 	'StudentService', 
@@ -177,7 +215,7 @@ angular.module('app')
 		};
 
 		StudentService.GetAllStudents().then((students) => {
-			console.log(students.results);
+			// console.log(students.results);
 			admCrtl.students = students.results;
 		});
 		
