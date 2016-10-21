@@ -9,6 +9,7 @@ var mountPath = process.env.PARSE_MOUNT || '/parse';
 service.getStaffMembers = GetStaffMembers; 
 service.getStaffMember = GetStaffMember;
 service.newStaffMember = NewStaffMember;
+service.activateStaff = ActivateStaff;
 
 module.exports = service;
 
@@ -71,4 +72,27 @@ function GetStaffMember(token, id) {
     }
   };
   return r.get(options);
+}
+
+function ActivateStaff(token, staff) {
+  var id = staff.objectId;
+
+  console.log("+++++ Pruned staff +++++", token);
+  var s;
+  if (server_url) {
+    s = server_url + '/classes/_User/'+id;
+  }
+
+  var options = {
+    url: s  || config.apiUrl + '/classes/_User/'+id,
+    headers: {
+      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Master-Key': process.env.MASTER_KEY || 'myMasterKey',
+      'Content-Type': 'application/json'
+    },
+    json : {
+      "isActive": staff.isActive
+    }
+  };
+  return r.put(options);
 }

@@ -1,15 +1,18 @@
 angular.module('app')
 	.controller('AdminStaffCtrl', [
 		'$scope',
+		'$filter',
 	 	'StudentService', 
 	 	'toaster', 
 	 	'LocalService',
 	 	'StaffService',
-	 	function($scope, StudentService, toaster, LocalService, StaffService){
+	 	function($scope, $filter, StudentService, toaster, LocalService, StaffService){
 
 	 		var admSCrtl = this;
 	 		admSCrtl.staff = [];
 	 		admSCrtl.newStaff;
+
+	 		admSCrtl.currentActive;
 
 	 		StaffService.getStaffMembers().then(function(staff){
 	 			admSCrtl.staff = staff;
@@ -20,9 +23,9 @@ angular.module('app')
 	 		$scope.$on('new-user', function(){
 	 			if (!admSCrtl.newStaff 
 	 				|| !admSCrtl.newStaff.username 
+	 				|| !admSCrtl.newStaff.email 
 	 				|| !admSCrtl.newStaff.firstName
 	 				|| !admSCrtl.newStaff.lastName) {
-
 	 				return;
 	 			}
 
@@ -35,6 +38,23 @@ angular.module('app')
 		 		});
 
 	 		});
+
+	 		admSCrtl.onStaffClick = function(i) {
+	 			admSCrtl.currentActive = $filter('filter')(admSCrtl.staff, {objectId: i})[0];
+	 			console.log(admSCrtl.currentActive);
+	 		}
+
+	 		admSCrtl.toggleActivate = function(id, status){
+	 			admSCrtl.currentActive.isActive = !admSCrtl.currentActive.isActive;
+	 			StaffService.updateStaff(admSCrtl.currentActive).then(function(done){
+	 				
+	 				toaster.pop((admSCrtl.currentActive.isActive ? 'success' : 'error'), 
+	 					"Done!", 
+	 					admSCrtl.currentActive.firstName +(admSCrtl.currentActive.isActive ? ' activated.' : ' deactivated.'));
+	 			}).catch(function(err){
+	 				admSCrtl.currentActive.isActive = !admSCrtl.currentActive.isActive;
+	 			});
+	 		}
 
 	}])
 	.controller('AdminStudentCtrl', [

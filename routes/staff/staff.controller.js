@@ -65,7 +65,18 @@ function newStaffMember(req, res) {
 }
 
 function editStaffMember(req, res) {
-	return res.status(200).send({done:true});
+	var _token = req.session.user.sessionToken;
+	var staff = req.body;
+	staffService.activateStaff(_token, staff).then((s) =>{
+		console.log(s);
+		if (s.code === 206) {
+			return res.status(403).send({done:false});
+		}
+		return res.status(200).send({done:true});
+	}).catch((err) => {
+		console.log(err);
+		return res.status(500).send(err);
+	});
 }
 
 function removeStaffMember(req, res) {

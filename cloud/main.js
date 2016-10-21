@@ -81,6 +81,7 @@ Parse.Cloud.define('getStaffMembers', (req, res) => {
 
   uQuery.equalTo('role', 'teacher');
   uQuery.include('profile');
+  uQuery.descending('createdAt');
 
   uQuery.find({sessionToken : token}).then((users) =>{
     return res.success(users);

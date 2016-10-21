@@ -6,6 +6,7 @@ function StaffService($http, $q){
   service.linkStaffToClass = LinkStaffToClass;
   service.getStaffMembers = GetStaffMembers;
   service.createNewStaffMember = CreateNewStaffMember;
+  service.updateStaff = UpdateStaff;
   
   return service;
 	
@@ -19,6 +20,10 @@ function StaffService($http, $q){
 
 	function CreateNewStaffMember(user) {
 		return $http.post('/dash/staff', user).then(handleSuccess, handleError);
+	}
+
+	function UpdateStaff(staff){
+		return $http.put('/dash/staff/'+staff.objectId, staff).then(handleSuccess, handleError);
 	}
 
 	// private functions
