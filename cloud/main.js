@@ -160,6 +160,43 @@ Parse.Cloud.define('linkParent', (req, res) =>{
   });
 });
 
+Parse.Cloud.define('cOrUposition', (req, res) =>{
+  var token = req.user.getSessionToken();
+  var st = req.params.staff;
+
+  console.log(st);
+
+  var staff, profile;
+
+  var sQ = new Parse.Query(Parse.User);
+
+  sQ.equalTo('objectId', st.id);
+  sQ.first({ sessionToken: token }).then((s) =>{
+    staff = s;
+    var prQ = new Parse.Query('Profile');
+    prQ.equalTo('user', st.id);
+    return prQ.first({ sessionToken: token }); 
+  }).then((p) =>{
+    if (!p) {
+      var Profile = Parse.Object.extend("Profile");
+      profile = new Profile();
+    } else {
+      profile = p;
+    }
+
+    profile.set('type', 'staff');
+    profile.set('position',st.position);
+    return profile.save(null,{ useMasterKey: true });
+  }).then((profile) =>{
+    staff.set('profile', profile);
+    return staff.save(null,{ useMasterKey: true });
+  }).then((staff) =>{
+    return res.success(staff);
+  }).catch((error) =>{
+    return res.error(error);
+  });
+});
+
 Parse.Cloud.afterDelete(Parse.User, (req, res) =>{
 	decreaseUser();
 });

@@ -47,7 +47,7 @@ angular.module('app')
 	 		admSCrtl.toggleActivate = function(id, status){
 	 			admSCrtl.currentActive.isActive = !admSCrtl.currentActive.isActive;
 	 			StaffService.updateStaff(admSCrtl.currentActive).then(function(done){
-	 				
+
 	 				toaster.pop((admSCrtl.currentActive.isActive ? 'success' : 'error'), 
 	 					"Done!", 
 	 					admSCrtl.currentActive.firstName +(admSCrtl.currentActive.isActive ? ' activated.' : ' deactivated.'));
@@ -55,6 +55,19 @@ angular.module('app')
 	 				admSCrtl.currentActive.isActive = !admSCrtl.currentActive.isActive;
 	 			});
 	 		}
+	 		$scope.$watch('admSCrtl.currentActive.profile.position', function(pos){
+	 			if (pos) {
+	 				StaffService.createOrUpdateStaffPosition({position:pos,id:admSCrtl.currentActive.objectId}).then(function(){
+	 					toaster.pop('success', 
+	 					"Done!", 
+	 					admSCrtl.currentActive.firstName +" position linked.");
+	 				}).catch(function(err){
+		 				admSCrtl.currentActive.profile.position = undefined;
+		 				toaster.pop('error', "Oops!", err.message);
+		 			});
+	 			}
+	 		});
+
 
 	}])
 	.controller('AdminStudentCtrl', [

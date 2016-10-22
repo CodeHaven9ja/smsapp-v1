@@ -13,13 +13,14 @@ var returnRouter = function(parse){
 	router.get('/', getStaffMembers);
 	router.get('/:staffId', getStaffMember);
 	router.post('/', newStaffMember);
+	router.post('/position', cOrUposition);
 	router.put('/:staffId', editStaffMember);
 	router.delete('/:staffId', removeStaffMember);
 
 	// Teacher Specific
 
 	router.get('/:staffId/class', getStaffClass);
-	router.post('/staffId/:classId', assignTeacherToClass);
+	router.post('/:staffId/:classId', assignTeacherToClass);
 
 	return router;
 }
@@ -75,6 +76,17 @@ function editStaffMember(req, res) {
 		return res.status(200).send({done:true});
 	}).catch((err) => {
 		console.log(err);
+		return res.status(500).send(err);
+	});
+}
+
+function cOrUposition(req, res) {
+	var _token = req.session.user.sessionToken;
+	var staff = req.body;
+	// TODO: Fix status code bug
+	staffService.cOrUposition(_token, staff).then((staff) =>{
+		return res.status(200).send(staff);
+	}).catch((err) => {
 		return res.status(500).send(err);
 	});
 }

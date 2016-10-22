@@ -6556,3 +6556,21 @@ a.view-all:hover {
 .link-profile-img{
     margin-top: 20px;
 }
+
+@media only screen and (min-width: 1360px) {
+    /*#staff-panel {
+        position: fixed;
+        top: 172px;
+        right: 20px;
+        width: 558px;
+    }*/
+}
+
+@media only screen and (min-width: 996px) {
+    /*#staff-panel {
+        position: fixed;
+        top: 172px;
+        right: 20px;
+        width: 493px;
+    }*/
+}

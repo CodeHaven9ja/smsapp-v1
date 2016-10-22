@@ -10,6 +10,7 @@ service.getStaffMembers = GetStaffMembers;
 service.getStaffMember = GetStaffMember;
 service.newStaffMember = NewStaffMember;
 service.activateStaff = ActivateStaff;
+service.cOrUposition = cOrUposition;
 
 module.exports = service;
 
@@ -76,8 +77,6 @@ function GetStaffMember(token, id) {
 
 function ActivateStaff(token, staff) {
   var id = staff.objectId;
-
-  console.log("+++++ Pruned staff +++++", token);
   var s;
   if (server_url) {
     s = server_url + '/classes/_User/'+id;
@@ -95,4 +94,25 @@ function ActivateStaff(token, staff) {
     }
   };
   return r.put(options);
+}
+
+function cOrUposition(token, staff) {
+  var s;
+  if (server_url) {
+    s = server_url + '/functions/cOrUposition';
+  }
+
+  var options = {
+    url: s  || config.apiUrl + '/functions/cOrUposition',
+    headers: {
+      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Revocable-Session': 1,
+      "X-Parse-Session-Token": token,
+      'Content-Type': 'application/json'
+    },
+    json:{
+      staff : staff
+    }
+  };
+  return r.post(options);
 }

@@ -7,6 +7,7 @@ function StaffService($http, $q){
   service.getStaffMembers = GetStaffMembers;
   service.createNewStaffMember = CreateNewStaffMember;
   service.updateStaff = UpdateStaff;
+  service.createOrUpdateStaffPosition = CreateOrUpdateStaffPosition;
   
   return service;
 	
@@ -24,6 +25,10 @@ function StaffService($http, $q){
 
 	function UpdateStaff(staff){
 		return $http.put('/dash/staff/'+staff.objectId, staff).then(handleSuccess, handleError);
+	}
+
+	function CreateOrUpdateStaffPosition(pos) {
+		return $http.post('/dash/staff/position', pos).then(handleSuccess, handleError);
 	}
 
 	// private functions

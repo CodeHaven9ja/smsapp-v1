@@ -25,7 +25,7 @@
 							{{s.firstName}} {{s.lastName}}
 							<p>{{p.objectId}}</p>
 							<span  class=" read tooltips" data-original-title="Mark as Read" data-toggle="tooltip" data-placement="left">
-								<span ng-if="s.profile" class="label label-success">Linked</span>
+								<span ng-if="s.profile.position" class="label label-success">Linked</span>
 							    <i ng-class="{'fa-circle': s.isActive, 'fa-circle-o': !s.isActive}" class="fa"></i>
 							</span>
 						</a>
@@ -39,7 +39,8 @@
 		</div>
 	</div>
 	<!-- Staff Panel -->
-	<div class="col-md-6" ng-if="admSCrtl.currentActive">
+
+	<div id="staff-panel" class="col-md-6" ng-if="admSCrtl.currentActive">
 		<div class="panel">
 			<header class="panel-heading">
 				Staff Profile
@@ -62,7 +63,7 @@
 						<img gravatar-src="admSCrtl.currentActive.email" gravatar-size="100" class="img-responsive img-thumbnail pull-right link-profile-img">
 					</div>
 				</div>
-				<div class="row">
+				<div class="row s-row">
 					<div class="col-xs-12">
 						<span class="name">
               <b>
@@ -78,6 +79,20 @@
 					    	</span>
 							</span>
 						</span>
+					</div>
+				</div>
+
+				<div class="row" ng-if="admSCrtl.currentActive.isActive">
+					<div class="form-group">
+						<label class="col-sm-2 control-label col-lg-2">Position</label>
+						<div class="col-lg-10">
+							<select ng-model="admSCrtl.currentActive.profile.position" class="form-control m-b-10">
+								<option value="principal">Principal</option>
+								<option value="classTeacher">Teacher</option>
+								<option value="non-acad">Non-Academic</option>
+								<option value="burser">Burser</option>
+							</select>
+						</div>
 					</div>
 				</div>
 			</section>
