@@ -10,7 +10,20 @@ function Service($http, $q, $httpParamSerializerJQLike) {
 	service.GetParent = GetParent;
 	service.LinkParent = LinkParent;
 	service.RemoveLink = RemoveLink;
+	service.NewStudent = NewStudent;
 	return service;
+
+	function NewStudent(student) {
+		return $http({
+			method: 'POST',
+			url: '/1/users',
+			headers: {
+				'X-Parse-Application-Id': '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
+				'X-Parse-Revocable-Session': 1
+			},
+			data: student
+		});
+	}
 	
 	function GetAllStudents() {
 		return $http.get('/dash/students', { cache: true}).then(handleSuccess, handleError);

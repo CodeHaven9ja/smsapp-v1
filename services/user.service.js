@@ -3,7 +3,7 @@ var r = require('../modules/service-response.js');
 
 var service = {};
 
-var mountPath = process.env.PARSE_MOUNT || '/parse';
+var mountPath = process.env.PARSE_MOUNT || '/1';
 
 service.toggleUserActivation = ToggleUserActivation;
 service.updateUser = UpdateUser;
@@ -25,10 +25,10 @@ function UpdateUser(userToken, userId, f) {
   var options = {
     url: s  || config.apiUrl + '/classes/_User/'+userId,
     headers: {
-      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Application-Id': process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
       'X-Parse-Revocable-Session': 1,
       "X-Parse-Session-Token": userToken,
-      'X-Parse-Master-Key': process.env.MASTER_KEY || 'myMasterKey',
+      'X-Parse-Master-Key': process.env.MASTER_KEY || '2h7bu8iPlLZ43Vt80rB97X2CDFmY087P',
       'Content-Type': 'application/json'
     },
     json : f
@@ -45,10 +45,10 @@ function ToggleUserActivation(userToken, userId, isActive) {
   var options = {
     url: s  || config.apiUrl + '/classes/_User/'+userId,
     headers: {
-      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Application-Id': process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
       'X-Parse-Revocable-Session': 1,
       "X-Parse-Session-Token": userToken,
-      'X-Parse-Master-Key': process.env.MASTER_KEY || 'myMasterKey',
+      'X-Parse-Master-Key': process.env.MASTER_KEY || '2h7bu8iPlLZ43Vt80rB97X2CDFmY087P',
       'Content-Type': 'application/json'
     },
     json : {

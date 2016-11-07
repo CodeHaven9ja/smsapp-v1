@@ -4,7 +4,7 @@ var r = require('../modules/service-response.js');
 
 var service = {};
 
-var mountPath = process.env.PARSE_MOUNT || '/parse';
+var mountPath = process.env.PARSE_MOUNT || '/1';
 
 service.searchParent = SearchParent; 
 
@@ -25,7 +25,7 @@ function SearchParent(token, q) {
   var options = {
     url: s  || config.apiUrl + '/functions/searchParent',
     headers: {
-      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Application-Id': process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
       'X-Parse-Revocable-Session': 1,
       "X-Parse-Session-Token": token,
       'Content-Type': 'application/json'

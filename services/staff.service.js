@@ -4,7 +4,7 @@ var r = require('../modules/service-response.js');
 
 var service = {};
 
-var mountPath = process.env.PARSE_MOUNT || '/parse';
+var mountPath = process.env.PARSE_MOUNT || '/1';
 
 service.getStaffMembers = GetStaffMembers; 
 service.getStaffMember = GetStaffMember;
@@ -29,7 +29,7 @@ function NewStaffMember(token, staff) {
   var options = {
     url: s  || config.apiUrl + '/users',
     headers: {
-      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Application-Id': process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
       'X-Parse-Revocable-Session': 1,
       "X-Parse-Session-Token": token,
       'Content-Type': 'application/json'
@@ -48,7 +48,7 @@ function GetStaffMembers(token) {
   var options = {
     url: s  || config.apiUrl + '/functions/getStaffMembers',
     headers: {
-      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Application-Id': process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
       'X-Parse-Revocable-Session': 1,
       "X-Parse-Session-Token": token,
       'Content-Type': 'application/json'
@@ -66,7 +66,7 @@ function GetStaffMember(token, id) {
   var options = {
     url: s  || config.apiUrl + '/classes/_User/'+id,
     headers: {
-      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Application-Id': process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
       'X-Parse-Revocable-Session': 1,
       "X-Parse-Session-Token": token,
       'Content-Type': 'application/json'
@@ -85,8 +85,8 @@ function ActivateStaff(token, staff) {
   var options = {
     url: s  || config.apiUrl + '/classes/_User/'+id,
     headers: {
-      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
-      'X-Parse-Master-Key': process.env.MASTER_KEY || 'myMasterKey',
+      'X-Parse-Application-Id': process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
+      'X-Parse-Master-Key': process.env.MASTER_KEY || '2h7bu8iPlLZ43Vt80rB97X2CDFmY087P',
       'Content-Type': 'application/json'
     },
     json : {
@@ -105,7 +105,7 @@ function cOrUposition(token, staff) {
   var options = {
     url: s  || config.apiUrl + '/functions/cOrUposition',
     headers: {
-      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Application-Id': process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
       'X-Parse-Revocable-Session': 1,
       "X-Parse-Session-Token": token,
       'Content-Type': 'application/json'

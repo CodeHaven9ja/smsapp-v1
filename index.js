@@ -26,29 +26,29 @@ if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 // Serve the Parse API on the /parse URL prefix
-var mountPath = process.env.PARSE_MOUNT || '/parse';
+var mountPath = process.env.PARSE_MOUNT || '/1';
 
 var serverUri;
 if (process.env.PARSE_SERVER_URI) {
   serverUri = process.env.PARSE_SERVER_URI + process.env.PARSE_MOUNT;
 } else {
-  serverUri = 'http://localhost:3000/parse';
+  serverUri = 'http://localhost:3000/1';
 }
 var publicServerURL;
 if (process.env.PUB_SERVER_URL) {
   publicServerURL = process.env.PUB_SERVER_URL + mountPath;
 } else {
-  publicServerURL = 'http://localhost:3000/parse';
+  publicServerURL = 'http://localhost:3000/1';
 }
 
-Parse.initialize(process.env.APP_ID || 'myAppId', "unused", process.env.MASTER_KEY || 'myMasterKey');
+Parse.initialize(process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC', "unused", process.env.MASTER_KEY || '2h7bu8iPlLZ43Vt80rB97X2CDFmY087P');
 Parse.serverURL = serverUri;
 
 var api = new ParseServer({
   databaseURI: databaseUri || 'mongodb://localhost:27017/smsappv1',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
-  appId: process.env.APP_ID || 'myAppId',
-  masterKey: process.env.MASTER_KEY || 'myMasterKey', //Add your master key here. Keep it secret!
+  appId: process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
+  masterKey: process.env.MASTER_KEY || '2h7bu8iPlLZ43Vt80rB97X2CDFmY087P', //Add your master key here. Keep it secret!
   serverURL: serverUri,  // Don't forget to change to https if needed
   // Enable email verification
   appName: 'Schoolpop',
@@ -73,11 +73,25 @@ var api = new ParseServer({
 var dashboard = new ParseDashboard({
   "apps": [
     {
-      "serverURL": "http://localhost:3000/parse",
+      "serverURL": "http://localhost:3000/1",
       "appId": "myAppId",
       "masterKey": "myMasterKey",
       "appName": "SMS Local"
-    },
+    }
+  ],
+  "users":[
+    {
+      "user":"mrsmith9ja",
+      "pass":"P@b0p0v!b"
+    },{
+      "user":"xlboyz",
+      "pass":"Summer500!"
+    }
+  ]
+}, true);
+
+var admin = new ParseDashboard({
+  "apps": [
     {
       "serverURL": serverUri,
       "appId": process.env.APP_ID,
@@ -135,6 +149,7 @@ app.use(express.static(path.join(__dirname, '/bower_components')));
 app.use(mountPath, api);
 // make the Parse Dashboard available at /dashboard
 app.use('/dashboard', dashboard);
+app.use('/admin', admin);
 // Establish routes
 
 // make '/app' default route
@@ -154,7 +169,7 @@ var r = require('./modules/service-response.js');
 
 app.post('/resetPassword', (req, res) =>{
 
-  var mountPath = process.env.PARSE_MOUNT || '/parse';
+  var mountPath = process.env.PARSE_MOUNT || '/1';
   var server_url;
 
   if (process.env.PARSE_SERVER_URI) {

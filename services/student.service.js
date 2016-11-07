@@ -4,7 +4,7 @@ var r = require('../modules/service-response.js');
 
 var service = {};
 
-var mountPath = process.env.PARSE_MOUNT || '/parse';
+var mountPath = process.env.PARSE_MOUNT || '/1';
 
 service.getStudents = GetStudents;
 service.getStudent = GetStudent;
@@ -30,7 +30,7 @@ function GetStudentAttendance(token, id) {
   var options = {
     url: s  || config.apiUrl + '/functions/getStudentAttendance',
     headers: {
-      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Application-Id': process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
       'X-Parse-Revocable-Session': 1,
       "X-Parse-Session-Token": token,
       'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ function GetStudentAttendanceToday(token, id) {
   var options = {
     url: s  || config.apiUrl + '/functions/getStudentAttendanceToday',
     headers: {
-      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Application-Id': process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
       'X-Parse-Revocable-Session': 1,
       "X-Parse-Session-Token": token,
       'Content-Type': 'application/json'
@@ -72,7 +72,7 @@ function LinkParentToStudent(token, sid, pid) {
   var options = {
     url: s  || config.apiUrl + '/functions/linkParent',
     headers: {
-      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Application-Id': process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
       'X-Parse-Revocable-Session': 1,
       "X-Parse-Session-Token": token,
       'Content-Type': 'application/json'
@@ -93,7 +93,7 @@ function GetStudent(token, id) {
   var options = {
     url: s  || config.apiUrl + '/classes/_User/'+id,
     headers: {
-      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Application-Id': process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
       'X-Parse-Revocable-Session': 1,
       "X-Parse-Session-Token": token,
       'Content-Type': 'application/json'
@@ -116,7 +116,7 @@ function GetStudentParentByParentId(userToken, id) {
       }
     },
     headers: {
-      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Application-Id': process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
       'X-Parse-Revocable-Session': 1,
       "X-Parse-Session-Token": userToken,
       'Content-Type': 'application/json'
@@ -140,10 +140,11 @@ function GetStudents(userToken, page) {
     		'role': 'user'
     	},
     	limit : limit,
+      order: "-createdAt",
     	skip: sk
     },
     headers: {
-      'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+      'X-Parse-Application-Id': process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
       'X-Parse-Revocable-Session': 1,
       "X-Parse-Session-Token": userToken,
       'Content-Type': 'application/json'

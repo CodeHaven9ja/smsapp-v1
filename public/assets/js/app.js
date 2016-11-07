@@ -88,6 +88,18 @@
                     controller: 'AdminAttendanceCtrl',
                     controllerAs: 'admACrtl'
                 })
+                .state('adminDemograph', {
+                    url: '/admin/demography',
+                    templateUrl: 'admin/demography.html',
+                    controller: 'AdminDemographCtrl',
+                    controllerAs: 'admDCrtl'
+                })
+                .state('adminReport', {
+                    url: '/admin/reports',
+                    templateUrl: 'admin/reports.html',
+                    controller: 'AdminReportCtrl',
+                    controllerAs: 'admRCrtl'
+                })
         }
         function run($http, $rootScope, $window) {
         	// body...

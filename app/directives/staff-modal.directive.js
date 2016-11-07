@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .directive('sclpopStaffModal', directive);
+        .directive('sclpopUserModal', directive);
 
     directive.$inject = [];
 
