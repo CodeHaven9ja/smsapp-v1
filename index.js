@@ -74,8 +74,8 @@ var dashboard = new ParseDashboard({
   "apps": [
     {
       "serverURL": "http://localhost:3000/1",
-      "appId": "myAppId",
-      "masterKey": "myMasterKey",
+      "appId": "9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC",
+      "masterKey": "2h7bu8iPlLZ43Vt80rB97X2CDFmY087P",
       "appName": "SMS Local"
     }
   ],

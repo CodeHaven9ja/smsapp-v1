@@ -1,0 +1,30 @@
+<li>
+    <h3 class="navigation-title">Navigation</h3>
+</li>
+<li class="active">
+    <a href="#/"><i class="fa fa-home"></i> <span>Dashboard</span></a>
+</li>
+<li class="menu-list">
+	<a id="records" href="" ng-click="sb.sidebarClick('#records')"><i class="fa fa-laptop"></i><span>My Children / Ward</span></a>
+	<ul class="child-list">
+		<li><a href="#/parent/list-children"> List Children / Ward</a></li>
+		<li><a href="#/students/records/{{sb.user.objectId}}"> Reports</a></li>
+	</ul>
+</li>
+<li class="menu-list">
+	<a href="" id="curriculum" ng-click="sb.sidebarClick('#curriculum')"><i class="fa fa-book"></i><span>Curriculum</span></a>
+	<ul class="child-list">
+		<li><a href="#/students/timetable/{{sb.user.objectId}}"> Time Table</a></li>
+		<li><a href="#/students/events/{{sb.user.objectId}}"> Calendar</a></li>
+		<li><a href="#/news">Newsletter &amp; Bulletin</a></li>
+	</ul>
+</li>
+<li><h3 class="navigation-title">Extra</h3></li>
+<li class="menu-list">
+	<a id="messages" href="javascript:;" ng-click="sb.sidebarClick('#messages')"><i class="fa fa-envelope-o"></i><span>Messages <span class="label noti-arrow bg-danger pull-right">4 Unread</span></span></a>
+	<ul class="child-list">
+		<li><a href="inbox.html"> Inbox</a></li>
+		<li><a href="inbox-details.html"> View Mail</a></li>
+		<li><a href="inbox-compose.html"> Compose Mail</a></li>
+	</ul>
+</li>

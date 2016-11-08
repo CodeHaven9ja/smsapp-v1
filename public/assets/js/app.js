@@ -100,6 +100,12 @@
                     controller: 'AdminReportCtrl',
                     controllerAs: 'admRCrtl'
                 })
+                .state('parentListChildren', {
+                    url: '/parent/list-children',
+                    templateUrl: 'parent/list-children.html',
+                    controller: 'ParentListCtrl',
+                    controllerAs: 'pListCrtl'
+                })
         }
         function run($http, $rootScope, $window) {
         	// body...

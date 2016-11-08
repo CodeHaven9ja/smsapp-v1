@@ -78,7 +78,8 @@ function LinkParentToStudent(token, sid, pid) {
       'Content-Type': 'application/json'
     },
     json:{
-      sid: sid
+      sid: sid,
+      pid: pid
     }
   };
   return r.post(options);

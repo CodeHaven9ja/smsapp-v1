@@ -6,7 +6,21 @@ function Service($http, $q, $httpParamSerializerJQLike){
 
 	service.ToggleActivate = ToggleActivate;
 
+	service.GetChildren = GetChildren;
+
 	return service;
+
+	function GetChildren(user) {
+		return $http({
+			method: 'POST',
+			url: '/1/functions/listChildren',
+			headers: {
+				'X-Parse-Application-Id': '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
+				'X-Parse-Session-Token': user.sessionToken,
+      	'Content-Type': 'application/json'
+			}
+		}).then(handleSuccess, handleError);
+	}
 
 	function ToggleActivate(parent) {
 		return $http.put('/dash/students/parent', parent).then(handleSuccess, handleError);

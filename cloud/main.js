@@ -1,4 +1,7 @@
 /*jshint esversion: 6 */
+
+require(__dirname + '/parent.js');
+
 Parse.Cloud.define('hello', (req, res) => {
   res.success('Hi');
 });
