@@ -1,16 +1,31 @@
 angular.module('app')
-	.controller('ParentListCtrl', ['ParentService', 'UserService',listChildren]);
+	.controller('ParentListCtrl', ['ParentService', 'UserService', 'StudentService',listChildren]);
 
-function listChildren(ParentService, UserService) {
+function listChildren(ParentService, UserService, StudentService) {
 	var pListCrtl = this;
+
+	pListCrtl.parent;
+
 	pListCrtl.children = [];
 
 	UserService.GetCurrent().then(function(user){
+		pListCrtl.parent = user;
 		return ParentService.GetChildren(user);
 	}).then(function(students){
 		for (var i = 0; i < students.result.length; i++) {
-			pListCrtl.children.push(students.result[i].user);
+			var student = students.result[i].user;
+			console.log(pListCrtl.parent);
+			StudentService.GetStudentClass(students.result[i].user.objectId,
+	 			pListCrtl.parent).then(function(clazz){
+					if (clazz.result) {
+						student.class = clazz.result;
+					} else {
+						student.class = {
+							commonName: 'Not assigned to a class.'
+						}
+					}
+					pListCrtl.children.push(student);
+			});
 		}
-		console.log(pListCrtl.children);
 	});
 }

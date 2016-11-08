@@ -162,7 +162,7 @@ angular.module('app')
  			admCrtl.newStudent.deleteClear = true;
 
  			StudentService.NewStudent(admCrtl.newStudent).then(function(u){
- 				return StudentService.GetStudent(u.data.objectId);
+ 				return StudentService.GetStudent(u.objectId);
  			}).then(function(stu){
  				toaster.pop('success', "Done!", stu.firstName+" added!");
  				admCrtl.students.unshift(stu);

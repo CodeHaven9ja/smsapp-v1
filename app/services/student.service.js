@@ -11,7 +11,23 @@ function Service($http, $q, $httpParamSerializerJQLike) {
 	service.LinkParent = LinkParent;
 	service.RemoveLink = RemoveLink;
 	service.NewStudent = NewStudent;
+	service.GetStudentClass = GetStudentClass;
 	return service;
+
+	function GetStudentClass(id, parent) {
+		return $http({
+			method: 'POST',
+			url: '/1/functions/getStudentClass',
+			headers:{
+				'X-Parse-Application-Id': '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
+				'X-Parse-Session-Token': parent.sessionToken,
+      	'Content-Type': 'application/json'
+			},
+			data:{
+				sid : id
+			}
+		}).then(handleSuccess, handleError);
+	}
 
 	function NewStudent(student) {
 		return $http({
@@ -22,7 +38,7 @@ function Service($http, $q, $httpParamSerializerJQLike) {
 				'X-Parse-Revocable-Session': 1
 			},
 			data: student
-		});
+		}).then(handleSuccess, handleError);
 	}
 	
 	function GetAllStudents() {
