@@ -100,11 +100,23 @@
                     controller: 'AdminReportCtrl',
                     controllerAs: 'admRCrtl'
                 })
+                .state('adminClassNew', {
+                    url: '/class/new',
+                    templateUrl: 'admin/class/new.html',
+                    controller: 'AdminClassNewCtrl',
+                    controllerAs: 'admCNCrtl'
+                })
                 .state('parentListChildren', {
                     url: '/parent/list-children',
                     templateUrl: 'parent/list-children.html',
                     controller: 'ParentListCtrl',
                     controllerAs: 'pListCrtl'
+                })
+                .state('teacherEnroll', {
+                    url: '/teacher/enroll',
+                    templateUrl: 'admin/enroll.html',
+                    controller: 'AdminCtrl',
+                    controllerAs: 'admCrtl'
                 })
         }
         function run($http, $rootScope, $window) {

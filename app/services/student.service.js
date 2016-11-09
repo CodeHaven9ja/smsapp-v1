@@ -12,7 +12,23 @@ function Service($http, $q, $httpParamSerializerJQLike) {
 	service.RemoveLink = RemoveLink;
 	service.NewStudent = NewStudent;
 	service.GetStudentClass = GetStudentClass;
+	service.updatePCID = UpdatePCID;
 	return service;
+
+	function UpdatePCID(pcid, sid) {
+		return $http({
+			method: 'POST',
+			url: '/1/functions/updateStudentPCID',
+			headers:{
+				'X-Parse-Application-Id': '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
+      	'Content-Type': 'application/json'
+			},
+			data:{
+				pcid : pcid,
+				sid : sid
+			}
+		}).then(handleSuccess, handleError);
+	}
 
 	function GetStudentClass(id, parent) {
 		return $http({

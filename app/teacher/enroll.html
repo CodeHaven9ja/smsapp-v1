@@ -47,10 +47,10 @@
 					<div class="pull-right">
 						<button ng-if="!$isFirst()" class="btn btn-primary" ng-click="$previousStep()">
 							<span class="fa fa-chevron-left"></span>
-							Previous
+							Activate Account
 						</button>
-						<button ng-if="!$isLast()" class="btn btn-success" ng-click="$nextStep()">
-							Next
+						<button ng-disabled="$isLast() || !admCrtl.student.isActive" class="btn btn-success" ng-click="$nextStep()">
+							Link Account
 							<span class="fa fa-chevron-right"></span>
 						</button>
 					</div>

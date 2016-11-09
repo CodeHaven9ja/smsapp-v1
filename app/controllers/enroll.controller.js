@@ -1,6 +1,6 @@
 angular.module('app')
-	.controller('AdminCtrl', ['$scope','StudentService','toaster', '$filter', 'PasswordGenerator', 
-		function($scope, StudentService,toaster,$filter,PasswordGenerator){
+	.controller('AdminCtrl', ['$scope','StudentService','toaster', '$filter', 'PasswordGenerator', 'StaffService', 
+		function($scope, StudentService,toaster,$filter,PasswordGenerator, StaffService){
 
 		var admCrtl = this;
 
@@ -10,6 +10,7 @@ angular.module('app')
 		admCrtl.student = {};
 		admCrtl._parent = {};
 		admCrtl.currentActive;
+		admCrtl.classes = [];
 		admCrtl.steps = [
 			{
         templateUrl: 'admin/student-enroll-steps/activate.html',
@@ -19,6 +20,10 @@ angular.module('app')
     	{
         templateUrl: 'admin/student-enroll-steps/link.html',
         title: 'Link Parent'
+    	},
+    	{
+        templateUrl: 'admin/student-enroll-steps/enroll.html',
+        title: 'Enroll To Class'
     	}
 		];
 
@@ -37,6 +42,11 @@ angular.module('app')
 			admCrtl.newStudent.username = user.toLowerCase(); 
 		});
 
+
+
+		StaffService.getClasses().then(function(c){
+			admCrtl.classes = c.result;
+		});
 
 		admCrtl.onStudentClick = function(s){
 			admCrtl.parent = {};
@@ -144,6 +154,18 @@ angular.module('app')
 			});
 		}
 
+		admCrtl.class = {};
+
+
+		admCrtl.addToClass = function(){
+			StaffService.addToClass(admCrtl.class.objectId, admCrtl.student.objectId).then(function(c){
+				toaster.pop('success', "Done!", admCrtl.student.firstName+" linked to class.");
+				return c.result;
+			}).then(function(d){
+				return StudentService.updatePCID(d.class.objectId,d.student.objectId);
+			});
+		}
+
 		admCrtl.clearParent = function(){
 			admCrtl.parent = {};
 		}
@@ -172,6 +194,15 @@ angular.module('app')
 
  		});
 
+	}])
+	.controller('AdminClassNewCtrl',['StaffService',function(StaffService){
+		var admCNCrtl = this;
+		admCNCrtl.class = {};
+		admCNCrtl.submitClass = function(){
+			StaffService.createClass(admCNCrtl.class).then(function(c){
+				console.log(c);
+			})
+		}
 	}])
 	.controller('AdminStudentCtrl', [
 		'$scope',

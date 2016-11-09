@@ -1,0 +1,10 @@
+<form class="form-horizontal">
+	<div class="form-group" ng-model="admCrtl.class" >
+		<div class="col-sm-10">
+			<select class="form-control" name="classId" ng-model="admCrtl.class.objectId">
+				<option ng-repeat="c in admCrtl.classes" value="{{c.objectId}}">{{c.commonName}}</option>
+			</select>
+		</div>
+	</div>
+	<input class="btn btn-primary" type="submit" value="Add to Class" ng-click="admCrtl.addToClass()">
+</form>

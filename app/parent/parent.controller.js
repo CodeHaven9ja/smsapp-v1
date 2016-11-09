@@ -14,7 +14,6 @@ function listChildren(ParentService, UserService, StudentService) {
 	}).then(function(students){
 		for (var i = 0; i < students.result.length; i++) {
 			var student = students.result[i].user;
-			console.log(pListCrtl.parent);
 			StudentService.GetStudentClass(students.result[i].user.objectId,
 	 			pListCrtl.parent).then(function(clazz){
 					if (clazz.result) {

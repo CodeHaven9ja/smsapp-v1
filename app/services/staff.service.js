@@ -1,6 +1,6 @@
-angular.module('app').factory('StaffService', StaffService);
+angular.module('app').factory('StaffService', ['UserService', '$http', '$q',StaffService]);
 
-function StaffService($http, $q){
+function StaffService(UserService, $http, $q){
   var service = {};
   
   service.linkStaffToClass = LinkStaffToClass;
@@ -8,6 +8,9 @@ function StaffService($http, $q){
   service.createNewStaffMember = CreateNewStaffMember;
   service.updateStaff = UpdateStaff;
   service.createOrUpdateStaffPosition = CreateOrUpdateStaffPosition;
+  service.createClass = CreateClass;
+  service.getClasses = GetClasses;
+  service.addToClass = AddToClass;
   
   return service;
 	
@@ -29,6 +32,53 @@ function StaffService($http, $q){
 
 	function CreateOrUpdateStaffPosition(pos) {
 		return $http.post('/dash/staff/position', pos).then(handleSuccess, handleError);
+	}
+
+	function CreateClass(clazz) {
+		return UserService.GetCurrent().then(function(staff){
+			return $http({
+				method: 'POST',
+				url:'/1/classes/ClassRoom',
+				data: clazz,
+				headers:{
+					'X-Parse-Application-Id': '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
+					'X-Parse-Session-Token': staff.sessionToken,
+	      	'Content-Type': 'application/json'
+				}
+			});
+		}).then(handleSuccess, handleError);
+	}
+
+	function AddToClass(cid,sid){
+		return UserService.GetCurrent().then(function(staff){
+			return $http({
+				method: 'POST',
+				url:'/1/functions/addToClass',
+				data: {
+					cid: cid,
+					sid: sid
+				},
+				headers:{
+					'X-Parse-Application-Id': '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
+					'X-Parse-Session-Token': staff.sessionToken,
+	      	'Content-Type': 'application/json'
+				}
+			}).then(handleSuccess, handleError);
+		});
+	}
+
+	function GetClasses() {
+		return UserService.GetCurrent().then(function(staff){
+			return $http({
+				method: 'POST',
+				url: '/1/functions/getClasses',
+				headers:{
+					'X-Parse-Application-Id': '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
+					'X-Parse-Session-Token': staff.sessionToken,
+	      	'Content-Type': 'application/json'
+				}
+			})
+		}).then(handleSuccess, handleError);
 	}
 
 	// private functions
