@@ -12,8 +12,17 @@ Parse.Cloud.job("SanitizeUsers", (req, status) =>{
 			console.log(user.get("username"));
 			if (!user.has("emailVerified")) {
 				user.set("emailVerified", false);
-				user.save(null, {useMasterKey: true});
 			}
+			if (!user.has("authData")) {
+				user.set("authData", null);
+			}
+			if (!user.has("deleteClear")) {
+				user.set("deleteClear", false);
+			}
+			if (!user.has("profile")) {
+				user.set("profile", null);
+			}
+			user.save(null, {useMasterKey: true});
 		});
 		status.success('Users sanitized.');
 	}).catch((err) =>{
