@@ -10,6 +10,10 @@ Parse.Cloud.job("SanitizeUsers", (req, status) =>{
 	q.find({useMasterKey: true}).then((users) =>{
 		_.each(users, (user) =>{
 			console.log(user.get("username"));
+			if (!user.has("emailVerified")) {
+				user.set("emailVerified", false);
+				user.save(null, {useMasterKey: true});
+			}
 		});
 		status.success('Users sanitized.');
 	}).catch((err) =>{
