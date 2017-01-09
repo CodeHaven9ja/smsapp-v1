@@ -79,24 +79,7 @@ var dashboard = new ParseDashboard({
       "appName": "SMS Local"
     },
     {
-      // TODO: Fill in remote server info
-    }
-  ],
-  "users":[
-    {
-      "user":"mrsmith9ja",
-      "pass":"P@b0p0v!b"
-    },{
-      "user":"xlboyz",
-      "pass":"Summer500!"
-    }
-  ]
-}, true);
-
-var admin = new ParseDashboard({
-  "apps": [
-    {
-      "serverURL": serverUri,
+      "serverURL": 'http://schoolpop.ng/1',
       "appId": process.env.APP_ID,
       "masterKey": process.env.MASTER_KEY,
       "appName": "Schoolpop.ng Prod",
@@ -149,16 +132,18 @@ app.use(flash());
 app.use(express.static(path.join(__dirname, '/public/assets')));
 app.use(express.static(path.join(__dirname, '/bower_components')));
 
-app.use(mountPath, api);
-// make the Parse Dashboard available at /dashboard
-app.use('/dashboard', dashboard);
-app.use('/admin', admin);
 // Establish routes
 
 // make '/app' default route
 app.get('/', (req, res) => {
     return res.redirect('/home');
 });
+
+app.use(mountPath, api);
+
+// make the Parse Dashboard available at /dashboard
+app.use('/dashboard', dashboard);
+
 
 app.use('/home', require('./routes/home')(Parse));
 app.use('/dash', require('./routes/dash')(Parse));
