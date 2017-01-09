@@ -3,6 +3,7 @@
 require(__dirname + '/parent.js');
 require(__dirname + '/student.js');
 require(__dirname + '/class-man.js');
+require(__dirname + '/course.js');
 
 Parse.Cloud.define('hello', (req, res) => {
   res.success('Hi');

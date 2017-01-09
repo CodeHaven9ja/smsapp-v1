@@ -10,8 +10,16 @@
         	service.getMessages = GetMessages;
         	return service;
 
-        	function GetMessages() {
-            	return $http.get('messages.json', { cache: true}).then(handleSuccess, handleError);
+        	function GetMessages(token, q) {
+            	return $http({
+                    method:"GET", 
+                    url:'/1/classes/Newsletter?include=message&'+q, 
+                    headers:{
+                        "X-Parse-Application-Id":"9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC",
+                        "X-Parse-Session-Token":token
+                    }, 
+                    cache: true
+                }).then(handleSuccess, handleError);
         	}
         }
 

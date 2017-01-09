@@ -13,7 +13,7 @@
             'ngAnimate',
             'uiSwitch',
             'multiStepForm',
-            'countTo'
+            'countTo',
         	])
         .config(config)
         .controller('stepCtrl', ['$scope', 'multiStepFormInstance', 

@@ -77,6 +77,9 @@ var dashboard = new ParseDashboard({
       "appId": "9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC",
       "masterKey": "2h7bu8iPlLZ43Vt80rB97X2CDFmY087P",
       "appName": "SMS Local"
+    },
+    {
+      // TODO: Fill in remote server info
     }
   ],
   "users":[

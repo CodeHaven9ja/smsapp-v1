@@ -2,7 +2,7 @@
     'use strict';
     angular
         .module('app')
-        .controller('NewsCtrl', ['$scope','$window','$interval','$timeout','MessageService',nwCrtl])
+        .controller('NewsCtrl', ['$scope','$window','$interval','$timeout','MessageService', 'UserService' ,nwCrtl])
         .controller('EventsCtrl',['$scope','$window','$interval','$timeout','UserService', 'uiCalendarConfig','$compile',evCrtl])
         .controller('TimeTableCtrl',['$scope','$window','$interval','$timeout','UserService', 'uiCalendarConfig','$compile',ttCrtl])
         .controller('ReportsCtrl',
@@ -46,14 +46,24 @@
             };
         });
 
-        function nwCrtl($scope,$window,$interval,$timeout,MessageService) {
+        function nwCrtl($scope,$window,$interval,$timeout,MessageService, UserService) {
             var nwCrtl = this;
+            nwCrtl.user = {};
             nwCrtl.messageClicked = false;
             nwCrtl.messages = [];
             nwCrtl.message = {};
 
-            MessageService.getMessages().then(function (m){
-                nwCrtl.messages = m;
+            UserService.GetCurrent().then(function(user){
+                nwCrtl.user = user;
+                return user;
+            }).then(function(user){
+                console.log(user);
+                var q = "where={\"$relatedTo\":{\"object\":{\"__type\":\"Pointer\",\"className\":\"Post\",\"objectId\":\"8TOXdXf3tz\"},\"key\":\"likes\"}}";
+                console.log(encodeURIComponent(q));
+                return MessageService.getMessages(user.sessionToken, encodeURIComponent(q));
+            }).then(function(m){
+                console.log(m.results);
+                nwCrtl.messages = m.results;
             });
 
             nwCrtl.selectMail = function(i){
