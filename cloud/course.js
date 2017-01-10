@@ -6,8 +6,10 @@ Parse.Cloud.beforeSave("Course", (req, res) =>{
 	var parentACLKey = "parentOf_"+course.get("student").id;
 	if (!course.existed()) {
 		var courseACL = new Parse.ACL();
-		courseACL.setReadAccess("teacher", true);
-		courseACL.setWriteAccess("teacher", true);
+		courseACL.setRoleReadAccess("teacher", true);
+		courseACL.setRoleWriteAccess("teacher", true);
+		courseACL.setRoleReadAccess("admin", true);
+		courseACL.setRoleWriteAccess("admin", true);
 		courseACL.setReadAccess(course.get("student"), true);
 		courseACL.setReadAccess(parentACLKey, true);
 		course.setACL(courseACL);

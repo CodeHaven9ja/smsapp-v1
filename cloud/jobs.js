@@ -28,4 +28,4 @@ Parse.Cloud.job("SanitizeUsers", (req, status) =>{
 	}).catch((err) =>{
 		status.error(err);
 	});
-})
+});

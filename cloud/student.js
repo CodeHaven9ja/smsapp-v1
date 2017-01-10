@@ -12,3 +12,7 @@ Parse.Cloud.define('getStudentClass', (req, res) =>{
 		return res.error(err);
 	});
 })
+
+// Parse.Cloud.job("CreateInitialReportsPerTerm", (req, status) =>{
+
+// });
