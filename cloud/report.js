@@ -64,8 +64,3 @@ Parse.Cloud.job("CreateInitialReportsPerTerm", (req, status) =>{
 		status.success('Users sanitized.');
 	});
 });
-
-function createReport(user) {
-	// body...
-}
-
