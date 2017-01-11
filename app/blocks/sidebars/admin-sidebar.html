@@ -22,14 +22,6 @@
 		<li><a href="#/parents">View Parents</a></li>
 	</ul>
 </li>
-<li class="menu-list">
-	<a href="" id="curriculum" ng-click="sb.sidebarClick('#curriculum')"><i class="fa fa-book"></i><span>Curriculum</span></a>
-	<ul class="child-list">
-		<li><a href="#/admin/timetable/{{sb.user.objectId}}"> Time Table</a></li>
-		<li><a href="#/admin/events/{{sb.user.objectId}}"> Calendar</a></li>
-		<li><a href="#/news">Newsletter &amp; Bulletin</a></li>
-	</ul>
-</li>
 <li><h3 class="navigation-title">Others</h3></li>
 <li class="menu-list">
 	<a href="" id="staff-man" ng-click="sb.sidebarClick('#staff-man')"><i class="fa fa-book"></i><span>Staff Management</span></a>
@@ -46,10 +38,12 @@
 </li>
 <li><h3 class="navigation-title">Extra</h3></li>
 <li class="menu-list">
-	<a id="messages" href="javascript:;" ng-click="sb.sidebarClick('#messages')"><i class="fa fa-envelope-o"></i><span>Messages <span class="label noti-arrow bg-danger pull-right">4 Unread</span></span></a>
+	<a id="messages" href="javascript:;" ng-click="sb.sidebarClick('#messages')"><i class="fa fa-envelope-o"></i>
+		<span>Messages 
+			<span class="label noti-arrow bg-danger pull-right">4 Unread</span>
+		</span>
+	</a>
 	<ul class="child-list">
-		<li><a href="inbox.html"> Inbox</a></li>
-		<li><a href="inbox-details.html"> View Mail</a></li>
-		<li><a href="inbox-compose.html"> Compose Mail</a></li>
+		<li><a href="#/mail"> Inbox</a></li>
 	</ul>
 </li>

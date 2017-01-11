@@ -118,6 +118,16 @@
                     controller: 'AdminCtrl',
                     controllerAs: 'admCrtl'
                 })
+                .state('mail', {
+                    url: '/mail',
+                    templateUrl: 'mail/index.html',
+                    controller: 'MailController',
+                    controllerAs: 'mailCtrl'
+                })
+                .state('mailCompose', {
+                    url: '/mail/compose',
+                    templateUrl: 'mail/new.html'
+                })
         }
         function run($http, $rootScope, $window) {
         	// body...

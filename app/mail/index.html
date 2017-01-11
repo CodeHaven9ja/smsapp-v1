@@ -1,0 +1,58 @@
+<div class="wrapper no-pad">
+	<!--mail inbox start-->
+		<aside class="col-md-3">
+      <div class="m-title" ng-if="mailCtrl.isInbox">
+        <h3>Inbox</h3>
+        <span>{{mailCtrl.unRead}} unread mail</span>
+      </div>
+      <div class="m-title" ng-if="!mailCtrl.isInbox">
+        <h3>Sent</h3>
+        <span>Outbox messages</span>
+      </div>
+      <div class="inbox-body">
+          <a class="btn btn-compose" href="#/mail/compose">
+              Compose
+          </a>
+      </div>
+      <ul class="inbox-nav inbox-divider">
+          <li ng-click="mailCtrl.toggle(0)" ng-class="{active : mailCtrl.isInbox}">
+              <a>
+              	<i class="fa fa-inbox"></i> 
+              	Inbox <span class="label label-danger pull-right">{{mailCtrl.inbox.length}}</span>
+            	</a>
+          </li>
+          <li ng-click="mailCtrl.toggle(1)" ng-class="{active : !mailCtrl.isInbox}">
+              <a>
+              	<i class="fa fa-envelope"></i> 
+              	Sent Mail <span class="label label-danger pull-right">{{mailCtrl.outbox.length}}</span>
+            	</a>
+          </li>
+      </ul>
+  	</aside>
+  	<aside class="col-md-9" style="height: 1200px">
+      <div class="inbox-body no-pad">
+	      <table class="table table-inbox table-hover">
+		      <tbody>
+			      <tr ng-repeat="mail in mailCtrl.mainBox" ng-class="{unread: !mail.isRead}">
+			      	<td class="inbox-small-cells">
+	              <label class="checkbox-custom check-success">
+	                <input type="checkbox" value="c1" id="c1"> <label for="c1"> </label>
+	              </label>
+		          </td>
+		          <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
+		          <td>
+	              <a href="#" class="avatar">
+	                <img gravatar-src="mail.from.email" gravatar-size="30" alt="">
+	              </a>
+		          </td>
+		          <td class="view-message  dont-show">{{mail.from.firstName + " "+ mail.from.lastName}}</td>
+		          <td class="view-message ">{{mail.subject}}</td>
+		          <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
+		          <td class="view-message  text-right">{{mail.createdAt | date:'medium'}}</td>
+			      </tr>
+		      </tbody>
+	      </table>
+      </div>
+    </aside>
+	<!--mail inbox end-->
+</div>

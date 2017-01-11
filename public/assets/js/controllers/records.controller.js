@@ -58,18 +58,21 @@
                 return user;
             }).then(function(user){
                 console.log(user);
-                var q = "where={\"$relatedTo\":{\"object\":{\"__type\":\"Pointer\",\"className\":\"Post\",\"objectId\":\"8TOXdXf3tz\"},\"key\":\"likes\"}}";
-                console.log(encodeURIComponent(q));
-                return MessageService.getMessages(user.sessionToken, encodeURIComponent(q));
+                // var q = "where={\"$relatedTo\":{\"object\":{\"__type\":\"Pointer\",\"className\":\"Post\",\"objectId\":\"8TOXdXf3tz\"},\"key\":\"likes\"}}";
+                // console.log(encodeURIComponent(q));
+                return MessageService.getMessages(user.sessionToken);
             }).then(function(m){
                 console.log(m.results);
                 nwCrtl.messages = m.results;
             });
 
             nwCrtl.selectMail = function(i){
-                nwCrtl.message = nwCrtl.messages[i].message;
-                nwCrtl.messages[i].isRead = true;
-                nwCrtl.messageClicked = true;
+                MessageService.getMessage(nwCrtl.user.sessionToken, nwCrtl.messages[i].message.objectId).then(function(m){
+                    nwCrtl.message = m;
+                    nwCrtl.messages[i].isRead = true;
+                    nwCrtl.messages[i].message = nwCrtl.message;
+                    nwCrtl.messageClicked = true;
+                });
             }
         }
 

@@ -1,1 +1,20 @@
-h1 Page not found
+doctype html
+html(lang='en')
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0")
+		meta(name="author", content="Thompson Edolo")
+		meta(name="keyword", content="slick, flat, dashboard, bootstrap, admin, template, theme, responsive, fluid, retina")
+		meta(name="description", content="")
+		link(rel="shortcut icon", href="/img/logo.png", type="image/png")
+
+		include ./includes/styles.pug
+
+
+	body.body-404
+		section.error-wrapper
+			i.icon-404
+			.text-center
+				h2.green-bg Page not found
+			p Something went wrong or that page doesn’t exist yet.
+			a(href="/", class="back-btn") Back to Home
