@@ -1,0 +1,42 @@
+<!-- {{mailCtrl.mail}} -->
+
+<div class="inbox-body">
+  <div class="heading-inbox row">
+
+      <div class="col-md-12">
+          <h4> {{mailCtrl.mail.subject}}</h4>
+      </div>
+
+
+
+  </div>
+  <div class="sender-info">
+    <div class="row">
+      <div class="col-md-6 col-xs-12">
+          <div class="pull-left">
+              <img alt="" gravatar-src="mailCtrl.mail.from.email">
+          </div>
+          <div class="s-info">
+              <strong>{{mailCtrl.mail.from.firstName + " "+ mailCtrl.mail.from.lastName}}</strong>
+              <span>[{{mailCtrl.mail.from.email}}]</span>
+          </div>
+
+      </div>
+      <div class="col-md-6 col-xs-12">
+          <p class="date pull-right"> {{mailCtrl.mail.createdAt | date:'medium'}} </p>
+
+      </div>
+    </div>
+  </div>
+  <div class="view-mail">
+    {{mailCtrl.mail.message.text}}
+  </div>
+  <div class="reply-mail m-b-20">
+    <form action="">
+      <textarea ng-model="mailCtrl.newMessage.text" class="form-control" name="" id="" cols="30" rows="5">Reply</textarea>
+    </form>
+  </div>
+  <div class="compose-btn pull-right">
+      <a class="btn  btn-success" ng-click='mailCtrl.send("RE: "+mailCtrl.mail.subject, mailCtrl.mail.from.objectId)'> Reply Mail</a>
+  </div>
+</div>

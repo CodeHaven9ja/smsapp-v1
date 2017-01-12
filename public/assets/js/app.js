@@ -124,9 +124,21 @@
                     controller: 'MailController',
                     controllerAs: 'mailCtrl'
                 })
-                .state('mailCompose', {
-                    url: '/mail/compose',
+                .state('mail.inbox',{
+                    url: '/inbox',
+                    templateUrl: 'mail/inbox.html'
+                })
+                .state('mail.outbox',{
+                    url: '/outbox',
+                    templateUrl: 'mail/inbox.html'
+                })
+                .state('mail.compose', {
+                    url: '/compose',
                     templateUrl: 'mail/new.html'
+                })
+                .state('mail.read', {
+                    url: '/read',
+                    templateUrl: 'mail/read.html'
                 })
         }
         function run($http, $rootScope, $window) {

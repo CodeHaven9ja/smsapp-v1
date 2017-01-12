@@ -1,0 +1,48 @@
+<div class="inbox-body">
+    <div class="compose-mail">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="to" class="col-sm-1 control-label">To</label>
+                <div class="col-sm-11">
+                    <input type="text" tabindex="1" id="to" class="form-control">
+                </div>
+                <div class="compose-options">
+                    <a onclick="$(this).hide(); $('#cc').parents('.form-group').removeClass('hidden'); $('#cc').focus();" href="javascript:;">Cc</a>
+                    <a onclick="$(this).hide(); $('#bcc').parents('.form-group').removeClass('hidden'); $('#bcc').focus();" href="javascript:;">Bcc</a>
+                </div>
+            </div>
+            <div class="form-group hidden">
+                <label for="cc" class="col-sm-1 control-label">Cc</label>
+                <div class="col-sm-11">
+                    <input type="text" tabindex="2" id="cc" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group hidden">
+                <label for="bcc" class="col-sm-1 control-label">Bcc</label>
+                <div class="col-sm-11">
+                    <input type="text" tabindex="2" id="bcc" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="subject" class="col-sm-1 control-label">Subject</label>
+                <div class="col-sm-11">
+                    <input type="text" tabindex="1" id="subject" class="form-control">
+                </div>
+            </div>
+
+            <div class="compose-editor form-group">
+                <label for="subject" class="col-sm-1 control-label">Message</label>
+                <div class="col-sm-11">
+                    <textarea class="wysihtml5 form-control" rows="9"></textarea>
+                </div>
+            </div>
+            <hr/>
+
+        </form>
+    </div>
+    <div class="compose-btn pull-right">
+        <a class="btn  btn-success" href="inbox-compose.html"> Send Mail</a>
+    </div>
+</div>

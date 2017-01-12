@@ -9,6 +9,7 @@ require(__dirname + '/report.js');
 require(__dirname + '/term.js');
 require(__dirname + '/school.js');
 require(__dirname + '/fees.js');
+require(__dirname + '/message.js');
 
 Parse.Cloud.define('hello', (req, res) => {
   res.success('Hi');
