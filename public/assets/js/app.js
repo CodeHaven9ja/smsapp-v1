@@ -119,6 +119,36 @@
                     controllerAs: 'admCrtl'
                 })
                 .state('mail', {
+                    resolve: {
+                        mails : function(UserService, MessageService){
+                            var u = {};
+                            return UserService.GetCurrent().then(function (user){
+                                u = user;
+                                return MessageService.getMails(u.sessionToken);
+                            }).then(function(mails){
+                                var emails = mails.results;
+                                var mail = {};
+                                mail.inbox = [];
+                                mail.outbox = [];
+                                mail.emails = emails;
+                                mail.unRead = 0;
+                                for (var i = 0; i < emails.length; i++) {
+                                    if (emails[i].to.objectId === u.objectId){
+                                    if (!emails[i].isRead){
+                                        mail.unRead++;
+                                    }
+                                        mail.inbox.push(emails[i]);
+                                    }
+
+                                    if (emails[i].from.objectId === u.objectId) {
+                                        mail.outbox.push(emails[i]);
+                                    }
+                                }
+                                console.log(emails);
+                                return mail;
+                            });
+                        }
+                    },
                     url: '/mail',
                     templateUrl: 'mail/index.html',
                     controller: 'MailController',
@@ -134,11 +164,15 @@
                 })
                 .state('mail.compose', {
                     url: '/compose',
-                    templateUrl: 'mail/new.html'
+                    templateUrl: 'mail/new.html',
+                    controller: 'MailComposeController',
+                    controllerAs: 'mailCCtrl'
                 })
                 .state('mail.read', {
-                    url: '/read',
-                    templateUrl: 'mail/read.html'
+                    url: '/:id',
+                    templateUrl: 'mail/read.html',
+                    controller: 'MailDetailController',
+                    controllerAs: 'mailDCtrl'
                 })
         }
         function run($http, $rootScope, $window) {

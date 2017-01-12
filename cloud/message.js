@@ -31,3 +31,25 @@ Parse.Cloud.define("newMessage", (req, res) =>{
 	});
 
 });
+
+Parse.Cloud.beforeSave("Mail", (req, res) =>{
+	var mail = req.object;
+
+	var from = mail.get("from");
+	var to = mail.get("to");
+
+	var roleACL = new Parse.ACL();
+
+	roleACL.setPublicReadAccess(false);
+	roleACL.setRoleReadAccess("admin", true);
+	roleACL.setRoleWriteAccess("admin", true);
+	roleACL.setWriteAccess(from, true);
+	roleACL.setWriteAccess(to, true);
+	roleACL.setReadAccess(from, true);
+	roleACL.setReadAccess(to, true);
+
+	mail.setACL(roleACL);
+
+	res.success();
+
+});
