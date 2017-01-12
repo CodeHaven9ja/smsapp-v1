@@ -3,13 +3,19 @@
     angular
         .module('app')
         .controller('SidebarCtrl',['$scope','$window','$interval', 'UserService',SidebarCtrl])
-        .controller('HeaderCtrl',['$scope','$window','$interval', 'UserService',HeaderCtrl]);
+        .controller('HeaderCtrl',['$scope','$window','$interval', 'UserService', 'MessageService',HeaderCtrl]);
 
-        function HeaderCtrl($scope,$window,$interval,UserService) {
+        function HeaderCtrl($scope,$window,$interval,UserService, MessageService) {
         	var hd = this;
+            hd.unread = 0;
+            hd.mails = [];
         	UserService.GetCurrent().then(function(user){
         		hd.user = user;
-        	});
+                return MessageService.getMails(user.sessionToken);
+        	}).then(function (m){
+                hd.mail = MessageService.getUnreadCount(m.results, hd.user);
+
+            });
         }
         
         function SidebarCtrl($scope,$window,$interval,UserService) {

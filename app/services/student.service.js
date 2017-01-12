@@ -69,8 +69,19 @@ function Service($http, $q, $httpParamSerializerJQLike) {
 		return $http.get('/dash/students/'+id+'/attendance/today').then(handleSuccess, handleError);
 	}
 
-	function MarkStudent(id) {
-		return $http.post('/dash/students/'+id+'/attendance/').then(handleSuccess, handleError);
+	function MarkStudent(token, id) {
+		return $http({
+			method: "POST",
+			url:'/1/functions/tickStudent',
+			headers:{
+        "X-Parse-Application-Id":"9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC",
+        "X-Parse-Session-Token":token
+      },
+      data: {
+      	sid : id
+      }
+		}).then(handleSuccess, handleError);
+		// return $http.post('/dash/students/'+id+'/attendance/').then(handleSuccess, handleError);
 	}
 
 	function ToggleActivate(student) {

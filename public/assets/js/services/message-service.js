@@ -4,8 +4,10 @@
     angular
         .module('app').factory('MessageService', Service);
 
-        function Service($http, $q, $httpParamSerializerJQLike) {
+        function Service($http, $q, $httpParamSerializerJQLike, UserService) {
         	var service = {};
+
+            var unRead = 0;
 
         	service.getMessages = GetMessages;
             service.getMessage = GetMessage;
@@ -13,7 +15,25 @@
             service.getMail = GetMail;
             service.newMessage = NewMessage;
             service.newMail = NewMail;
+            service.getUnreadCount = GetUnreadCount;
+
         	return service;
+
+            function GetUnreadCount(m, user) {
+                var mail = {};
+                mail.mails = [];
+                unRead = 0;
+                for (var i = 0; i < m.length; i++) {
+                    if (m[i].to.objectId === user.objectId) {
+                        if (!m[i].isRead) {
+                            unRead++;
+                        }
+                        mail.mails.push(m[i]);
+                    }   
+                }
+                mail.unread = unRead;
+                return mail;
+            }
 
             function GetMessage(token, id) {
                 return $http({

@@ -34,59 +34,6 @@ Parse.Cloud.define('resetPassword', (req, res) =>{
   });
 });
 
-Parse.Cloud.define('getStudentAttendanceToday', (req, res) =>{
-  var token = req.user.getSessionToken();
-  var sid = req.params.sid;
-
-  var user;
-  var t = getDate();
-
-  var uQuery = new Parse.Query(Parse.User);
-  var aQuery = new Parse.Query('Activity');
-  uQuery.equalTo('objectId', sid);
-  uQuery.equalTo('role', 'user');
-  
-  uQuery.first().then((s) =>{
-    user = s;
-    aQuery.equalTo('fromUser', user);
-    aQuery.equalTo('type', 'attendance');
-    aQuery.equalTo('tickDate', t);
-
-    return aQuery.first({sessionToken : req.user.getSessionToken()});
-  }).then((activity) =>{
-    
-    if (!activity) {
-      return res.error({
-        errorCode: 404,
-        message: 'Not present.'
-      });
-    }
-    res.success();
-  }).catch((error) =>{
-    res.error(error);
-  });
-});
-
-Parse.Cloud.afterSave(Parse.User, (req, res) => {
-	var user = req.object;
-  var currentUser = req.user;
-  if (user.existed()) { 
-  	if (user.get('role') != "user"){
-  		decreaseUser();
-  	}
-  	return; 
-  } 
-  if (!user.existed() && user.get('role') === "teacher") {
-    user.set("isActive", false);
-    user.save(null,{useMasterKey: true});
-    return;
-  }
-  user.set("role", "user");
-  user.set("isActive", false);
-  user.save(null,{useMasterKey: true});
-  increaseUser();
-});
-
 Parse.Cloud.define('getStaffMembers', (req, res) => {
   var token = req.user.getSessionToken();
   var uQuery = new Parse.Query(Parse.User);
@@ -236,7 +183,15 @@ function decreaseUser() {
 function getDate() {
   var today = new Date();
   var dd = today.getDate();
-  var mm = today.getMonth() + 1;
+  var mm = today.getMonth()+1; //January is 0!
+
   var yyyy = today.getFullYear();
-  return new Date(mm+'-'+dd+'-'+yyyy);
+  if(dd<10){
+      dd='0'+dd;
+  } 
+  if(mm<10){
+      mm='0'+mm;
+  } 
+  var today = dd+'/'+mm+'/'+yyyy;
+  return today;
 }

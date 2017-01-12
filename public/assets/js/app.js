@@ -144,7 +144,6 @@
                                         mail.outbox.push(emails[i]);
                                     }
                                 }
-                                console.log(emails);
                                 return mail;
                             });
                         }

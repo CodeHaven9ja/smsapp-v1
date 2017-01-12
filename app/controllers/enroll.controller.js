@@ -209,7 +209,8 @@ angular.module('app')
 	 	'StudentService', 
 	 	'toaster', 
 	 	'LocalService',
-		function($scope, StudentService, toaster, LocalService){
+	 	'UserService',
+		function($scope, StudentService, toaster, LocalService, UserService){
 
 			var sCtrl = this;
 
@@ -233,7 +234,9 @@ angular.module('app')
 
 			sCtrl.markStudent = function() {
 				if (sCtrl.student) {
-					StudentService.MarkStudent(sCtrl.student.objectId).then((status) =>{
+					UserService.GetCurrent().then(function(user){
+						return StudentService.MarkStudent(user.sessionToken, sCtrl.student.objectId);
+					}).then((status) =>{
 						sCtrl.student.present = status;
 						toaster.pop('success', "Done!", sCtrl.student.firstName+"'s attendance recorded.");
 					});

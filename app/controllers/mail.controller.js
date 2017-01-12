@@ -148,7 +148,6 @@
 
       function setup() {
       	// mailCtrl.mails = mails.results;
-      	console.log(mailCtrl.mails.length);
       	for (var i = 0; i < mailCtrl.mails.length; i++) {
     			if (mailCtrl.mails[i].to.objectId === mailCtrl.user.objectId){
       			if (!mailCtrl.mails[i].isRead){
