@@ -2,7 +2,7 @@
     'use strict';
     angular
         .module('app')
-        .controller('SidebarCtrl',['$scope','$window','$interval', 'UserService',SidebarCtrl])
+        .controller('SidebarCtrl',['$scope','$window','$interval', 'UserService', 'MessageService',SidebarCtrl])
         .controller('HeaderCtrl',['$scope','$window','$interval', 'UserService', 'MessageService',HeaderCtrl]);
 
         function HeaderCtrl($scope,$window,$interval,UserService, MessageService) {
@@ -14,16 +14,18 @@
                 return MessageService.getMails(user.sessionToken);
         	}).then(function (m){
                 hd.mail = MessageService.getUnreadCount(m.results, hd.user);
-
             });
         }
         
-        function SidebarCtrl($scope,$window,$interval,UserService) {
+        function SidebarCtrl($scope,$window,$interval,UserService, MessageService) {
         	var sb = this;
 
         	UserService.GetCurrent().then(function(user){
         		sb.user = user;
-        	});
+                return MessageService.getMails(user.sessionToken);
+        	}).then(function (m){
+                sb.mail = MessageService.getUnreadCount(m.results, sb.user);
+            });
     		
     		sb.sidebarClick = function(el){
     			var list = angular.element(el);

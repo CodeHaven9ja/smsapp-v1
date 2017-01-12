@@ -49,6 +49,7 @@ Parse.Cloud.define('tickStudent', (req, res) =>{
 		activity.set("fromUser", student);
 		activity.set('type', 'attendance');
 		activity.set("tickDate", getDate());
+    activity.set("markedBy", user);
 
 		roleACL.setPublicReadAccess(false);
 		roleACL.setReadAccess(student, true);

@@ -40,7 +40,7 @@
 <li class="menu-list">
 	<a id="messages" href="#/mail" ng-click="sb.sidebarClick('#messages')"><i class="fa fa-envelope-o"></i>
 		<span>Messages 
-			<span class="label noti-arrow bg-danger pull-right">4 Unread</span>
+			<span ng-if="sb.mail.unread > 0" class="label noti-arrow bg-danger pull-right">{{sb.mail.unread}} Unread</span>
 		</span>
 	</a>
 </li>
