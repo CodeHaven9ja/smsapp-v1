@@ -15,8 +15,20 @@
 
       service.getResult = GetResult;
       service.getTopcs = GetTopcs;
+      service.setSubject = SetSubject;
 
       return service;
+
+      function SetSubject(token, data) {
+      	return $http({
+      		method:'POST',
+      		url: '/1/functions/setSubject',
+      		headers: getHeaders(token),
+      		data:{
+      			data:data
+      		}
+      	}).then(handleSuccess, handleError);
+      }
 
       function GetTopcs() {
       	return $http({

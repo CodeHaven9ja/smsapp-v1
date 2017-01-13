@@ -17,11 +17,14 @@
                 scope: true,
                 link: function(scope, element, attrs){
                     var e = element[0];
-                    var ngScore, score;
+                    var ngScore, score, withExam;
 
                     var calculate = function(){
                         ngScore = parseInt(attrs.ngScore) || 0;
-                        if (ngScore <=39) {
+                        withExam = attrs.exam;
+                        if (withExam === 'false'){
+                            score = 'NA';
+                        } else if (ngScore <=39) {
                             score = 'F';
                         } else if (ngScore >=40 && ngScore <= 45) {
                             score = 'E';

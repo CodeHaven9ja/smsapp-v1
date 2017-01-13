@@ -15,6 +15,8 @@
       rCtrl.student = {};
       rCtrl.subjects = [];
       rCtrl.subject = {};
+      rCtrl.subject.caScore = 0;
+      rCtrl.subject.examScore = 0;
       rCtrl.topics = [];
       rCtrl.user = {};
 
@@ -42,8 +44,21 @@
       }
 
       rCtrl.sendScore = function(){
-      	console.log(rCtrl.subject);
-      	rCtrl.subject = {};
+      	var s = {};
+      	s.studentId = rCtrl.student.objectId;
+      	s.score =  rCtrl.subject.caScore + rCtrl.subject.examScore;
+      	s.topicId = rCtrl.subject.topicId;
+      	ReportService.setSubject(rCtrl.user.sessionToken, s).then(function(subject){
+      		console.log(subject);
+	      	rCtrl.subject = {};
+			    rCtrl.subject.caScore = 0;
+			    rCtrl.subject.examScore = 0;
+			    return ReportService.getResult(rCtrl.user.sessionToken, rCtrl.student.objectId);
+      	}).then(function(subjects){
+      		rCtrl.subjects = subjects.result;
+      	}).catch(function(err){
+      		console.log(err);
+      	});
       }
     }
 })();

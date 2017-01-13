@@ -12,14 +12,63 @@ Parse.Cloud.define('getResult', (req, res) =>{
 		rQ.include("subjects");
 		return rQ.first({sessionToken: currentUser.getSessionToken()});
 	}).then((r) =>{
-		console.log(r);
 		var relation = r.relation("subjects");
-		return relation.query().find({sessionToken: currentUser.getSessionToken()});
+		var relQ = relation.query();
+		relQ.include("subject");
+		return relQ.find({sessionToken: currentUser.getSessionToken()});
 	}).then((subjects) =>{
 		return res.success(subjects);
 	}).catch((err) =>{
 		return res.error(err);
 	});
+});
+
+Parse.Cloud.define('setSubject', (req, res) =>{
+	var currentUser = req.user;
+	var data = req.params.data;
+	var student, school, report, term;
+	var stuQ = new Parse.Query(Parse.User);
+	stuQ.equalTo("objectId", data.studentId);
+
+	return stuQ.first({sessionToken: currentUser.getSessionToken()}).then((s) =>{
+		student = s;
+		school = s.get("school");
+		var tx = new Parse.Query("Term");
+		tx.equalTo("isCurrentTerm", true);
+		tx.equalTo("school", school);
+		console.log(school);
+
+		return tx.first({sessionToken: currentUser.getSessionToken()});
+	}).then((t) => {
+		term = t;
+		console.log(term);
+		var report = new Parse.Query("Report");
+		report.equalTo("student", student);
+		report.equalTo("term", term);
+		return report.first({sessionToken: currentUser.getSessionToken()});
+	}).then((r) =>{
+		report = r;
+		console.log(report);
+		var relation = report.relation("subjects");
+		var relQ = relation.query();
+		var Topic = Parse.Object.extend("Topic");
+		var topic = new Topic();
+		topic.id = data.topicId;
+		relQ.equalTo("subject", topic);
+		return relQ.first({sessionToken: currentUser.getSessionToken()});
+	}).then((s) =>{
+		console.log(s);
+		s.set("score", data.score);
+		if (data.score > 40) {
+			s.set("withExam", true);
+		}
+		return s.save(null, {sessionToken: currentUser.getSessionToken()});
+	}).then((s) =>{
+		return res.success(s);
+	}).catch((err) =>{
+		return res.error(err);
+	});
+
 });
 
 Parse.Cloud.job("CreateInitialReportsPerTerm", (req, status) =>{
