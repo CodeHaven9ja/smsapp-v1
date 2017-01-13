@@ -1,24 +1,26 @@
 var _ = require("underscore");
 
-// Parse.Cloud.afterSave("Report", (req, res) =>{
-// 	var report = req.object;
-// 	var student = report.get("student");
-// 	var parentACLKey = "parentOf_"+student.get("objectId");
-// 	if (!report.existed()) {
-// 		var reportACL = new Parse.ACL();
-// 		reportACL.setReadAccess("teacher", true);
-// 		reportACL.setWriteAccess("teacher", true);
-// 		reportACL.setReadAccess(student, true);
-// 		reportACL.setReadAccess(parentACLKey, true);
-// 		report.setACL(reportACL);
-// 	}
-// 	report.save(null, {useMasterKey: true}).then((r) =>{
-// 		return res.success(r);
-// 	}).catch((err) =>{
-// 		console.log(err);
-// 		return res.error(err);
-// 	});
-// });
+Parse.Cloud.define('getResult', (req, res) =>{
+	var currentUser = req.user;
+	var student = req.params.sid;
+	var sQ = new Parse.Query(Parse.User);
+	var rQ = new Parse.Query("Report");
+	sQ.equalTo("objectId", student);
+
+	sQ.first({sessionToken: currentUser.getSessionToken()}).then((user) =>{
+		rQ.equalTo("student", user);
+		rQ.include("subjects");
+		return rQ.first({sessionToken: currentUser.getSessionToken()});
+	}).then((r) =>{
+		console.log(r);
+		var relation = r.relation("subjects");
+		return relation.query().find({sessionToken: currentUser.getSessionToken()});
+	}).then((subjects) =>{
+		return res.success(subjects);
+	}).catch((err) =>{
+		return res.error(err);
+	});
+});
 
 Parse.Cloud.job("CreateInitialReportsPerTerm", (req, status) =>{
 	var usersQuery = new Parse.Query(Parse.User);

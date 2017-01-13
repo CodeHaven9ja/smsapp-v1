@@ -1,0 +1,38 @@
+<toaster-container></toaster-container>
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="panel"  students-array="tRCtrl.students">
+			<header class="panel-heading">
+				search
+			</header>
+			<div class="panel-body">
+				<div class="col-md-12" search-box model="tRCtrl.searchQ"></div>
+				<div class="noti-information notification-menu">
+					<div class="student-list notification-list mail-list not-list" 
+						dir-paginate="s in tRCtrl.students 
+						| filter: tRCtrl.searchQ
+						| itemsPerPage: 4" ng-click="tRCtrl.onStudentClick(s)">
+						<a class="single-mail" href="#/teacher/report/{{s.objectId}}">
+							<span class="icon bg-primary">
+								<i class="fa fa-user"></i>
+							</span>
+							{{s.firstName}} {{s.lastName}}
+							<p>{{s.objectId}}</p>
+							<span  class=" read tooltips" data-original-title="Mark as Read" data-toggle="tooltip" data-placement="left">
+								<span ng-if="s.profile" class="label label-success">Linked</span>
+							    <i ng-class="{'fa-circle': s.isActive, 'fa-circle-o': !s.isActive}" class="fa"></i>
+							</span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<dir-pagination-controls boundary-links="true"></dir-pagination-controls>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div ui-view></div>
+	</div>
+</div>

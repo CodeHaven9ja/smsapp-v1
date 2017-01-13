@@ -3,12 +3,12 @@
 
     angular
         .module('app')
-        .directive('sclpopUserModal', directive);
+        .directive('sclpopUserModal', sclpopUserModal);
 
-    directive.$inject = [];
+    sclpopUserModal.$inject = [];
 
     /* @ngInject */
-    function directive() {
+    function sclpopUserModal() {
         // Usage:
         //
         // Creates:
@@ -26,7 +26,7 @@
 
         function link(scope, element, attrs) {
         	element.click(function(){
-        		$('#sclpop-staff-modal').modal({
+        		$('#ng-modal').modal({
         			backdrop : 'static',
         			show: true
         		});

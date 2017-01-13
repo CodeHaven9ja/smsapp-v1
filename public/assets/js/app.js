@@ -118,6 +118,24 @@
                     controller: 'AdminCtrl',
                     controllerAs: 'admCrtl'
                 })
+                .state('teacher', {
+                    url: '/teacher',
+                    templateUrl: 'teacher/teacher.index.html', 
+                    controller: function(){
+
+                    }
+                })
+                .state('teacher.report', {
+                    url: '/report',
+                    templateUrl: 'teacher/teacher.result.html',
+                    controller: 'TeacherReportCtrl',
+                    controllerAs: 'tRCtrl'
+                }).state('teacher.report.detail',{
+                    url: '/:id',
+                    templateUrl: 'blocks/reports.html',
+                    controller: 'ReportController',
+                    controllerAs: 'rCtrl'
+                })
                 .state('mail', {
                     resolve: {
                         mails : function(UserService, MessageService){
