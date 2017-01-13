@@ -23,6 +23,7 @@
                 var mail = {};
                 mail.mails = [];
                 unRead = 0;
+                // console.log(m)
                 for (var i = 0; i < m.length; i++) {
                     if (m[i].to.objectId === user.objectId) {
                         if (!m[i].isRead) {
@@ -62,7 +63,7 @@
             function GetMails(token){
                 return $http({
                     method:"GET", 
-                    url:'/1/classes/Mail?include=from&include=message&include=to&order=-createdAt', 
+                    url:'/1/classes/Mail?include=from&include=message&order=-createdAt', 
                     headers:{
                         "X-Parse-Application-Id":"9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC",
                         "X-Parse-Session-Token":token
@@ -83,17 +84,16 @@
                 }).then(handleSuccess, handleError);
             }
 
-            function NewMessage(token, text, toId) {
+            function NewMessage(token, message) {
                 return $http({
                     method:"POST", 
-                    url:'/1/functions/newMessage', 
+                    url:'/1/functions/loopSend', 
                     headers:{
                         "X-Parse-Application-Id":"9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC",
                         "X-Parse-Session-Token":token
                     },
                     data:{
-                        toId: toId,
-                        text: text
+                        message: message
                     }
                 }).then(handleSuccess, handleError);
             }

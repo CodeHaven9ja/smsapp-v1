@@ -19,41 +19,24 @@
     	mailCCtrl.message = {};
     	mailCCtrl.toUser;
 
+      mailCCtrl.users = [];
+
     	UserService.GetCurrent().then(function (user){
     		mailCCtrl.user = user;
     	});
 
     	mailCCtrl.send = function (){
-    		UserService.GetUser(mailCCtrl.message.toId).then(function (user){
-    			mailCCtrl.toUser = user;
-    			return MessageService.newMessage(mailCCtrl.user.sessionToken, mailCCtrl.message.text, user.objectId);
-    		}).then(function (message){
-    			console.log(message);
-  				var mail = {
-    				subject: mailCCtrl.message.subject,
-    				to: {
-    					"__type": "Pointer",
-        			"className": "_User",
-        			"objectId": mailCCtrl.toUser.objectId
-    				},
-    				from:{
-    					"__type": "Pointer",
-        			"className": "_User",
-        			"objectId": mailCCtrl.user.objectId
-    				},
-    				"isRead": false,
-    				"message": {
-			        "__type": "Pointer",
-			        "className": "Message",
-			        "objectId": message.result.objectId
-			      }
-    			};
-    			return MessageService.newMail(mailCCtrl.user.sessionToken, mail);
-    		}).then(function (mail){
-    			$state.transitionTo('mail.inbox');
-    		}).catch(function (err){
-    			console.log(err);
-    		});
+        mailCCtrl.users = mailCCtrl.message.toId.split(',');
+        var message = {
+          users : mailCCtrl.users,
+          message : mailCCtrl.message
+        };
+
+        MessageService.newMessage(mailCCtrl.user.sessionToken, message).then((status) =>{
+          $state.transitionTo('mail.inbox');
+        }).catch((err) =>{
+          console.log(err);
+        });
     	}
     }
     function MailDetailController($scope, $stateParams, UserService, MessageService){
