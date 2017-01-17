@@ -57,7 +57,6 @@
 
     	UserService.GetCurrent().then(function(user){
     		vm.user = user;
-    		console.log(vm.user);
     	});
 
     	vm.show = function(i, r){
@@ -75,7 +74,6 @@
     	vm.update = function(){
     		vm.isUpdating = true;
     		vm.updateTitle = "Updating...";
-    		console.log(vm.item);
     		var sub = {};
     		sub.score = vm.item.score;
     		ReportService.updateSubject(vm.user.sessionToken, vm.item.objectId, sub).then(function(s){

@@ -2,7 +2,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" ng-show="!vm.isUpdating" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" ng-show="!vm.isUpdating" class="close" ng-click="vm.hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="exampleModalLabel">Edit {{vm.item.subject.title}}</h4>
       </div>
       <div class="modal-body">
@@ -34,7 +34,7 @@
       <td>{{r.subject.title}}</td>
       <td>{{r.score}}</td>
       <td ng-score="{{r.score}}" exam="{{r.withExam}}"></td>
-      <td><a id="r-edit" ng-click="vm.show($index, r)">Edit</a></td>
+      <td><a id="r-edit" ng-show="vm.user.role ==='admin' || vm.user.role ==='teacher'" ng-click="vm.show($index, r)">Edit</a></td>
     </tr>
   </tbody>
 </table>
