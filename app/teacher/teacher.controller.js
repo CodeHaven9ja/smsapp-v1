@@ -4,6 +4,7 @@ angular.module('app')
 
 			var tRCtrl = this;
 			tRCtrl.students = [];
+			tRCtrl.report = {};
 
 			StudentService.GetAllStudents().then((students) => {
 				// console.log(students.results);

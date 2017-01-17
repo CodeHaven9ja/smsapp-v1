@@ -16,6 +16,7 @@
       service.getResult = GetResult;
       service.getTopcs = GetTopcs;
       service.setSubject = SetSubject;
+      service.updateSubject = UpdateSubject;
 
       return service;
 
@@ -47,6 +48,15 @@
       			sid: sid
       		}
       	}).then(handleSuccess, handleError);
+      }
+
+      function UpdateSubject(token, id, subject) {
+        return $http({
+          method: 'PUT',
+          url: '/1/classes/Subject/'+id,
+          headers: getHeaders(token),
+          data: subject
+        }).then(handleSuccess, handleError);
       }
 
       ////////////////
