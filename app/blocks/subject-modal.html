@@ -30,7 +30,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="r in vm.r" ng-class="{'danger' : r.score <= 39 && r.withExam, 'warning':r.score <= 45 && r.score > 39  && r.withExam, 'success' : r.score <= 65 && r.score > 45  && r.withExam, 'success' : r.score > 65 && r.withExam, 'info': !r.withExam}" >
+    <tr ng-repeat="r in vm.r | orderBy:'subject.title'" >
       <td>{{r.subject.title}}</td>
       <td>{{r.score}}</td>
       <td ng-score="{{r.score}}" exam="{{r.withExam}}"></td>

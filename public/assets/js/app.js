@@ -96,9 +96,9 @@
                 })
                 .state('adminReport', {
                     url: '/admin/reports',
-                    templateUrl: 'admin/reports.html',
-                    controller: 'AdminReportCtrl',
-                    controllerAs: 'admRCrtl'
+                    templateUrl: 'teacher/teacher.result.html',
+                    controller: 'TeacherReportCtrl',
+                    controllerAs: 'tRCtrl'
                 })
                 .state('adminClassNew', {
                     url: '/class/new',
@@ -191,6 +191,21 @@
                     controller: 'MailDetailController',
                     controllerAs: 'mailDCtrl'
                 })
+                .state('fees',{
+                    url: '/fees',
+                    templateUrl: 'fees/index.html',
+                    controller: function($state){
+                        // $state.go('fees.list');
+                    }
+                }).state('fees.list',{
+                    url: '/list',
+                    templateUrl: 'fees/list.html',
+                    controller: 'FeesController as feesCtrl'
+                }).state('fees.list.detail',{
+                    url:'/:id',
+                    templateUrl: 'fees/details.html',
+                    controller: 'FeesDetailController as feesDCtrl'
+                });
         }
         function run($http, $rootScope, $window) {
         	// body...

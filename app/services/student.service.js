@@ -13,7 +13,51 @@ function Service($http, $q, $httpParamSerializerJQLike) {
 	service.NewStudent = NewStudent;
 	service.GetStudentClass = GetStudentClass;
 	service.updatePCID = UpdatePCID;
+	service.getFees = GetFees;
+	service.getFee = GetFee;
+	service.updateFees = UpdateFees;
+
 	return service;
+
+	function GetFee(token, id) {
+		return $http({
+			method: 'GET',
+			url: '/1/classes/Fees/'+id,
+			headers:{
+				'X-Parse-Application-Id': '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
+				"X-Parse-Session-Token":token,
+      	'Content-Type': 'application/json'
+			}
+		}).then(handleSuccess, handleError);
+	}
+
+	function UpdateFees(token, fid, fee){
+		return $http({
+			method: 'PUT',
+			url: '/1/classes/Fees/'+fid,
+			headers:{
+				'X-Parse-Application-Id': '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
+				"X-Parse-Session-Token":token,
+      	'Content-Type': 'application/json'
+			},
+			data:fee
+		}).then(handleSuccess, handleError);
+	}
+
+	function GetFees(token, sid) {
+		return $http({
+			method: 'POST',
+			url: '/1/functions/getFees',
+			headers:{
+				'X-Parse-Application-Id': '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
+				"X-Parse-Session-Token":token,
+      	'Content-Type': 'application/json'
+			},
+			data:{
+				sid : sid
+			}
+		}).then(handleSuccess, handleError);
+	}
 
 	function UpdatePCID(pcid, sid) {
 		return $http({

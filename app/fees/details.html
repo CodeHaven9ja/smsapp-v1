@@ -1,0 +1,25 @@
+<div class="panel">
+	<header class="panel-heading">
+		{{feesDCtrl.student.firstName +" "+feesDCtrl.student.lastName}}
+		<p class="btn-xs btn btn-success pull-right" ng-show="feesDCtrl.fee.paid">Paid</p>
+	</header>
+	<div class="panel-body">
+		<form name="pay" role="form">
+			<div class="form-group">
+				<label>Percent Paid</label>
+				<h4>{{feesDCtrl.fee.percent_paid| number :2}}%</h4>
+			</div>
+			<div class="form-group">
+				<label>Amount Due</label>
+				<input ng-model="feesDCtrl.fee.amount_due" ng-change="feesDCtrl.calculate()" type="number" class="form-control">
+			</div>
+			<div class="form-group">
+				<label>Amount Paid</label>
+				<input type="number" ng-model="feesDCtrl.fee.amount_paid" ng-change="feesDCtrl.calculate()" type="number" class="form-control">
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" ng-disabled="feesDCtrl.fee.percent_paid == 0 || feesDCtrl.fee.paid" ng-click="feesDCtrl.pay()" class="btn btn-info btn-lg pull-right">Pay</button>
+	</div>
+</div>

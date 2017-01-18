@@ -54,7 +54,6 @@ Parse.Cloud.define('setSubject', (req, res) =>{
 		relQ.equalTo("subject", topic);
 		return relQ.first({sessionToken: currentUser.getSessionToken()});
 	}).then((s) =>{
-		console.log(s);
 		if (!s) {
 
 			var Topic = Parse.Object.extend("Topic");
