@@ -36,19 +36,16 @@ Parse.Cloud.define('setSubject', (req, res) =>{
 		var tx = new Parse.Query("Term");
 		tx.equalTo("isCurrentTerm", true);
 		tx.equalTo("school", school);
-		console.log(school);
 
 		return tx.first({sessionToken: currentUser.getSessionToken()});
 	}).then((t) => {
 		term = t;
-		console.log(term);
 		var report = new Parse.Query("Report");
 		report.equalTo("student", student);
 		report.equalTo("term", term);
 		return report.first({sessionToken: currentUser.getSessionToken()});
 	}).then((r) =>{
 		report = r;
-		console.log(report);
 		var relation = report.relation("subjects");
 		var relQ = relation.query();
 		var Topic = Parse.Object.extend("Topic");
@@ -58,11 +55,33 @@ Parse.Cloud.define('setSubject', (req, res) =>{
 		return relQ.first({sessionToken: currentUser.getSessionToken()});
 	}).then((s) =>{
 		console.log(s);
-		s.set("score", data.score);
-		if (data.score > 40) {
-			s.set("withExam", true);
+		if (!s) {
+
+			var Topic = Parse.Object.extend("Topic");
+			var topic = new Topic();
+			topic.id = data.topicId;
+			var Subject = Parse.Object.extend("Subject");
+			var ss = new Subject();
+			ss.set("subject", topic);
+			ss.set("score", data.score);
+			if (data.score > 40) {
+				ss.set("withExam", true);
+			}
+			return ss.save(null, {sessionToken: currentUser.getSessionToken()}).then((sx)=>{
+				var relation = report.relation("subjects");
+				relation.add(sx);
+				return report.save(null, {sessionToken: currentUser.getSessionToken()});
+			});
+
+		} else {
+
+			s.set("score", data.score);
+			if (data.score > 40) {
+				s.set("withExam", true);
+			}
+			return s.save(null, {sessionToken: currentUser.getSessionToken()});
+
 		}
-		return s.save(null, {sessionToken: currentUser.getSessionToken()});
 	}).then((s) =>{
 		return res.success(s);
 	}).catch((err) =>{

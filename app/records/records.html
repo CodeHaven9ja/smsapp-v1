@@ -3,22 +3,7 @@
 		<section class="panel">
 			<header class="panel-heading head-border">Results(Cumulative)</header>
 			<div class="panel-body">
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Subject</th>
-							<th>Score</th>
-							<th>Remark</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="r in rpCrtl.currentStudent.results" ng-class="{'danger' : r.score <= 39, 'warning':r.score <= 45 && r.score > 39  , 'info' : r.score <= 65 && r.score > 45  , 'success' : r.score > 65}">
-							<td>{{r.subject}}</td>
-							<td>{{r.score}}</td>
-							<td ng-score="{{r.score}}"></td>
-						</tr>
-					</tbody>
-				</table>
+				<ng-subject-modal r="rpCrtl.currentStudent.results"></ng-subject-modal>
 			</div>
 		</section>
 	</div>

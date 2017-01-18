@@ -6,7 +6,7 @@
         .controller('EventsCtrl',['$scope','$window','$interval','$timeout','UserService', 'uiCalendarConfig','$compile',evCrtl])
         .controller('TimeTableCtrl',['$scope','$window','$interval','$timeout','UserService', 'uiCalendarConfig','$compile',ttCrtl])
         .controller('ReportsCtrl',
-            ['$scope','$window','$interval','$timeout','UserService',rpCrtl]
+            ['$scope','$window','$interval','$timeout','UserService', 'ReportService',rpCrtl]
         )
         .controller('AttendanceCtrl',
             ['$scope','$window','$interval','$timeout','UserService',rcCrtl]
@@ -26,11 +26,13 @@
                             score = 'NA';
                         } else if (ngScore <=39) {
                             score = 'F';
-                        } else if (ngScore >=40 && ngScore <= 45) {
+                        } else if (ngScore >=40 && ngScore <= 44) {
                             score = 'E';
-                        } else if (ngScore >= 46 && ngScore <= 65) {
+                        } else if(ngScore >=45 && ngScore <= 49) {
+                            score = 'D';
+                        } else if (ngScore >= 50 && ngScore <= 64) {
                             score = 'C';
-                        } else if (ngScore >= 66 && ngScore <= 100) {
+                        } else if (ngScore >= 65 && ngScore <= 100) {
                             score = 'A';
                         }
                         e.innerText = score;
@@ -296,7 +298,7 @@
 
         }
 
-        function rpCrtl($scope,$window,$interval,$timeout,UserService) {
+        function rpCrtl($scope,$window,$interval,$timeout,UserService, ReportService) {
             var rpCrtl = this;
             rpCrtl.students = [];
             rpCrtl.currentStudent = {};
@@ -307,44 +309,9 @@
                 return user;
             }).then(function(user){
                 rpCrtl.currentStudent = user;
-                rpCrtl.currentStudent.results = [
-                    {
-                        subject : 'Mathematics',
-                        score: 12
-                    },
-                    {
-                        subject : 'English Language',
-                        score: 56
-                    },
-                    {
-                        subject : 'Chemistry',
-                        score: 48
-                    },
-                    {
-                        subject : 'Biology',
-                        score: 82
-                    },
-                    {
-                        subject : 'History',
-                        score: 97
-                    },
-                    {
-                        subject : 'Economics',
-                        score: 65
-                    },
-                    {
-                        subject : 'Physics',
-                        score: 55
-                    },
-                    {
-                        subject : 'Geography',
-                        score: 71
-                    },
-                    {
-                        subject : 'Technical Drawing',
-                        score: 73
-                    }
-                ];
+                return ReportService.getResult(user.sessionToken, user.objectId);
+            }).then(function(r){
+                rpCrtl.currentStudent.results = r.result;
                 rpCrtl.currentStudent.reports = [
                     {
                         teacher : "Garba Ali",

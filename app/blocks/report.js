@@ -49,7 +49,7 @@
       	s.score =  rCtrl.subject.caScore + rCtrl.subject.examScore;
       	s.topicId = rCtrl.subject.topicId;
       	ReportService.setSubject(rCtrl.user.sessionToken, s).then(function(subject){
-      		console.log(subject);
+      		// console.log(subject);
 	      	rCtrl.subject = {};
 			    rCtrl.subject.caScore = 0;
 			    rCtrl.subject.examScore = 0;
