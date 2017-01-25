@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var httpServer = require('http'),
 		app = require('./index'),
 		ParseServer = require('./parse-server');

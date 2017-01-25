@@ -15,9 +15,22 @@ function Service($http, $q, $httpParamSerializerJQLike) {
 	service.updatePCID = UpdatePCID;
 	service.getFees = GetFees;
 	service.getFee = GetFee;
+	service.getFeeByUser = GetFeeByUser;
 	service.updateFees = UpdateFees;
 
 	return service;
+
+	function GetFeeByUser(token) {
+		return $http({
+			method: 'GET',
+			url: '/1/classes/Fees?limit=1&order=-createdAt',
+			headers:{
+				'X-Parse-Application-Id': '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
+				"X-Parse-Session-Token":token,
+      	'Content-Type': 'application/json'
+			}
+		}).then(handleSuccess, handleError);
+	}
 
 	function GetFee(token, id) {
 		return $http({

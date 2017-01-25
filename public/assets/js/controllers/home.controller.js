@@ -2,12 +2,16 @@
     'use strict';
     angular
         .module('app')
-        .controller('HomeCtrl',['$scope','$window','$interval','$timeout','UserService',hmCrtl]);
-        function hmCrtl($scope,$window,$interval,$timeout,UserService) {
+        .controller('HomeCtrl',['$scope','$window','$interval','$timeout','UserService', 'StudentService',hmCrtl]);
+        function hmCrtl($scope,$window,$interval,$timeout,UserService,StudentService) {
         	// console.log($window.jwtToken)
         	var hmCrtl = this;
             UserService.GetCurrent().then(function(user){
                 hmCrtl.user = user;
+                return StudentService.getFeeByUser(user.sessionToken);
+            }).then(function(fee){
+                console.log(fee);
+                hmCrtl.fee = fee.results[0];
             });
         	hmCrtl.to = 0;
         	hmCrtl.todo = {};

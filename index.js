@@ -19,7 +19,7 @@ var ParseDashboard = require('parse-dashboard');
 
 
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3030;
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
 if (!databaseUri) {
@@ -32,13 +32,13 @@ var serverUri;
 if (process.env.PARSE_SERVER_URI) {
   serverUri = process.env.PARSE_SERVER_URI + process.env.PARSE_MOUNT;
 } else {
-  serverUri = 'http://localhost:3000/1';
+  serverUri = 'http://localhost:3030/1';
 }
 var publicServerURL;
 if (process.env.PUB_SERVER_URL) {
   publicServerURL = process.env.PUB_SERVER_URL + mountPath;
 } else {
-  publicServerURL = 'http://localhost:3000/1';
+  publicServerURL = 'http://localhost:3030/1';
 }
 
 Parse.initialize(process.env.APP_ID || '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC', "unused", process.env.MASTER_KEY || '2h7bu8iPlLZ43Vt80rB97X2CDFmY087P');
@@ -60,7 +60,7 @@ var api = new ParseServer({
       // The address that your emails come from
       fromAddress: 'Schoolpop <noreply@'+ process.env.DOMAIN_NAME+ '>',
       // Your domain from mailgun.com
-      domain: process.env.DOMAIN_NAME || 'http://localhost:3000',
+      domain: process.env.DOMAIN_NAME || 'http://localhost:3030',
       // Your API key from mailgun.com
       apiKey: process.env.MAILGUN_API_KEY || 'key-mykey',
     }
@@ -69,33 +69,6 @@ var api = new ParseServer({
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   }
 });
-
-var dashboard = new ParseDashboard({
-  "apps": [
-    {
-      "serverURL": "http://localhost:3000/1",
-      "appId": "9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC",
-      "masterKey": "2h7bu8iPlLZ43Vt80rB97X2CDFmY087P",
-      "appName": "SMS Local"
-    },
-    {
-      "serverURL": 'http://schoolpop.ng/1',
-      "appId": process.env.APP_ID,
-      "masterKey": process.env.MASTER_KEY,
-      "appName": "Schoolpop.ng Prod",
-      "production": true
-    }
-  ],
-  "users":[
-    {
-      "user":"mrsmith9ja",
-      "pass":"P@b0p0v!b"
-    },{
-      "user":"xlboyz",
-      "pass":"Summer500!"
-    }
-  ]
-}, true);
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
 // If you wish you require them, you can set them as options in the initialization above:
 // javascriptKey, restAPIKey, dotNetKey, clientKey
@@ -140,9 +113,6 @@ app.get('/', (req, res) => {
 });
 
 app.use(mountPath, api);
-
-// make the Parse Dashboard available at /dashboard
-app.use('/dashboard', dashboard);
 
 
 app.use('/home', require('./routes/home')(Parse));
@@ -217,9 +187,9 @@ app.get('/500', function(req, res, next){
 // middleware use()d, we assume 404, as nothing else
 // responded.
 
-// $ curl http://localhost:3000/notfound
-// $ curl http://localhost:3000/notfound -H "Accept: application/json"
-// $ curl http://localhost:3000/notfound -H "Accept: text/plain"
+// $ curl http://localhost:3030/notfound
+// $ curl http://localhost:3030/notfound -H "Accept: application/json"
+// $ curl http://localhost:3030/notfound -H "Accept: text/plain"
 
 app.use(function(req, res, next){
   res.status(404);
