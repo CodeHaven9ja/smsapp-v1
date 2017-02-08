@@ -23,7 +23,12 @@
               multiStepFormInstance.setActiveIndex(1);
             }
         }])
-        .run(run);
+        .run(run)
+        .filter('capitalize', function() {
+            return function(input) {
+              return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+            }
+        });
         function config($stateProvider, $urlRouterProvider) {
         	// default route
             $urlRouterProvider.otherwise("/");
@@ -117,6 +122,51 @@
                     templateUrl: 'admin/enroll.html',
                     controller: 'AdminCtrl',
                     controllerAs: 'admCrtl'
+                })
+                .state('profile', {
+                    resolve: {
+                        user: function(UserService, $stateParams){
+                            var id = $stateParams.id;
+                            return UserService.GetUser(id).then(function(user){
+                                return user;
+                            });
+                        }, 
+                        school: function(UserService, $stateParams) {
+                            var id = $stateParams.id;
+                            return UserService.GetUser(id).then(function(user){
+                                return user.school;
+                            }).then(function(s){
+                                return UserService.GetSchool(s.objectId);
+                            });
+                        }
+                    },
+                    url:'/profile/:id',
+                    templateUrl: 'blocks/profile.html',
+                    controller: 'ProfileController as $ctrl'
+                })
+                .state('profile.account',{
+                    url:'/account',
+                    controller: 'ProfileController as $ctrl',
+                    templateUrl:'blocks/profile/account.html'
+                })
+                .state('profile.address',{
+                    resolve:{
+                        profile: function(UserService, user){
+                            return UserService.GetProfile(user);
+                        }
+                    },
+                    url:'/address',
+                    templateUrl:'blocks/profile/address.html',
+                    controller: 'ProfileAddressConntroller as $ctrl'
+                })
+                .state('profile.social',{
+                    url:'/social',
+                    templateUrl:'blocks/profile/address.html',
+                    controller: 'ProfileController as $ctrl'
+                })
+                .state('school', {
+                    url:'/school/:id',
+                    template: "<h1>Hi</h1>"
                 })
                 .state('teacher', {
                     url: '/teacher',

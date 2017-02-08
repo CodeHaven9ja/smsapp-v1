@@ -1,0 +1,32 @@
+<div class="Subhead">
+	<h2 class="Subhead-heading">{{$ctrl.title}}</h2>
+</div>
+
+<p class="sub-title text-danger">Change Password</p>
+
+<form name="changePassword" class="edit_user" novalidate>
+	
+	<div class="form-group">
+		<label for="oldPassword">Old Password</label>
+		<input name="oldPassword" type="password" ng-model="$ctrl.password.old" ng-required="true" id="oldPassword" class="form-control" placeholder="Enter old password">
+	</div>
+
+	<div class="form-group">
+		<label for="newPassword">New Password</label>
+		<input name="newPassword" type="password" ng-model="$ctrl.password.new" ng-required="true" id="newPassword" class="form-control" placeholder="Enter new password">
+	</div>
+
+	<div class="form-group">
+		<label for="confirmNewPassword">Confim New Password</label>
+		<input name="confirmNewPassword" type="password" ng-model="$ctrl.password.confirm" ng-required="true" id="confirmNewPassword" class="form-control" placeholder="Confirm new password">
+	</div>
+
+	<button type="submit" class="btn btn-info" 
+	ng-click="$ctrl.updatePassword($ctrl.password.new)"
+	ng-disabled="$ctrl.password.old === $ctrl.password.new 
+	|| $ctrl.password.new !== $ctrl.password.confirm 
+	|| changePassword.oldPassword.$error.required 
+	|| changePassword.newPassword.$error.required 
+	|| changePassword.confirmNewPassword.$error.required">Submit</button>
+
+</form>

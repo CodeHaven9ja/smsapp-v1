@@ -2,6 +2,12 @@ angular.module('app').factory('LocalService', function($rootScope){
 	var sharedService = {};
 
 	sharedService.id = '';
+  sharedService.states = [
+    {
+      state: 'Abia',
+      ISO: 'AB'
+    }
+  ];
 
   sharedService.createUser = function(label){
     $rootScope.$broadcast(label);

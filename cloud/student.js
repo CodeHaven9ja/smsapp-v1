@@ -118,6 +118,26 @@ function getDate() {
   return today;
 }
 
+function increaseUser() {
+  var Count = Parse.Object.extend("Count");
+  var cQuery = new Parse.Query(Count);
+  cQuery.equalTo('type', 'users');
+  cQuery.first().then((count) =>{
+      count.increment('count');
+      count.save();
+    });
+}
+
+function decreaseUser() {
+  var Count = Parse.Object.extend("Count");
+  var cQuery = new Parse.Query(Count);
+  cQuery.equalTo('type', 'users');
+  cQuery.first().then((count) =>{
+      count.increment('count', -1);
+      count.save();
+    });
+}
+
 // Parse.Cloud.job("CreateInitialReportsPerTerm", (req, status) =>{
 
 // });
