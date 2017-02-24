@@ -3,11 +3,151 @@ angular.module('app').factory('LocalService', function($rootScope){
 
 	sharedService.id = '';
   sharedService.states = [
-    {
-      state: 'Abia',
-      ISO: 'AB'
-    }
-  ];
+   {
+      state:'Abia',
+      ISO:'AB'
+   },
+   {
+      state:'Adamawa',
+      ISO:'AD'
+   },
+   {
+      state:'Akwa Ibom',
+      ISO:'AI'
+   },
+   {
+      state:'Anambra',
+      ISO:'AN'
+   },
+   {
+      state:'Bauchi',
+      ISO:'BC'
+   },
+   {
+      state:'Bayelsa',
+      ISO:'BY'
+   },
+   {
+      state:'Benue',
+      ISO:'BN'
+   },
+   {
+      state:'Borno',
+      ISO:'BO'
+   },
+   {
+      state:'Cross River',
+      ISO:'CR'
+   },
+   {
+      state:'Delta',
+      ISO:'DL'
+   },
+   {
+      state:'Ebonyi ',
+      ISO:'EB'
+   },
+   {
+      state:'Edo',
+      ISO:'ED'
+   },
+   {
+      state:'Ekiti',
+      ISO:'EK'
+   },
+   {
+      state:'Enugu ',
+      ISO:'EG'
+   },
+   {
+      state:'Federal Capital Territory',
+      ISO:'FCT'
+   },
+   {
+      state:'Gombe',
+      ISO:'GB'
+   },
+   {
+      state:'Imo',
+      ISO:'IM'
+   },
+   {
+      state:'Jigawa',
+      ISO:'JG'
+   },
+   {
+      state:'Kaduna',
+      ISO:'KD'
+   },
+   {
+      state:'Kano',
+      ISO:'KN'
+   },
+   {
+      state:'Katsina',
+      ISO:'KS'
+   },
+   {
+      state:'Kogi',
+      ISO:'KG'
+   },
+   {
+      state:'Kwara',
+      ISO:'KW'
+   },
+   {
+      state:'Lagos',
+      ISO:'LG'
+   },
+   {
+      state:'Nasarawa',
+      ISO:'NW'
+   },
+   {
+      state:'Niger',
+      ISO:'NG'
+   },
+   {
+      state:'Ogun',
+      ISO:'OG'
+   },
+   {
+      state:'Ondo',
+      ISO:'OD'
+   },
+   {
+      state:'Osun',
+      ISO:'OS'
+   },
+   {
+      state:'Oyo',
+      ISO:'OY'
+   },
+   {
+      state:'Plateau',
+      ISO:'PL'
+   },
+   {
+      state:'Rivers',
+      ISO:'RV'
+   },
+   {
+      state:'Sokoto',
+      ISO:'SK'
+   },
+   {
+      state:'Taraba',
+      ISO:'TR'
+   },
+   {
+      state:'Yobe',
+      ISO:'YB'
+   },
+   {
+      state:'Zamfara',
+      ISO:'ZM'
+   }
+];
 
   sharedService.createUser = function(label){
     $rootScope.$broadcast(label);
