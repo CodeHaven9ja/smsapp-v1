@@ -7,12 +7,13 @@
         function Service($http, $q, $httpParamSerializerJQLike) {
         	var service = {};
             var user;
+            service.token = null;
+            service.user = null;
 
-        	service.GetCurrent = GetCurrent;
+            service.GetCurrent = GetCurrent;
             service.GetUser = GetUser;
             service.GetSchool = GetSchool;
             service.UpdatePassword = UpdatePassword;
-            service.token = null;
             service.GetProfile = GetProfile;
         	return service;
 

@@ -6,24 +6,24 @@
 	
 	<div class="form-group">
 		<label for="street">Street</label>
-		<input name="street" type="text" ng-model="$ctrl.profile.street" ng-required="true" id="street" class="form-control" placeholder="Enter Street">
+		<input name="street" type="text" ng-model="$ctrl.profile.street" id="street" class="form-control" placeholder="Enter Street">
 	</div>
 
 	<div class="form-group">
 		<label for="city">City</label>
-		<input name="city" type="text" ng-model="$ctrl.profile.city" ng-required="true" id="city" class="form-control" placeholder="eg. Isolo">
+		<input name="city" type="text" ng-model="$ctrl.profile.city" id="city" class="form-control" placeholder="eg. Isolo">
 	</div>
 
 	<div class="form-group">
 		<label for="state">State</label>
-		<select name="state" ng-model="$ctrl.profile.confirm" ng-required="true" id="state" class="form-control">
+		<select name="state" ng-model="$ctrl.profile.state" id="state" class="form-control">
 			<option ng-repeat="state in $ctrl.state" value="{{state.ISO}}">{{state.state}}</option>
 		</select>
 	</div>
 
 	<div class="form-group">
 		<label for="alt-phone">Alternative Phone number</label>
-		<input name="alt-phone" type="text" ng-model="$ctrl.profile.alt_phone" ng-required="true" id="alt-phone" class="form-control" placeholder="Alternative Phone number">
+		<input name="alt-phone" type="text" ng-model="$ctrl.profile.alt_phone" id="alt-phone" class="form-control" placeholder="Alternative Phone number">
 	</div>
 
 	<div class="Subhead">
@@ -32,22 +32,21 @@
 
 	<div class="form-group">
 		<label for="lga">LGA</label>
-		<input name="lga" type="text" ng-model="$ctrl.profile.lga" ng-required="true" id="lga" class="form-control" placeholder="eg. Isolo">
+		<input name="lga" type="text" ng-model="$ctrl.profile.lga" id="lga" class="form-control" placeholder="eg. Isolo">
 	</div>
 
 	<div class="form-group">
 		<label for="soo">State Of Origin</label>
-		<select name="soo" ng-model="$ctrl.profile.soo" ng-required="true" id="soo" class="form-control">
+		<select name="soo" ng-model="$ctrl.profile.soo" id="soo" class="form-control">
 			<option ng-repeat="state in $ctrl.state" value="{{state.ISO}}">{{state.state}}</option>
 		</select>
 	</div>
 
-	<button type="submit" class="btn btn-info" 
-	ng-click="$ctrl.updatePassword($ctrl.password.new)"
-	ng-disabled="$ctrl.password.old === $ctrl.password.new 
-	|| $ctrl.password.new !== $ctrl.password.confirm 
-	|| editAddress.street.$error.required 
-	|| editAddress.newPassword.$error.required 
-	|| editAddress.state.$error.required">Submit</button>
+	<div class="form-group" ng-if="$ctrl.user.role === 'user'">
+		<label for="mmn">Mothers Median Name</label>
+		<input name="mmn" type="text" ng-model="$ctrl.profile.mmn" id="mmn" class="form-control" placeholder="Mothers Median Name">
+	</div>
+
+	<button type="submit" class="btn btn-info" ng-click="$ctrl.doProfile()">Submit</button>
 
 </form>
