@@ -15,11 +15,39 @@
             service.GetSchool = GetSchool;
             service.UpdatePassword = UpdatePassword;
             service.GetProfile = GetProfile;
+            service.UploadProfileImage = UploadProfileImage;
+            service.Current = Current;
         	return service;
+
+            function UploadProfileImage(file, id, token) {
+                return $http({
+                    method: "PUT",
+                    url: "/1/classes/_User/"+id,
+                    headers : {
+                        "X-Parse-Application-Id":"9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC",
+                        'X-Parse-Session-Token':token,
+                        "Content-Type": "application/json"
+                    },
+                    data: {
+                        img : file
+                    }
+                }).then(handleSuccess, handleError);
+            }
 
         	function GetCurrent() {
             	return $http.get('/dash/users/current', { cache: true}).then(handleSuccess, handleError);
         	}
+
+            function Current(token){
+                return $http({
+                    method: "GET", 
+                    url: "/1/users/me",
+                    headers:{
+                        "X-Parse-Application-Id":"9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC",
+                        'X-Parse-Session-Token':token
+                    }
+                }).then(handleSuccess, handleError);
+            }
 
             function UpdatePassword(id, token, password) {
                 return $http({

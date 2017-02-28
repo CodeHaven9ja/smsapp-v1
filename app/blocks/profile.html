@@ -1,6 +1,19 @@
 <div class="row">
 	<div class="col-md-3 col-xs-12">
-		<img gravatar-src="$ctrl.user.email" gravatar-size="250" alt="{{$ctrl.user.email}}" class="img-responsive img-rounded">
+		<div class="profile-pic">
+			<img ng-if="!$ctrl.user.img" gravatar-src="$ctrl.user.email" gravatar-size="250" alt="{{$ctrl.user.email}}" class="img-responsive img-rounded">
+			<img ng-if="$ctrl.user.img" ng-src="{{$ctrl.user.img.url}}" alt="$ctrl.user.img.url" class="img-responsive img-rounded">
+			<div class="overlayx" ng-class="{overlayOn: $ctrl.uploading}">
+				<div class="text">
+					<file id="file" type = "file" ng-model="$ctrl.myFile" ng-change="$ctrl.upload()"/>
+					<label for="file" ng-if="!$ctrl.uploading">
+						<i class="fa fa-cloud-upload"></i>
+						Upload
+					</label>
+					<div ng-if="$ctrl.uploading" class="loader">Loading...</div>
+				</div>
+			</div>
+		</div>
 		<h1 class="profile">
 			<span class="fullname">{{$ctrl.user.firstName | capitalize}} {{$ctrl.user.lastName | capitalize}}</span>
 			<span class="username">{{$ctrl.user.username}}</span>
