@@ -15,7 +15,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="student in pListCrtl.children">
+							<tr ng-repeat="student in pListCrtl.children track by $index">
 								<th>{{$index + 1}}</th>
 								<th>{{student.firstName}} {{student.lastName}}</th>
 								<th>{{student.class.commonName}}</th>
