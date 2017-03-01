@@ -13,7 +13,19 @@
         COMMON_VARIABLE: "true"
       },
       env_production : {
-        NODE_ENV: "production"
+        NODE_ENV: "production",
+        APP_ID:               "9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC",
+        CLOUDINARY_URL:       "cloudinary://114138982143439:UzfFXSfb5IXnkXnLRc71Sq7QkTI@hijuto3yk",
+        DOMAIN_NAME:          "schoolpop.ng",
+        MAILGUN_API_KEY:      "key-9vmhz-shoqd2qm8votyipmtnh-m9xjg6",
+        MASTER_KEY:           "2h7bu8iPlLZ43Vt80rB97X2CDFmY087P",
+        MONGODB_URI:          "mongodb://heroku_1z74d6hn:97n77cfb9kkf162e2u7s5t0vll@ds029665.mlab.com:29665/heroku_1z74d6hn",
+        PAPERTRAIL_API_TOKEN: "Q9HYll1BKt87CnJYvNj",
+        PARSE_MOUNT:          "/1",
+        PARSE_SERVER_URI:     "http://schoolpop.ng",
+        PUB_SERVER_URL:       "http://schoolpop.ng",
+        REDISCLOUD_URL:       "redis://rediscloud:XTDVeU08TGPN2JeI@pub-redis-12395.eu-west-1-2.2.ec2.garantiadata.com:12395",
+        SESSION_SECRET:       "G~B5l!dE#4#22T>ablq%vC{Y9sw'#T"
       }
     }
   ],
