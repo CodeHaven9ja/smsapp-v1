@@ -123,7 +123,7 @@
                                 var r = [];
                                 for (var i = 0; i < students.results.length; i++){
                                     var s = students.results[i].user;
-                                    r.push(StudentService.GetStudentClass(s.user.objectId, parent).then(function(clazz){
+                                    r.push(StudentService.GetStudentClass(s.objectId, parent).then(function(clazz){
                                         if (clazz.result) {
                                             s.class = clazz.result;
                                         } else {
