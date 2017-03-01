@@ -10,6 +10,29 @@ function listChildren(students,ParentService, UserService, StudentService) {
 
 	console.log(students);
 
+	pListCrtl.getClass = function(s) {
+		var c = {};
+		if (!s) {
+			return c;
+		}
+		return StudentService.GetStudentClass(s.objectId, pListCrtl.parent).then(function(clazz){
+				if (clazz.result) {
+					c = clazz.result;
+				} else {
+					c = {
+						commonName: 'Not assigned to a class.'
+					}
+				}
+			return c;
+		}).catch(function(err){
+			console.log(err);
+			c = {
+				commonName: 'Not assigned to a class.'
+			}
+			return c;
+		});
+	}
+
 	// UserService.GetCurrent().then(function(user){
 	// 	pListCrtl.parent = user;
 	// 	return ParentService.GetChildren(user);
@@ -17,14 +40,7 @@ function listChildren(students,ParentService, UserService, StudentService) {
 	// 	for (var i = 0; i < students.results.length; i++) {
 	// 		var student = students.results[i].user;
 	// 		StudentService.GetStudentClass(students.results[i].user.objectId,
-	//  			pListCrtl.parent).then(function(clazz){
-	// 				if (clazz.result) {
-	// 					student.class = clazz.result;
-	// 				} else {
-	// 					student.class = {
-	// 						commonName: 'Not assigned to a class.'
-	// 					}
-	// 				}
+	
 	// 				pListCrtl.children.push(student);
 	// 		});
 	// 	}

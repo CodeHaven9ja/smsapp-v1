@@ -18,7 +18,7 @@
 							<tr ng-repeat="student in pListCrtl.children track by $index">
 								<th>{{$index + 1}}</th>
 								<th>{{student.firstName}} {{student.lastName}}</th>
-								<th ng-if="student.class.commonName">{{student.class.commonName}}</th>
+								<th>{{pListCrtl.getClass(student).commonName}}</th>
 								<th><a href="#/student/{{student.objectId}}">View</a></th>
 							</tr>
 						</tbody>
