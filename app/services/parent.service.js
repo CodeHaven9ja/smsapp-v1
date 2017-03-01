@@ -12,14 +12,34 @@ function Service($http, $q, $httpParamSerializerJQLike){
 
 	function GetChildren(user) {
 		return $http({
-			method: 'POST',
-			url: '/1/functions/listChildren',
+			method: "GET",
+			url: "/1/classes/Profile",
 			headers: {
 				'X-Parse-Application-Id': '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
 				'X-Parse-Session-Token': user.sessionToken,
       	'Content-Type': 'application/json'
+			},
+			params: {
+				where: {
+	    		'parent': {
+	    			"__type": "Pointer",
+            "className": "_User",
+            "objectId": user.objectId
+	    		}
+	    	},
+	    	include: "user",
+	      order: "-createdAt"
 			}
 		}).then(handleSuccess, handleError);
+		// return $http({
+		// 	method: 'POST',
+		// 	url: '/1/functions/listChildren',
+		// 	headers: {
+		// 		'X-Parse-Application-Id': '9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC',
+		// 		'X-Parse-Session-Token': user.sessionToken,
+  //     	'Content-Type': 'application/json'
+		// 	}
+		// }).then(handleSuccess, handleError);
 	}
 
 	function ToggleActivate(parent) {

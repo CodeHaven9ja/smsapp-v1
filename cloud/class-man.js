@@ -34,7 +34,7 @@ Parse.Cloud.define('getClasses', (req, res) => {
 	}).then((c)=>{
 		return res.success(c);
 	}).catch((error) =>{
-    res.error(error);
+    return res.error(error);
   });
 });
 

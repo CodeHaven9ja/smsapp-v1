@@ -1,19 +1,21 @@
 angular.module('app')
-	.controller('ParentListCtrl', ['ParentService', 'UserService', 'StudentService',listChildren]);
+	.controller('ParentListCtrl', ['students','ParentService', 'UserService', 'StudentService',listChildren]);
 
-function listChildren(ParentService, UserService, StudentService) {
+function listChildren(students, ParentService, UserService, StudentService) {
 	var pListCrtl = this;
 
 	pListCrtl.parent;
 
 	pListCrtl.children = [];
 
+	console.log(students);
+
 	UserService.GetCurrent().then(function(user){
 		pListCrtl.parent = user;
 		return ParentService.GetChildren(user);
 	}).then(function(students){
-		for (var i = 0; i < students.result.length; i++) {
-			var student = students.result[i].user;
+		for (var i = 0; i < students.results.length; i++) {
+			var student = students.results[i].user;
 			StudentService.GetStudentClass(students.result[i].user.objectId,
 	 			pListCrtl.parent).then(function(clazz){
 					if (clazz.result) {
