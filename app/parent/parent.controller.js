@@ -8,14 +8,15 @@ function listChildren(students,ParentService, UserService, StudentService) {
 
 	pListCrtl.children = students;
 
-	console.log(students);
+	// console.log(students);
 
-	pListCrtl.getClass = function(s) {
+	pListCrtl.getClass = function(s, p) {
+		console.log(s, p);
 		var c = {};
 		if (!s) {
 			return c;
 		}
-		return StudentService.GetStudentClass(s.objectId, pListCrtl.parent).then(function(clazz){
+		return StudentService.GetStudentClass(s.objectId, p).then(function(clazz){
 				if (clazz.result) {
 					c = clazz.result;
 				} else {
