@@ -1,14 +1,14 @@
 angular.module('app')
-	.controller('ParentListCtrl', ['students','ParentService', 'UserService', 'StudentService',listChildren]);
+	.controller('ParentListCtrl', ['ParentService', 'UserService', 'StudentService',listChildren]);
 
-function listChildren(students, ParentService, UserService, StudentService) {
+function listChildren(ParentService, UserService, StudentService) {
 	var pListCrtl = this;
 
 	pListCrtl.parent;
 
 	pListCrtl.children = [];
 
-	console.log(students);
+	// console.log(students);
 
 	UserService.GetCurrent().then(function(user){
 		pListCrtl.parent = user;
