@@ -123,24 +123,9 @@
                                 var r = [];
                                 for (var i = 0; i < students.results.length; i++){
                                     var s = students.results[i].user;
-                                    r.push(StudentService.GetStudentClass(s.objectId, parent).then(function(clazz){
-                                        if (clazz.result) {
-                                            s.class = clazz.result;
-                                        } else {
-                                            s.class = {
-                                                commonName: 'Not assigned to a class.'
-                                            }
-                                        }
-                                        return s;
-                                    }));
+                                    r.push(s);
                                 };
-                                return $q.all(r);
-                            }).then(function(res){
-                                for (var i = 0; i < res.length; i++) {
-                                    var c = res[i];
-                                    children.push(c);
-                                }
-                                return children;
+                                return r;
                             });
                         }
                     },

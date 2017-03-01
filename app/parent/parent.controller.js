@@ -8,7 +8,7 @@ function listChildren(students,ParentService, UserService, StudentService) {
 
 	pListCrtl.children = students;
 
-	// console.log(students);
+	console.log(students);
 
 	// UserService.GetCurrent().then(function(user){
 	// 	pListCrtl.parent = user;
