@@ -27,7 +27,7 @@ function listChildren(students, parent, ParentService, UserService, StudentServi
 	});
 
 	pListCrtl.getClass = function(s, p) {
-		console.log(s, p);
+		// console.log(s, p);
 		var c = {};
 		if (!s) {
 			return c;
