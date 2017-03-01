@@ -56,7 +56,9 @@
 
             <li>
                 <a href="javascript:;" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <img gravatar-src="hd.user.email" gravatar-size="100" alt="">{{hd.user.firstName}} {{hd.user.lastName}}
+                    <img ng-if="!hd.user.img" gravatar-src="hd.user.email" gravatar-size="100" alt="">
+                    <img ng-if="hd.user.img" ng-src="{{hd.user.img.url}}" alt="">
+                    {{hd.user.firstName}} {{hd.user.lastName}}
                     <span class=" fa fa-angle-down"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-usermenu purple pull-right">
