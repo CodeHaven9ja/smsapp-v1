@@ -112,38 +112,38 @@
                     controllerAs: 'admCNCrtl'
                 })
                 .state('parentListChildren', {
-                    // resolve: {
-                    //     students: function(ParentService, UserService, StudentService, $q){
-                    //         var children = [];
-                    //         var parent = null;
-                    //         return UserService.GetCurrent().then(function(user){
-                    //             parent = user;
-                    //             return ParentService.GetChildren(user);
-                    //         }).then(function(students){
-                    //             var r = [];
-                    //             for (var i = 0; i < students.results.length; i++){
-                    //                 var s = students.results[i].user;
-                    //                 r.push(StudentService.GetStudentClass(s.user.objectId, parent).then(function(clazz){
-                    //                     if (clazz.result) {
-                    //                         s.class = clazz.result;
-                    //                     } else {
-                    //                         s.class = {
-                    //                             commonName: 'Not assigned to a class.'
-                    //                         }
-                    //                     }
-                    //                     return s;
-                    //                 }));
-                    //             };
-                    //             return $q.all(r);
-                    //         }).then(function(res){
-                    //             for (var i = 0; i < res.length; i++) {
-                    //                 var c = res[i];
-                    //                 children.push(c);
-                    //             }
-                    //             return children;
-                    //         });
-                    //     }
-                    // },
+                    resolve: {
+                        students: function(ParentService, UserService, StudentService, $q){
+                            var children = [];
+                            var parent = null;
+                            return UserService.GetCurrent().then(function(user){
+                                parent = user;
+                                return ParentService.GetChildren(user);
+                            }).then(function(students){
+                                var r = [];
+                                for (var i = 0; i < students.results.length; i++){
+                                    var s = students.results[i].user;
+                                    r.push(StudentService.GetStudentClass(s.user.objectId, parent).then(function(clazz){
+                                        if (clazz.result) {
+                                            s.class = clazz.result;
+                                        } else {
+                                            s.class = {
+                                                commonName: 'Not assigned to a class.'
+                                            }
+                                        }
+                                        return s;
+                                    }));
+                                };
+                                return $q.all(r);
+                            }).then(function(res){
+                                for (var i = 0; i < res.length; i++) {
+                                    var c = res[i];
+                                    children.push(c);
+                                }
+                                return children;
+                            });
+                        }
+                    },
                     url: '/parent/list-children',
                     templateUrl: 'parent/list-children.html',
                     controller: 'ParentListCtrl',
