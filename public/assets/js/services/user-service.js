@@ -94,13 +94,16 @@
             }
 
             function GetSchool(id) {
-                return $http({
-                    method:"GET", 
-                    url:'/1/classes/School/'+id, 
-                    headers:{
-                        "X-Parse-Application-Id":"9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC"
-                    }, 
-                    cache: true
+                return GetCurrent().then(function(user){
+                    return $http({
+                        method:"GET", 
+                        url:'/1/classes/School/'+id, 
+                        headers:{
+                            "X-Parse-Application-Id":"9o87s1WOIyPgoTEGv0PSp9GXT1En9cwC",
+                            'X-Parse-Session-Token':user.sessionToken
+                        }, 
+                        cache: true
+                    })
                 }).then(handleSuccess, handleError);
             }
             // private functions
