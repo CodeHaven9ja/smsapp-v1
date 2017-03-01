@@ -19,8 +19,11 @@ function listChildren(students, parent, ParentService, UserService, StudentServi
 
 	$q.all(r).then(function(res){
 		for (var i = 0; i < res.length; i++) {
-			console.log(res[i]);
+			pListCrtl.children[i].class = res;
 		}
+		return pListCrtl.children;
+	}).then(function(c) {
+			console.log(c);
 	});
 
 	pListCrtl.getClass = function(s, p) {
