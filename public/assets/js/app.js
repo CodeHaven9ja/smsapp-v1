@@ -127,6 +127,9 @@
                                 };
                                 return r;
                             });
+                        },
+                        parent : function(UserService){
+                            return UserService.GetCurrent().then(function(user){ return user; });
                         }
                     },
                     url: '/parent/list-children',

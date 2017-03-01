@@ -1,10 +1,10 @@
 angular.module('app')
-	.controller('ParentListCtrl', ['students','ParentService', 'UserService', 'StudentService',listChildren]);
+	.controller('ParentListCtrl', ['students', 'parent', 'ParentService', 'UserService', 'StudentService',listChildren]);
 
-function listChildren(students,ParentService, UserService, StudentService) {
+function listChildren(students, parent, ParentService, UserService, StudentService) {
 	var pListCrtl = this;
 
-	pListCrtl.parent;
+	pListCrtl.parent = parent;
 
 	pListCrtl.children = students;
 
