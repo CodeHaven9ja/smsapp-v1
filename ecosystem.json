@@ -22,8 +22,8 @@
         MONGODB_URI:          "mongodb://heroku_1z74d6hn:97n77cfb9kkf162e2u7s5t0vll@ds029665.mlab.com:29665/heroku_1z74d6hn",
         PAPERTRAIL_API_TOKEN: "Q9HYll1BKt87CnJYvNj",
         PARSE_MOUNT:          "/1",
-        PARSE_SERVER_URI:     "http://schoolpop.ng",
-        PUB_SERVER_URL:       "http://schoolpop.ng",
+        PARSE_SERVER_URI:     "http://api.schoolpop.ng",
+        PUB_SERVER_URL:       "http://api.schoolpop.ng",
         REDISCLOUD_URL:       "redis://rediscloud:XTDVeU08TGPN2JeI@pub-redis-12395.eu-west-1-2.2.ec2.garantiadata.com:12395",
         SESSION_SECRET:       "G~B5l!dE#4#22T>ablq%vC{Y9sw'#T"
       }
