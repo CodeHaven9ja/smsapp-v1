@@ -102,23 +102,23 @@ app.use(expressSession({
 app.use(flash());
 
 // Serve static assets from the /public folder
-app.use(express.static(path.join(__dirname, '/public/assets')));
-app.use(express.static(path.join(__dirname, '/bower_components')));
+// app.use(express.static(path.join(__dirname, '/public/assets')));
+// app.use(express.static(path.join(__dirname, '/bower_components')));
 
 // Establish routes
 
 // make '/app' default route
-app.get('/', (req, res) => {
-    return res.redirect('/home');
-});
+// app.get('/', (req, res) => {
+//    return res.redirect('/home');
+// });
 
 app.use(mountPath, api);
 
 
-app.use('/home', require('./routes/home')(Parse));
-app.use('/dash', require('./routes/dash')(Parse));
-app.use('/staff', require('./routes/staff/staff.controller')(Parse));
-app.use('/users', require('./routes/users'));
+// app.use('/home', require('./routes/home')(Parse));
+// app.use('/dash', require('./routes/dash')(Parse));
+// app.use('/staff', require('./routes/staff/staff.controller')(Parse));
+// app.use('/users', require('./routes/users'));
 
 
 var config = require('./config.json');
