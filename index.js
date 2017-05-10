@@ -102,15 +102,15 @@ app.use(expressSession({
 app.use(flash());
 
 // Serve static assets from the /public folder
-// app.use(express.static(path.join(__dirname, '/public/assets')));
+app.use(express.static(path.join(__dirname, '/public')));
 // app.use(express.static(path.join(__dirname, '/bower_components')));
 
 // Establish routes
 
 // make '/app' default route
-app.get('/', (req, res) => {
-   return res.status(200);
-});
+// app.get('/', (req, res) => {
+//    return res.redirect('/home');
+// });
 
 app.use(mountPath, api);
 
