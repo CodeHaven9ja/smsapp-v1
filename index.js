@@ -108,9 +108,9 @@ app.use(flash());
 // Establish routes
 
 // make '/app' default route
-// app.get('/', (req, res) => {
-//    return res.redirect('/home');
-// });
+app.get('/', (req, res) => {
+   return res.status(200);
+});
 
 app.use(mountPath, api);
 
