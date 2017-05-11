@@ -106,9 +106,9 @@ app.use(express.static(path.join(__dirname, './public')));
 app.get('/', (req, res) => {
   res.status(200).send("ok");
 });
-app.get('/.well-known/acme-challenge/:id', (req, res) => {
-  res.status(200).send("ok");
-});
+// app.get('/.well-known/acme-challenge/:id', (req, res) => {
+//   res.status(200).send("ok");
+// });
 // app.use(express.static(path.join(__dirname, '/bower_components')));
 
 // Establish routes
