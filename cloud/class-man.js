@@ -30,6 +30,8 @@ Parse.Cloud.define('getClasses', (req, res) => {
 		var relation = s.relation("classRoom");
 		var query = relation.query();
 
+		query.descending("commonName");
+
 		return query.find({sessionToken : user.getSessionToken()});
 	}).then((c)=>{
 		return res.success(c);
