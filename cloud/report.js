@@ -137,3 +137,17 @@ Parse.Cloud.job("CreateInitialReportsPerTerm", (req, status) =>{
 		status.success('Users sanitized.');
 	});
 });
+
+Parse.Cloud.beforeSave("Report", (req, res) => {
+	let report = req.object;
+
+	if (report.get("caScore") > 40) {
+		res.error("CA test score cannot be greater than 40");
+	}
+
+	if (report.get("examScore") > 60) {
+		res.error("Exam score cannot be greater than 60");
+	}
+
+	res.success();
+});
