@@ -63,6 +63,8 @@ Parse.Cloud.define('setSubject', (req, res) =>{
 			var ss = new Subject();
 			ss.set("subject", topic);
 			ss.set("score", data.score);
+			ss.set("caScore", data.caScore);
+			ss.set("examScore", data.examScore);
 			if (data.score > 40) {
 				ss.set("withExam", true);
 			}
@@ -75,6 +77,8 @@ Parse.Cloud.define('setSubject', (req, res) =>{
 		} else {
 
 			s.set("score", data.score);
+			ss.set("caScore", data.caScore);
+			ss.set("examScore", data.examScore);
 			if (data.score > 40) {
 				s.set("withExam", true);
 			}
