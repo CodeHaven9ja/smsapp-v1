@@ -99,8 +99,8 @@ Parse.Cloud.job("CreateInitialReportsPerTerm", (req, status) =>{
 	usersQuery.equalTo("role", "user");
 	usersQuery.equalTo("isActive", true);
 	usersQuery.find({useMasterKey: true}).then((usrs) =>{
-	var Report = Parse.Object.extend("Report");
-	var Term = Parse.Object.extend("Term");
+		var Report = Parse.Object.extend("Report");
+		var Term = Parse.Object.extend("Term");
 	
 		_.each(usrs, (u) =>{
 			user = u;
@@ -133,8 +133,9 @@ Parse.Cloud.job("CreateInitialReportsPerTerm", (req, status) =>{
 			});
 
 		});
-
 		status.success('Users sanitized.');
+	}).catch((err) => {
+		status.error('Users sanitization failed.');
 	});
 });
 
