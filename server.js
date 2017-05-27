@@ -52,7 +52,7 @@ var api = new ParseServer({
     }
   },
   liveQuery: {
-    classNames: ["Mail", "Result"] // List of classes to support for query subscriptions
+    classNames: ["Mail", "Result", "School"] // List of classes to support for query subscriptions
   }
 });
 
