@@ -151,24 +151,46 @@ Parse.Cloud.job("SanitizeParentRolesOnStudents", (req, status) => {
 		_.each(users, (u) => {
 			// Get Role 
 			let role;
-			let parent = u.get("profile").get("parent");
+			var parent;
+			if (u.has("profile") && u.get("profile").has("parent")) {
+				parent = u.get("profile").get("parent");
+			}
 			let q = new Parse.Query("Role");
-			q.equalTo("name", parentOf_+u.id);
+			q.equalTo("name", "parentOf_"+u.id);
 			
 			let query = q.first({useMasterKey: true}).then((r) =>{
+				let role = r;
 				if (parent) {
+					if (!r) {
+						console.log(`
+							***********************
+							*  Creating new role  *
+							***********************
+						`);
+						var roleACL = new Parse.ACL();
+						roleACL.setRoleReadAccess("teacher", true);
+						roleACL.setRoleWriteAccess("teacher", true);
+						roleACL.setRoleReadAccess("admin", true);
+						roleACL.setRoleWriteAccess("admin", true);
+
+						role = new Parse.Role("parentOf_"+u.id, roleACL);
+					}
 					role.getUsers().add(parent);
+					return role.save(null, {useMasterKey: true});
+				} else {
+					return null;
 				}
-				return role.save({useMasterKey: true});
 			});
 
 			promises.push(query);
+		
 		});
 
 		return Parse.Promise.when(promises);
 	}).then(() => {
 		status.success("Parents attached to correct roles");
 	}).catch((err) => {
+		console.log(err);
 		status.error("An error occurred!!!");
 	})
 
