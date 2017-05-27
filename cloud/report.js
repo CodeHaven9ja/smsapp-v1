@@ -94,8 +94,8 @@ Parse.Cloud.define('setSubject', (req, res) =>{
 });
 
 Parse.Cloud.job("CreateInitialReportsPerTerm", (req, status) =>{
-	var usersQuery = new Parse.Query(Parse.User);
 	var user;
+	var usersQuery = new Parse.Query(Parse.User);
 	usersQuery.equalTo("role", "user");
 	usersQuery.equalTo("isActive", true);
 	usersQuery.find({useMasterKey: true}).then((usrs) =>{
@@ -138,6 +138,42 @@ Parse.Cloud.job("CreateInitialReportsPerTerm", (req, status) =>{
 		status.error('Users sanitization failed.');
 	});
 });
+
+Parse.Cloud.job("SanitizeParentRolesOnStudents", (req, status) => {
+	var usersQuery = new Parse.Query(Parse.User);
+	usersQuery.equalTo("role", "user");
+	usersQuery.equalTo("isActive", true);
+	usersQuery.include(["profile"]);
+
+	let promises = [] 
+
+	usersQuery.find({useMasterKey: true}).then((users) => {
+		_.each(users, (u) => {
+			// Get Role 
+			let role;
+			let parent = u.get("profile").get("parent");
+			let q = new Parse.Query("Role");
+			q.equalTo("name", parentOf_+u.id);
+			
+			let query = q.first({useMasterKey: true}).then((r) =>{
+				if (parent) {
+					role.getUsers().add(parent);
+				}
+				return role.save({useMasterKey: true});
+			});
+
+			promises.push(query);
+		});
+
+		return Parse.Promise.when(promises);
+	}).then(() => {
+		status.success("Parents attached to correct roles");
+	}).catch((err) => {
+		status.error("An error occurred!!!");
+	})
+
+
+})
 
 Parse.Cloud.beforeSave("Report", (req, res) => {
 	let report = req.object;
