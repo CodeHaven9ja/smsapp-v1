@@ -1,26 +1,26 @@
-// Parse.Cloud.afterSave('ClassRoom', (req, res) => {
-// 	// Get current user
+Parse.Cloud.afterSave('ClassRoom', (req, res) => {
+	// Get current user
 
-// 	var user = req.user;
+	var user = req.user;
 
-// 	// Classroom
+	// Classroom
 
-// 	var classRoom = req.object;
+	var classRoom = req.object;
 
-// 	// Get School
+	// Get School
 
-// 	var schoolQ = new Parse.Query('School');
-// 	schoolQ.first({sessionToken : user.getSessionToken()}).then((s) =>{
-// 		var relation = s.relation('classRoom');
-// 		relation.add(classRoom);
+	var schoolQ = new Parse.Query('School');
+	schoolQ.first({sessionToken : user.getSessionToken()}).then((s) =>{
+		var relation = s.relation('classRoom');
+		relation.add(classRoom);
 
-// 		return s.save(null, {sessionToken : user.getSessionToken()});
-// 	}).then((s) =>{
-// 		return res.success({school: s, class: classRoom});
-// 	}).catch((error) =>{
-//     res.error(error);
-//   });
-// });
+		return s.save(null, {sessionToken : user.getSessionToken()});
+	}).then((s) =>{
+		return res.success({school: s, class: classRoom});
+	}).catch((error) =>{
+    res.error(error);
+  });
+});
 
 Parse.Cloud.define('getClasses', (req, res) => {
 	var user = req.user;
