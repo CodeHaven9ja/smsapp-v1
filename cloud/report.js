@@ -45,6 +45,9 @@ Parse.Cloud.define('setSubject', (req, res) =>{
 		report.equalTo("term", term);
 		return report.first({sessionToken: currentUser.getSessionToken()});
 	}).then((r) =>{
+		if (!r) {
+			return res.error("This user has no report for this term");
+		}
 		report = r;
 		var relation = report.relation("subjects");
 		var relQ = relation.query();
