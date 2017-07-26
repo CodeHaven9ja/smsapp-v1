@@ -44,7 +44,7 @@ var api = new ParseServer({
     module: 'parse-server-simple-mailgun-adapter',
     options: {
       // The address that your emails come from
-      fromAddress: 'Schoolpop <noreply@'+ process.env.DOMAIN_NAME+ '>',
+      fromAddress: 'Admin <noreply@'+ process.env.DOMAIN_NAME+ '>',
       // Your domain from mailgun.com
       domain: process.env.DOMAIN_NAME || 'http://localhost:3030',
       // Your API key from mailgun.com
@@ -52,7 +52,7 @@ var api = new ParseServer({
     }
   },
   liveQuery: {
-    classNames: ["Mail", "Result", "School"] // List of classes to support for query subscriptions
+    classNames: ["Group", "GroupMember", "GroupPayment"] // List of classes to support for query subscriptions
   }
 });
 
