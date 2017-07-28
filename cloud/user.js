@@ -1,6 +1,8 @@
 /*jshint esversion: 6 */
 var _ = require("underscore");
 
+var Profile = Parse.Object.extend("Profile");
+
 Parse.Cloud.job('sanitizeUser', (req, stat) => {
 	var promises = [];
 
@@ -24,6 +26,30 @@ Parse.Cloud.job('sanitizeUser', (req, stat) => {
 		return stat.success("Done sanitizing.");
 	}).catch((err) => {
 		return stat.error(err);
-	})
+	});
 
-})
+});
+
+Parse.Cloud.job('profilize', (req, stat) => {
+	var promises = [];
+
+	var query = new Parse.Query(Parse.User);
+
+	query.doesNotExist("p_username");
+
+	return query.find().then((users) =>{
+		_.each(users, (user) => {
+			let profile = new Profile();
+			profile.set("user", user);
+
+			user.set("profile", profile);
+
+			promises.push(user.save(null, {useMasterKey:true}));
+		});
+		return Parse.Promise.when(promises);
+	}).then(() =>{
+		return stat.success("Done sanitizing.");
+	}).catch((err) => {
+		return stat.error(err);
+	});
+});
