@@ -42,6 +42,14 @@ Parse.Cloud.job('profilize', (req, stat) => {
 			let profile = new Profile();
 			profile.set("user", user);
 
+			if (user.get("role") == "user") {
+				profile.set("type", "student");
+			} else if (user.get("role") == "parent") {
+				profile.set("type", "parent");
+			} else {
+				profile.set("type", "staff");
+			}
+
 			user.set("profile", profile);
 
 			promises.push(user.save(null, {useMasterKey:true}));
