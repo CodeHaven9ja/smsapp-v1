@@ -35,7 +35,7 @@ Parse.Cloud.job('profilize', (req, stat) => {
 
 	var query = new Parse.Query(Parse.User);
 
-	query.doesNotExist("p_username");
+	query.doesNotExist("profile");
 
 	return query.find().then((users) =>{
 		_.each(users, (user) => {
