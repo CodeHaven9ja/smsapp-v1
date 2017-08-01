@@ -65,9 +65,15 @@ Parse.Cloud.job('profilize', (req, stat) => {
 Parse.Cloud.define("removeAdmin", (req, res) =>{
 	let user = req.params.user;
 
-	user.unset("school");
+	console.log(user);
 
-	return user.save(null, {useMasterKey:true}).then((user) =>{
+	let uQ = new Parse.Query(Parse.User);
+	uQ.equalTo("objectId", user.objectId);
+
+	return uQ.first().then((user) =>{
+		user.unset("school");
+		return user.save(null, {useMasterKey:true});
+	}).then((user) =>{
 		return res.success(user);
 	}).catch((err) =>{
 		return res.error(err);
@@ -79,6 +85,8 @@ Parse.Cloud.define("addAdmin", (req, res) =>{
 	let user   = req.user;
 	let school = user.get("school");
 	let role 	 = "adminOf"+school.id; 
+
+	console.log(admin);
 
 	admin.set("school", school);
 
