@@ -94,4 +94,4 @@ Parse.Cloud.define("addAdmin", (req, res) =>{
 	}).catch((err) =>{
 		return res.error(err);
 	});
-}
+});
