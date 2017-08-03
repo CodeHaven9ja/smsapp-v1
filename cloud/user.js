@@ -93,7 +93,7 @@ Parse.Cloud.define("addAdmin", (req, res) =>{
 
 	return uQ.first().then((user) =>{
 		user.set("school", school);
-		user.set("role" "admin");
+		user.set("role", "admin");
 		return user.save(null, {useMasterKey:true});
 	}).then((user) =>{
 		let rQuery = new Parse.Query(Parse.Role);
