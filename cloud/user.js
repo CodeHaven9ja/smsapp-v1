@@ -72,6 +72,7 @@ Parse.Cloud.define("removeAdmin", (req, res) =>{
 
 	return uQ.first().then((user) =>{
 		user.unset("school");
+		user.set("role", "none");
 		return user.save(null, {useMasterKey:true});
 	}).then((user) =>{
 		return res.success(user);
@@ -97,13 +98,6 @@ Parse.Cloud.define("addAdmin", (req, res) =>{
 		admin.set("role", "admin");
 		return admin.save(null, {useMasterKey:true});
 	}).then((user) =>{
-		let rQuery = new Parse.Query("_Role");
-		rQuery.equalTo("name", role);
-		return rQuery.first({useMasterKey:true});
-	}).then((r) =>{
-		r.getUsers().add(admin);
-		return r.save(null, {useMasterKey:true});
-	}).then(() =>{
 		return res.success(admin);
 	}).catch((err) =>{
 		return res.error(err);
