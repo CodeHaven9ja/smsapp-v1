@@ -12,7 +12,7 @@ Parse.Cloud.afterSave(Parse.User, (req, res) => {
     user.save(null,{useMasterKey: true});
     return;
   }
-  user.set("role", "user");
+  user.set("role", "none");
   user.set("isActive", false);
   user.save(null,{useMasterKey: true});
   increaseUser();

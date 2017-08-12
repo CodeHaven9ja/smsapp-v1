@@ -3,6 +3,13 @@ var _ = require("underscore");
 
 var Profile = Parse.Object.extend("Profile");
 
+const userRoles = {
+	admin: 'admin',
+	teacher: 'teacher',
+	student: 'user',
+	parent: 'parent'
+}
+
 Parse.Cloud.job('sanitizeUser', (req, stat) => {
 	var promises = [];
 
@@ -63,6 +70,50 @@ Parse.Cloud.job('profilize', (req, stat) => {
 });
 
 Parse.Cloud.define("removeAdmin", (req, res) =>{
+	return removeUser(req, res);
+});
+
+Parse.Cloud.define("addAdmin", (req, res) =>{
+	return addUser(req, res, userRoles.admin);
+});
+
+Parse.Cloud.define("addTeacher", (req, res) =>{
+	return addUser(req, res, userRoles.teacher);
+});
+
+Parse.Cloud.define("addParent", (req, res) =>{
+	return addUser(req, res, userRoles.parent);
+});
+
+Parse.Cloud.define("addStudent", (req, res) =>{
+	return addUser(req, res, userRoles.student);
+});
+
+function addUser(req, res, role) {
+	let userToBeAdded  	= req.params.user;
+	let user   					= req.user;
+	let school 					= user.get("school");
+	let role 	 					= role+"Of"+school.id; 
+
+	console.log(userToBeAdded);
+
+	let uQ = new Parse.Query(Parse.User);
+	uQ.equalTo("objectId", userToBeAdded.objectId);
+
+	return uQ.first().then((user) =>{
+		userToBeAdded = user;
+		userToBeAdded.set("school", school);
+		userToBeAdded.set("role", role);
+		userToBeAdded.set('isActive',true);	
+		return userToBeAdded.save(null, {useMasterKey:true});
+	}).then((user) =>{
+		return res.success(userToBeAdded);
+	}).catch((err) =>{
+		return res.error(err);
+	});
+}
+
+function removeUser (req, res) {
 	let user = req.params.user;
 
 	console.log(user);
@@ -73,33 +124,11 @@ Parse.Cloud.define("removeAdmin", (req, res) =>{
 	return uQ.first().then((user) =>{
 		user.unset("school");
 		user.set("role", "none");
+		user.set('isActive', false);
 		return user.save(null, {useMasterKey:true});
 	}).then((user) =>{
 		return res.success(user);
 	}).catch((err) =>{
 		return res.error(err);
 	});
-});
-
-Parse.Cloud.define("addAdmin", (req, res) =>{
-	let admin  = req.params.user;
-	let user   = req.user;
-	let school = user.get("school");
-	let role 	 = "adminOf"+school.id; 
-
-	console.log(admin);
-
-	let uQ = new Parse.Query(Parse.User);
-	uQ.equalTo("objectId", admin.objectId);
-
-	return uQ.first().then((user) =>{
-		admin = user;
-		admin.set("school", school);
-		admin.set("role", "admin");
-		return admin.save(null, {useMasterKey:true});
-	}).then((user) =>{
-		return res.success(admin);
-	}).catch((err) =>{
-		return res.error(err);
-	});
-});
+}
