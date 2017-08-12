@@ -103,7 +103,7 @@ function addUser(req, res, role) {
 	return uQ.first().then((user) =>{
 		userToBeAdded = user;
 		userToBeAdded.set("school", school);
-		userToBeAdded.set("role", r);
+		userToBeAdded.set("role", role);
 		userToBeAdded.set('isActive',true);	
 		return userToBeAdded.save(null, {useMasterKey:true});
 	}).then((user) =>{
