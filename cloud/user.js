@@ -95,7 +95,7 @@ Parse.Cloud.define("addStudent", (req, res) =>{
 });
 
 Parse.Cloud.define("userCount", (req, res) => {
-	let role 						= req.query.role;
+	let role 						= req.params.role;
 	let user   					= req.user;
 	let school 					= user.get("school");
 
