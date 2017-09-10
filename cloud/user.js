@@ -70,7 +70,12 @@ Parse.Cloud.job('profilize', (req, stat) => {
 });
 
 Parse.Cloud.define("removeAdmin", (req, res) =>{
-	return removeUser(req, res);
+	let user = req.params.user;
+	return removeUser(req, res).then((user) =>{
+		return res.success(user);
+	}).catch((err) =>{
+		return res.error(err);
+	});
 });
 
 Parse.Cloud.define("addAdmin", (req, res) =>{
@@ -87,6 +92,21 @@ Parse.Cloud.define("addParent", (req, res) =>{
 
 Parse.Cloud.define("addStudent", (req, res) =>{
 	return addUser(req, res, userRoles.student);
+});
+
+Parse.Cloud.define("userCount", (req, res) => {
+	let role 						= req.query.role;
+	let user   					= req.user;
+	let school 					= user.get("school");
+
+	let uQ = new Parse.Query(Parse.User);
+	uQ.equalTo('school', school);
+	uQ.equalTo('role', role);
+	return uQ.count().then((count) =>{
+		return res.success(count);
+	}).catch((err) => {
+		return res.error(err);
+	})
 });
 
 function addUser(req, res, role) {
@@ -126,9 +146,5 @@ function removeUser (req, res) {
 		user.set("role", "none");
 		user.set('isActive', false);
 		return user.save(null, {useMasterKey:true});
-	}).then((user) =>{
-		return res.success(user);
-	}).catch((err) =>{
-		return res.error(err);
 	});
 }
