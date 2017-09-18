@@ -23,7 +23,7 @@ function getNewsForParent(req, res, user) {
 	const profileQ = new Parse.Query(Profile);
 	profileQ.equalTo('parent', user);
 	return profileQ.find({sessionToken: user.getSessionToken()}).then((profiles) => {
-		const children = []
+		const children = [];
 		if (profiles.length === 0) {
 			return res.error({message: 'No child found'});
 		}
@@ -35,6 +35,7 @@ function getNewsForParent(req, res, user) {
 		const schools = [];
 		_.each(children, child => schools.push(child.get('school')))
 		const uniqS = _.uniq(schools);
+		console.log(uniqS);
 		const newsQ = new Parse.Query(News);
 		newsQ.containedIn('school', uniqS);
 		return newsQ.find();
