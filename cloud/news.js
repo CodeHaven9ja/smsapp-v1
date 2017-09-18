@@ -21,6 +21,7 @@ Parse.Cloud.define('getNews', (req, res) => {
 
 function getNewsForParent(req, res, user) {
 	const profileQ = new Parse.Query(Profile);
+	const schools = [];
 	profileQ.equalTo('parent', user);
 	return profileQ.find({sessionToken: user.getSessionToken()}).then((profiles) => {
 		const children = [];
@@ -34,8 +35,15 @@ function getNewsForParent(req, res, user) {
 
 		return children;
 	}).then((children) => {
-		const schools = [];
-		_.each(children, child => schools.push(child.get('school')));
+		const promise = Parse.Promise.as();
+		_.each(children, child => {
+			promise = promise.then(() => {
+				let c = child.fetch();
+				schools.push(c.get('school'));
+			});
+		});
+		return promise;
+	}).then(() =>{
 		console.log(schools);
 		const newsQ = new Parse.Query(News);
 		newsQ.containedIn('school', schools);
