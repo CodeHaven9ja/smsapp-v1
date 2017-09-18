@@ -10,6 +10,8 @@ Parse.Cloud.define('getNews', (req, res) => {
 		isParent === true;
 	};
 
+	console.log('Is Parent', isParent);
+
 	if (isParent) {
 		return getNewsForParent(req, res, user);
 	} else {
