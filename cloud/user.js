@@ -102,7 +102,7 @@ Parse.Cloud.define("userCount", (req, res) => {
 	let uQ = new Parse.Query(Parse.User);
 	uQ.equalTo('school', school);
 	uQ.equalTo('role', role);
-	return uQ.count().then((count) =>{
+	return uQ.count({useMasterKey: true}).then((count) =>{
 		return res.success(count);
 	}).catch((err) => {
 		return res.error(err);
