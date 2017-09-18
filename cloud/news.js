@@ -7,7 +7,7 @@ Parse.Cloud.define('getNews', (req, res) => {
 	let isParent = false;
 
 	if(user.get('role') === 'parent') {
-		isParent === true;
+		isParent = true;
 	};
 
 	console.log('Is Parent', isParent, 'role =>'+user.get('role'));
