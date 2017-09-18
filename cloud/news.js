@@ -35,7 +35,7 @@ function getNewsForParent(req, res, user) {
 
 		return children;
 	}).then((children) => {
-		const promise = Parse.Promise.as();
+		let promise = Parse.Promise.as();
 		_.each(children, child => {
 			promise = promise.then(() => {
 				let c = child.fetch();
