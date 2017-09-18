@@ -30,12 +30,13 @@ function getNewsForParent(req, res, user) {
 
 		_.each(profiles, (profile) => children.push(profile.get('user')));
 
+		console.log(children);
+
 		return children;
 	}).then((children) => {
 		const schools = [];
-		_.each(children, child => schools.push(child.get('school')))
-		const uniqS = _.uniq(schools);
-		console.log(uniqS);
+		_.each(children, child => schools.push(child.get('school')));
+		console.log(schools);
 		const newsQ = new Parse.Query(News);
 		newsQ.containedIn('school', schools);
 		return newsQ.find();
