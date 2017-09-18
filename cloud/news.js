@@ -32,17 +32,12 @@ function getNewsForParent(req, res, user) {
 
 		_.each(profiles, (profile) => children.push(profile.get('user')));
 
-		console.log(children);
-
 		return children;
 	}).then((children) => {
+		console.log(children);
 		let promise = Parse.Promise.as();
 		_.each(children, child => {
-			promise = promise.then(() => {
-				child.fetch((c) =>{
-					schools.push(c.get('school'));				
-				});
-			});
+			schools.push(child.get('school'));	
 		});
 		return promise;
 	}).then(() =>{
