@@ -23,6 +23,7 @@ function getNewsForParent(req, res, user) {
 	const profileQ = new Parse.Query(Profile);
 	const schools = [];
 	profileQ.equalTo('parent', user);
+	profileQ.include('user');
 	return profileQ.find({sessionToken: user.getSessionToken()}).then((profiles) => {
 		const children = [];
 		if (profiles.length === 0) {
