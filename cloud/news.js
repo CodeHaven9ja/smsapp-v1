@@ -24,7 +24,7 @@ function getNewsForParent(req, res, user) {
 	profileQ.equalTo('parent', user);
 	return profileQ.find({sessionToken: user.getSessionToken()}).then((profiles) => {
 		const children = []
-		if (!profiles) {
+		if (profiles.length === 0) {
 			return res.error({message: 'No child found'});
 		}
 
