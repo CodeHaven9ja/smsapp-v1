@@ -38,8 +38,9 @@ function getNewsForParent(req, res, user) {
 		let promise = Parse.Promise.as();
 		_.each(children, child => {
 			promise = promise.then(() => {
-				let c = child.fetch();
-				schools.push(c.get('school'));
+				child.fetch((c) =>{
+					schools.push(c.get('school'));				
+				});
 			});
 		});
 		return promise;
