@@ -33,7 +33,7 @@ function getNewsForParent(req, res, user) {
 		const schools = [];
 		_.each(children, child => schools.push(child.get('school')))
 		const uniqS = _.uniq(schools);
-		const newsQ = Parse.Query(News);
+		const newsQ = new Parse.Query(News);
 		newsQ.containedIn('school', uniqS);
 		return newsQ.find();
 	}).then((news) => {
@@ -45,7 +45,7 @@ function getNewsForParent(req, res, user) {
 
 function getNews(req, res, user) {
 	const school = user.get('school');
-	const newsQ = Parse.Query(News);
+	const newsQ = new Parse.Query(News);
 	newsQ.equalTo('school', school);
 	return newsQ.find().then((news) => {
 		return res.success(news);
