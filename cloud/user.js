@@ -10,6 +10,29 @@ const userRoles = {
 	parent: 'parent'
 }
 
+Parse.Cloud.beforeSave(Parse.User, (req, res) => {
+	const user = req.object;
+
+	if (!user.has('p_username')) {
+		user.set('p_username', user.get('username').toLowerCase());
+	}
+
+	if (!user.has('p_email')) {
+		user.set('p_email', user.get('email').toLowerCase());
+	}
+
+	if (!user.has('p_firstName')) {
+		user.set('p_firstName', user.get('firstName').toLowerCase());
+	}
+
+	if (!user.has('p_lastName')) {
+		user.set('p_lastName', user.get('lastName').toLowerCase());
+	}
+
+	res.success();
+
+});
+
 Parse.Cloud.job('sanitizeUser', (req, stat) => {
 	var promises = [];
 
